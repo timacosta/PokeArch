@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId = "com.architects.pokearch"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
     implementation(libs.retrofit)
+    implementation(libs.navigation)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
