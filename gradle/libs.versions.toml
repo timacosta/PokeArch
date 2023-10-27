@@ -84,17 +84,13 @@ hilt-androix-compiler = { group = "androidx.hilt", name = "hilt-compiler", versi
 [plugins]
 
 #Android Gradle Plugin
-com-android-application = { id = "com.android.application", version.ref = "agp" }
+androidApplication = { id = "com.android.application", version.ref = "agp" }
 
 #Kotlin Gradle Plugin
-org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }
 
 #Dagger-Hilt Module Project
-dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger-hilt" }
-
-#Dagger-Hilt Module App
-#id ("kotlin-kapt")
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin-kapt" }
+hiltAndroid= { id = "com.google.dagger.hilt.android", version.ref = "dagger-hilt" }
 
 #("dagger.hilt.android.plugin")
 hilt-android-plugin = { id = "dagger.hilt.android.plugin", version.ref = "dagger-hilt" }
