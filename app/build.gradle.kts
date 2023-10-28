@@ -2,9 +2,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
-    kotlin("kapt")
     alias (libs.plugins.hiltAndroid)
-
+    alias(libs.plugins.ksp)
 
 
 }
@@ -16,7 +15,7 @@ android {
     defaultConfig {
         applicationId = "com.architects.pokearch"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -46,7 +45,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
     packaging {
         resources {
@@ -70,9 +69,9 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.dagger.hilt)
-    kapt(libs.dagger.hilt.compiler)
+    ksp(libs.dagger.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
-    kapt(libs.hilt.androix.compiler)
+    ksp(libs.hilt.androix.compiler)
 
 
     testImplementation(libs.junit)

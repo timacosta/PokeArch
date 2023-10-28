@@ -4,10 +4,10 @@
 agp = "8.1.2"
 
 #Kotlin Plugin
-org-jetbrains-kotlin-android = "1.8.10"
+org-jetbrains-kotlin-android = "1.9.10"
 
 #Core Ktx
-core-ktx = "1.9.0"
+core-ktx = "1.12.0"
 
 #Testing
 junit = "4.13.2"
@@ -19,21 +19,21 @@ lifecycle-runtime-ktx = "2.6.2"
 
 #Compose
 activity-compose = "1.8.0"
-compose-bom = "2023.03.00"
+compose-bom = "2023.10.01"
 
 #Retrofit
 retrofit = "2.9.0"
 
 #OkHttp
-okhttp = "4.10.0"
-okhttp-logging-interceptor = "4.10.0"
+okhttp = "4.11.0"
+okhttp-logging-interceptor = "4.11.0"
 
 #Dagger - Hilt
-dagger-hilt = "2.44"
+dagger-hilt = "2.48"
 androidx-hilt = "1.0.0"
 
 #Kotlin-Kapt
-kotlin-kapt = "1.9.10"
+ksp = "1.9.10-1.0.13"
 
 [libraries]
 
@@ -94,6 +94,9 @@ hiltAndroid= { id = "com.google.dagger.hilt.android", version.ref = "dagger-hilt
 
 #("dagger.hilt.android.plugin")
 hilt-android-plugin = { id = "dagger.hilt.android.plugin", version.ref = "dagger-hilt" }
+
+#KSP
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 [bundles]
 
