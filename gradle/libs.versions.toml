@@ -1,39 +1,109 @@
 [versions]
+
+#Android Gradle Plugin
 agp = "8.1.2"
-org-jetbrains-kotlin-android = "1.8.10"
-core-ktx = "1.9.0"
+
+#Kotlin Plugin
+org-jetbrains-kotlin-android = "1.9.10"
+
+#Core Ktx
+core-ktx = "1.12.0"
+
+#Testing
 junit = "4.13.2"
 androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
+
+#Lifecycle
 lifecycle-runtime-ktx = "2.6.2"
+
+#Compose
 activity-compose = "1.8.0"
-compose-bom = "2023.03.00"
+compose-bom = "2023.10.01"
+
+#Retrofit
 retrofit = "2.9.0"
+
+#Detekt
 detekt = "1.23.1"
 detekt-compose = "0.3.2"
 
+#OkHttp
+okhttp = "4.11.0"
+okhttp-logging-interceptor = "4.11.0"
+
+#Dagger - Hilt
+dagger-hilt = "2.48"
+androidx-hilt = "1.0.0"
+
+#Kotlin-ksp
+ksp = "1.9.10-1.0.13"
 
 [libraries]
+
+#Android Gradle Plugin
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+
+#Kotlin Plugin
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+
+#Testing
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+
+#Lifecycle
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+
+#Compose
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+
+#Ui
 ui = { group = "androidx.compose.ui", name = "ui" }
 ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+
+#Material3
 material3 = { group = "androidx.compose.material3", name = "material3" }
+
+#Retrofit
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+
+#OkHttp
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp-logging-interceptor" }
+
+#Dagger - Hilt
+dagger-hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "dagger-hilt" }
+dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "dagger-hilt" }
+hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidx-hilt" }
+hilt-androix-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "androidx-hilt" }
+
+#Detekt
 detetkcompose = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "detekt-compose" }
 
 [plugins]
-com-android-application = { id = "com.android.application", version.ref = "agp" }
-org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }
+
+#Android Gradle Plugin
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+
+#Kotlin Gradle Plugin
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }
+
+#Dagger-Hilt Module Project
+hiltAndroid= { id = "com.google.dagger.hilt.android", version.ref = "dagger-hilt" }
+
+#("dagger.hilt.android.plugin")
+hilt-android-plugin = { id = "dagger.hilt.android.plugin", version.ref = "dagger-hilt" }
+
+#KSP
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+
+#Detekt
 io-gitlab-arturbosch-detekt = {  id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 
 [bundles]
