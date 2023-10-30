@@ -32,7 +32,7 @@ okhttp-logging-interceptor = "4.11.0"
 dagger-hilt = "2.48"
 androidx-hilt = "1.0.0"
 
-#Kotlin-Kapt
+#Kotlin-ksp
 ksp = "1.9.10-1.0.13"
 
 [libraries]
