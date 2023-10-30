@@ -4,8 +4,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias (libs.plugins.hiltAndroid)
     alias(libs.plugins.ksp)
-
-
+    alias(libs.plugins.io.gitlab.arturbosch.detekt)
 }
 
 android {
@@ -72,6 +71,7 @@ dependencies {
     ksp(libs.dagger.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
     ksp(libs.hilt.androix.compiler)
+    detektPlugins(libs.detetkcompose)
 
 
     testImplementation(libs.junit)
