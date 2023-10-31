@@ -26,9 +26,12 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build -x detekt
 
-      - name: Execute Detekt validation
+      - name: Execute Detekt
         run: ./gradlew detekt
         continue-on-error: true
+
+      - name: Execute KtLint
+        run: ./gradlew ktlintCheck
 
       - name: Execute Unit tests
         run: ./gradlew testDebugUnitTest
