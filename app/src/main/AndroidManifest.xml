@@ -14,7 +14,7 @@
         android:theme="@style/Theme.PokeArch"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".PokeArchActivity"
             android:exported="true"
             android:theme="@style/Theme.PokeArch">
             <intent-filter>

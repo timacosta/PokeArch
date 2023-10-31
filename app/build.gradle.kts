@@ -72,7 +72,7 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
     ksp(libs.hilt.androix.compiler)
     detektPlugins(libs.detetkcompose)
-
+    implementation(libs.navigation)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
