@@ -8,10 +8,10 @@ import com.architects.pokearch.ui.screens.home.HomeScreen
 import com.architects.pokearch.ui.screens.team.TeamScreen
 
 @Composable
-fun MainNavigation(navHostController: NavHostController, onNavigationDetailClick: (Int) -> Unit) {
+fun MainNavigation(navController: NavHostController, onNavigationDetailClick: (Int) -> Unit) {
 
     NavHost(
-        navController = navHostController,
+        navController = navController,
         route = NavCommand.Main.route,
         startDestination = NavCommand.Home.route
     ) {

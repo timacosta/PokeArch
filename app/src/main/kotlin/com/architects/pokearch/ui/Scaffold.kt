@@ -1,78 +1,66 @@
 package com.architects.pokearch.ui
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import com.architects.pokearch.MainViewModel
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import com.architects.pokearch.ui.navigation.NavItem
 
-// TODO: Revisar nomenclatura y String resources
 @Composable
-fun MyScaffold(vm: MainViewModel) {
+fun BottomNavigationBar(
+    navController: NavController
+) {
 
-    Scaffold(
-        topBar = { MainTopAppBar(vm) },
-        bottomBar = { MyBottomAppBar(vm) },
+    NavigationBar(
+        contentColor = MaterialTheme.colorScheme.onPrimary,
+        containerColor = MaterialTheme.colorScheme.primary
     ) {
-        Column(
-            modifier = Modifier
-                .padding(it)
-                .fillMaxSize()
-        ) {
-            // TODO: Añadir la pantalla segun input del usuario.
-            when (vm.screenIndex.value) {
-                0 -> {
-                    //* TODO: Navegar a la pantalla principal */
-                }
 
-                1 -> {
-                    /* TODO: Navegar a la pantalla segun navegacion (Favoritos?) */
-                }
-                // 3 -> { /* TODO: Agregar las futuras pantallas */ }
-            }
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.destination?.route
+
+        NavItem.values().forEach { item ->
+            val title = stringResource(id = item.title)
+            val isCurrentRoute = currentRoute?.contains(item.navCommand.route)
+
+            NavigationBarItem(
+                icon = {
+                    Icon(imageVector = item.icon, contentDescription = title)
+                },
+                label = { Text(text = title) },
+                selected = isCurrentRoute == true,
+                onClick = {
+                    navController.navigate(item.navCommand.route) {
+                        // Pop up to the start destination of the graph to
+                        // avoid building up a large stack of destinations
+                        // on the back stack as users select items
+                        navController.graph.startDestinationRoute?.let { route ->
+                            popUpTo(route) {
+                                saveState = true
+                            }
+                        }
+                        // Avoid multiple copies of the same destination when
+                        // reselecting the same item
+                        launchSingleTop = true
+                        // Restore state when reselecting a previously selected item
+                        restoreState = true
+                    }
+                },
+                colors = NavigationBarItemDefaults.colors(
+                    unselectedIconColor = MaterialTheme.colorScheme.inversePrimary,
+                    unselectedTextColor = MaterialTheme.colorScheme.inversePrimary,
+                    selectedTextColor = MaterialTheme.colorScheme.onPrimary
+
+                )
+            )
         }
+
     }
-}
-
-@Composable
-fun MyBottomAppBar(vm: MainViewModel) {
-    BottomAppBar {
-        NavigationBarItem(
-            selected = vm.screenIndex.value == 0,
-            onClick = { vm.onIndexChange(0) },
-            icon = { Icon(imageVector = Icons.Default.Home, contentDescription = "Home") })
-
-        NavigationBarItem(
-            selected = vm.screenIndex.value == 1,
-            onClick = { vm.onIndexChange(1) },
-            icon = { Icon(imageVector = Icons.Default.Star, contentDescription = "Favourites") }
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MainTopAppBar(vm: MainViewModel) {
-
-    // TODO: Cambiar por String Resources!!
-    val title = when (vm.screenIndex.value) {
-        0 -> "Pokedex"
-        1 -> "Favourites"
-        else -> "" // TODO: Añadir pantallas futuras.
-    }
-
-    TopAppBar(
-        title = { Text(text = title) }
-    )
 }
