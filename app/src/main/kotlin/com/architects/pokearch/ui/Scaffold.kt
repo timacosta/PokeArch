@@ -73,6 +73,6 @@ fun MainTopAppBar(vm: MainViewModel) {
     }
 
     TopAppBar(
-        title = { Text(text = title) },
-        )
+        title = { Text(text = title) }
+    )
 }
