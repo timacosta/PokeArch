@@ -45,6 +45,9 @@ androidx-hilt = "1.0.0"
 #Kotlin-ksp
 ksp = "1.9.10-1.0.13"
 
+#Splashscreen
+splashscreen = "1.0.1"
+
 [libraries]
 
 #Android Gradle Plugin
@@ -94,6 +97,9 @@ navigation = { group = "androidx.navigation", name = "navigation-compose", versi
 
 #Detekt
 detetkcompose = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "detekt-compose" }
+
+#Splashscreen
+splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
 
 [plugins]
 
