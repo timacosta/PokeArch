@@ -1,10 +1,15 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.SARIF
+
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
-    alias (libs.plugins.hiltAndroid)
+    alias(libs.plugins.hiltAndroid)
     alias(libs.plugins.ksp)
     alias(libs.plugins.io.gitlab.arturbosch.detekt)
+    alias(libs.plugins.org.jlleitschuh.ktlint)
 }
 
 android {
@@ -50,6 +55,16 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+}
+
+ktlint {
+    android.set(true)
+    ignoreFailures.set(false)
+    reporters {
+        reporter(PLAIN)
+        reporter(CHECKSTYLE)
+        reporter(SARIF)
     }
 }
 

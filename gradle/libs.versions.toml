@@ -31,6 +31,9 @@ navigation = "2.7.4"
 detekt = "1.23.1"
 detekt-compose = "0.3.2"
 
+#KTLint
+ktlint = "11.3.2"
+
 #OkHttp
 okhttp = "4.11.0"
 okhttp-logging-interceptor = "4.11.0"
@@ -111,6 +114,9 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 #Detekt
 io-gitlab-arturbosch-detekt = {  id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+
+#KTLint
+org-jlleitschuh-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 
 [bundles]
 
