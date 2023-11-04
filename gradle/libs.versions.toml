@@ -45,7 +45,19 @@ androidx-hilt = "1.0.0"
 #Kotlin-ksp
 ksp = "1.9.10-1.0.13"
 
+#Arrow
+arrow = "1.2.0"
+
+#Coroutines
+kotlinx-coroutines-test = "1.7.0"
+kotlinx-coroutines-core = "1.7.0"
+kotlinx-coroutines-android = "1.7.0"
+
 [libraries]
+
+kotlinx_coroutines_test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines-test" }
+kotlinx_coroutines_core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines-core" }
+kotlinx_coroutines_android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines-android" }
 
 #Android Gradle Plugin
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -59,6 +71,8 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 
 #Lifecycle
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle-runtime-ktx" }
+lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle-runtime-ktx" }
 
 #Compose
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
@@ -94,6 +108,9 @@ navigation = { group = "androidx.navigation", name = "navigation-compose", versi
 
 #Detekt
 detetkcompose = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "detekt-compose" }
+
+#Arrow
+arrow = { group = "io.arrow-kt", name = "arrow-core", version.ref = "arrow" }
 
 [plugins]
 

@@ -18,7 +18,6 @@ fun MainScreen(onNavigationDetailClick:(pokemonId: Int) -> Unit){
         contentAlignment = Alignment.TopCenter,
         modifier = Modifier.fillMaxSize()
     ) {
-        Text(text = "MainScreen (Scaffold)")
         MainNavigation(
             navHostController = navHostController,
             onNavigationDetailClick = onNavigationDetailClick
