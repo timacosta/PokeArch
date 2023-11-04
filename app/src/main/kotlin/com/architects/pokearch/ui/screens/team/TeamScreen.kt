@@ -13,6 +13,6 @@ fun TeamScreen() {
         contentAlignment = Alignment.Center,
         modifier = Modifier.fillMaxSize()
     ) {
-        Text(text = "DetailScreen")
+        Text(text = "TeamScreen")
     }
 }

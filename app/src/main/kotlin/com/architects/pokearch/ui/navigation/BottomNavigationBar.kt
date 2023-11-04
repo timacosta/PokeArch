@@ -1,4 +1,4 @@
-package com.architects.pokearch.ui
+package com.architects.pokearch.ui.navigation
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -11,7 +11,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.architects.pokearch.ui.navigation.NavItem
 
 @Composable
 fun BottomNavigationBar(
