@@ -4,16 +4,16 @@
     <aapt:attr name="android:drawable">
         <vector
             android:name="vector"
-            android:width="550dp"
-            android:height="550dp"
-            android:viewportWidth="550"
-            android:viewportHeight="550">
+            android:width="750dp"
+            android:height="750dp"
+            android:viewportWidth="750"
+            android:viewportHeight="750">
             <group
                 android:name="all"
-                android:pivotX="255"
-                android:pivotY="255"
-                android:translateX="19.5"
-                android:translateY="19.5">
+                android:pivotX="255.5"
+                android:pivotY="255.5"
+                android:translateX="119.5"
+                android:translateY="119.5">
                 <path
                     android:name="path"
                     android:pathData="M 491.859 156.348 C 478.968 125.865 460.517 98.483 437.017 74.976 C 413.501 51.476 386.113 33.016 355.644 20.126 C 324.084 6.775 290.553 0.001 255.992 0.001 C 221.438 0.001 187.909 6.774 156.347 20.126 C 125.864 33.016 98.482 51.477 74.974 74.976 C 51.475 98.483 33.015 125.865 20.124 156.348 C 6.774 187.91 0 221.44 0 255.993 C 0 290.553 6.773 324.084 20.125 355.645 C 33.015 386.114 51.476 413.502 74.975 437.002 C 98.482 460.518 125.864 478.969 156.348 491.859 C 187.91 505.203 221.439 511.984 255.993 511.984 C 290.554 511.984 324.085 505.203 355.645 491.859 C 386.114 478.968 413.502 460.517 437.018 437.002 C 460.518 413.502 478.969 386.113 491.86 355.645 C 505.204 324.084 511.985 290.553 511.985 255.993 C 511.984 221.44 505.203 187.91 491.859 156.348 Z"

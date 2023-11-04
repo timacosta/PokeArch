@@ -11,12 +11,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_pokeball_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.PokeArch"
         tools:targetApi="31">
         <activity
             android:name=".PokeArchActivity"
             android:exported="true"
-            android:theme="@style/Theme.PokeArch">
+            android:theme="@style/Theme.PokeArch.Starting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
