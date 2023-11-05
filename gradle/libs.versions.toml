@@ -53,6 +53,9 @@ kotlinx-coroutines-test = "1.7.0"
 kotlinx-coroutines-core = "1.7.0"
 kotlinx-coroutines-android = "1.7.0"
 
+#Splashscreen
+splashscreen = "1.0.1"
+
 [libraries]
 
 kotlinx_coroutines_test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines-test" }
@@ -111,6 +114,9 @@ detetkcompose = { group = "io.nlopez.compose.rules", name = "detekt", version.re
 
 #Arrow
 arrow = { group = "io.arrow-kt", name = "arrow-core", version.ref = "arrow" }
+
+#Splashscreen
+splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
 
 [plugins]
 
