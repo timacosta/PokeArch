@@ -48,6 +48,9 @@ ksp = "1.9.10-1.0.13"
 #Coil
 coil = "2.5.0"
 
+#Palette
+palette = "1.0.0"
+
 [libraries]
 
 #Android Gradle Plugin
@@ -100,6 +103,9 @@ detetkcompose = { group = "io.nlopez.compose.rules", name = "detekt", version.re
 
 #Coil
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+
+#Palette
+palette = { group = "androidx.palette", name = "palette", version.ref = "palette" }
 
 [plugins]
 

@@ -89,6 +89,7 @@ dependencies {
     detektPlugins(libs.detetkcompose)
     implementation(libs.navigation)
     implementation(libs.coil)
+    implementation(libs.palette)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
