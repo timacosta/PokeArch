@@ -13,7 +13,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,13 +41,14 @@ fun HomeItem(pokemon: Pokemon, modifier: Modifier = Modifier, onDetailClick: (In
 
     val image = rememberAsyncImagePainter(
         model = ImageRequest.Builder(LocalContext.current)
-        .data(pokemon.getImageUrl())
-        .size(coil.size.Size.ORIGINAL)
-        .allowHardware(false)
-        .build())
+            .data(pokemon.getImageUrl())
+            .size(coil.size.Size.ORIGINAL)
+            .allowHardware(false)
+            .build()
+    )
 
     val colorDefault = MaterialTheme.colorScheme.background
-    val colorsDefault = listOf(colorDefault,colorDefault)
+    val colorsDefault = listOf(colorDefault, colorDefault)
 
     var colors by remember { mutableStateOf(colorsDefault) }
 
@@ -78,20 +78,18 @@ fun HomeItem(pokemon: Pokemon, modifier: Modifier = Modifier, onDetailClick: (In
 @Composable
 private fun AsyncImagePainter.GetColorsBackground(onGetColor: (List<Color>) -> Unit) {
     if (this.state is AsyncImagePainter.State.Success) {
-        SideEffect {
-            var colors = emptyList<Color>()
-            val palette =
-                Palette.from((this.state as AsyncImagePainter.State.Success).result.drawable.toBitmap())
-                    .generate()
-            palette.lightVibrantSwatch?.let { colors = colors.plus(Color(it.rgb)) }
-            palette.dominantSwatch?.let { colors = colors.plus(Color(it.rgb)) }
+        var colors = emptyList<Color>()
+        val palette =
+            Palette.from((this.state as AsyncImagePainter.State.Success).result.drawable.toBitmap())
+                .generate()
+        palette.lightVibrantSwatch?.let { colors = colors.plus(Color(it.rgb)) }
+        palette.dominantSwatch?.let { colors = colors.plus(Color(it.rgb)) }
 
-            if (colors.size == 1) {
-                colors = colors.plus(colors[0])
-            }
-
-            onGetColor(colors)
+        if (colors.size == 1) {
+            colors = colors.plus(colors[0])
         }
+
+        onGetColor(colors)
     }
 }
 
