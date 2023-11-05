@@ -12,8 +12,8 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -70,7 +70,7 @@ fun PokeArchTheme(
 
 
 @Composable
-fun PokeArchTeam(content: @Composable () -> Unit){
+fun MyPokeArchTheme(content: @Composable () -> Unit){
     PokeArchTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
