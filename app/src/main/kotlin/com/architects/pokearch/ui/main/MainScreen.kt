@@ -17,7 +17,7 @@ import com.architects.pokearch.ui.navigation.MainNavigation
 fun MainScreen(onNavigationDetailClick:(pokemonId: Int) -> Unit){
     val navHostController = rememberNavController()
 
-    /*TODO: Cambiar box por scaffold con bottom bar*/
+
     Scaffold(
         topBar = {},
         bottomBar = {
