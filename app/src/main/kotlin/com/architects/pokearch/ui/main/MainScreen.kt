@@ -10,13 +10,13 @@ import androidx.navigation.compose.rememberNavController
 import com.architects.pokearch.ui.navigation.MainNavigation
 
 @Composable
-fun MainScreen(onNavigationDetailClick:(pokemonId: Int) -> Unit){
+fun MainScreen(modifier: Modifier = Modifier, onNavigationDetailClick:(pokemonId: Int) -> Unit){
     val navHostController = rememberNavController()
 
     /*TODO: Cambiar box por scaffold con bottom bar*/
     Box(
         contentAlignment = Alignment.TopCenter,
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         Text(text = "MainScreen (Scaffold)")
         MainNavigation(

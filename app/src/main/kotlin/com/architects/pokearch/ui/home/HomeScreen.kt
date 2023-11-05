@@ -10,10 +10,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun HomeScreen(onNavigationClick: (Int) -> Unit) {
+fun HomeScreen(modifier: Modifier = Modifier, onNavigationClick: (Int) -> Unit) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         Column {
             Text(text = "HomeScreen")
