@@ -1,5 +1,6 @@
 package com.architects.pokearch.ui.home
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -41,11 +42,7 @@ import com.architects.pokearch.ui.theme.MyPokeArchTheme
 fun HomeItem(pokemon: Pokemon, modifier: Modifier = Modifier, onDetailClick: (Int) -> Unit) {
 
     val image = rememberAsyncImagePainter(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(pokemon.getImageUrl())
-            .size(coil.size.Size.ORIGINAL)
-            .allowHardware(false)
-            .build()
+        model = pokemon.getImageUrl().buildImageRequest(LocalContext.current)
     )
 
     val colorDefault = MaterialTheme.colorScheme.background
@@ -75,6 +72,15 @@ fun HomeItem(pokemon: Pokemon, modifier: Modifier = Modifier, onDetailClick: (In
         }
     }
 }
+
+private fun String.buildImageRequest(context: Context) =
+    if (this.contains("http")){
+        ImageRequest.Builder(context)
+            .data(this)
+            .size(coil.size.Size.ORIGINAL)
+            .allowHardware(false)
+            .build()
+    } else null
 
 @Composable
 private fun AsyncImagePainter.GetColorsBackground(onGetColors: (List<Color>) -> Unit) {
