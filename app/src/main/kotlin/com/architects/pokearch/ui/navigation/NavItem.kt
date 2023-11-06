@@ -33,15 +33,15 @@ sealed class NavCommand(val baseRoute: String, navArgs: List<NavArg> = emptyList
         navArgument(it.key) { type = it.navType }
     }
 
-    object Main : NavCommand("mainScreen")
+    data object Main : NavCommand("mainScreen")
 
-    object Home : NavCommand("homeScreen")
+    data object Home : NavCommand("homeScreen")
 
-    object Team : NavCommand("teamScreen")
+    data object Team : NavCommand("teamScreen")
 
-    object Feature : NavCommand("featureScreen")
+    data object Feature : NavCommand("featureScreen")
 
-    object Detail : NavCommand("detailScreen", listOf(NavArg.PokemonId)) {
+    data object Detail : NavCommand("detailScreen", listOf(NavArg.PokemonId)) {
         fun createRoute(pokemonId: Int): String = "$baseRoute/$pokemonId"
     }
 

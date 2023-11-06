@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
@@ -38,15 +39,7 @@ fun BottomNavigationBar(
                 onClick = {
                     navController.navigate(item.navCommand.route) {
 
-                        navController.graph.startDestinationRoute?.let { route ->
-                            popUpTo(route) {
-                                saveState = true
-                            }
-                        }
-
-                        launchSingleTop = true
-
-                        restoreState = true
+                        navigateToTopLevelDestination(navController)
                     }
                 },
                 colors = NavigationBarItemDefaults.colors(
@@ -57,6 +50,15 @@ fun BottomNavigationBar(
                 )
             )
         }
-
     }
+}
+
+private fun NavOptionsBuilder.navigateToTopLevelDestination(navController: NavController) {
+    navController.graph.startDestinationRoute?.let { route ->
+        popUpTo(route) {
+            saveState = true
+        }
+    }
+    launchSingleTop = true
+    restoreState = true
 }

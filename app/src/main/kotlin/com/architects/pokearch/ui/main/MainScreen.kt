@@ -24,7 +24,7 @@ fun MainScreen(modifier: Modifier = Modifier, onNavigationDetailClick:(pokemonId
             BottomNavigationBar(navController = navHostController)
         },
         content = { padding ->
-            Box(modifier = Modifier.padding(padding)){
+            Box(modifier.padding(padding)){
                 MainNavigation(
                     navHostController = navHostController,
                     onNavigationDetailClick = onNavigationDetailClick
