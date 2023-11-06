@@ -101,7 +101,7 @@ private fun Palette.extractColors() =
 
 @Preview
 @Composable
-fun HomeItemList() {
+private fun HomeItemList() {
     val pokemons = PokemonRepository.getPokemons()
 
     MyPokeArchTheme {
