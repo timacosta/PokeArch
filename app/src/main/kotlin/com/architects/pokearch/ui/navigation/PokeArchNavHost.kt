@@ -10,7 +10,7 @@ import com.architects.pokearch.ui.screens.detail.DetailScreen
 import com.architects.pokearch.ui.main.MainScreen
 
 @Composable
-fun Navigation(){
+fun PokeArchNavHost(){
     val navHostController = rememberNavController()
 
     NavHost(
