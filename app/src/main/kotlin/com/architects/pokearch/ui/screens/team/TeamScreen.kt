@@ -1,4 +1,4 @@
-package com.architects.pokearch.ui.team
+package com.architects.pokearch.ui.screens.team
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +13,6 @@ fun TeamScreen(modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center,
         modifier = modifier.fillMaxSize()
     ) {
-        Text(text = "DetailScreen")
+        Text(text = "TeamScreen")
     }
 }
