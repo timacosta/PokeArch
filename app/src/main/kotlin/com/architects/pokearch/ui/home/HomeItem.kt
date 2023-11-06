@@ -1,5 +1,6 @@
 package com.architects.pokearch.ui.home
 
+import android.graphics.drawable.Drawable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -76,22 +77,27 @@ fun HomeItem(pokemon: Pokemon, modifier: Modifier = Modifier, onDetailClick: (In
 }
 
 @Composable
-private fun AsyncImagePainter.GetColorsBackground(onGetColor: (List<Color>) -> Unit) {
-    if (this.state is AsyncImagePainter.State.Success) {
-        var colors = emptyList<Color>()
-        val palette =
-            Palette.from((this.state as AsyncImagePainter.State.Success).result.drawable.toBitmap())
-                .generate()
-        palette.lightVibrantSwatch?.let { colors = colors.plus(Color(it.rgb)) }
-        palette.dominantSwatch?.let { colors = colors.plus(Color(it.rgb)) }
-
-        if (colors.size == 1) {
-            colors = colors.plus(colors[0])
-        }
-
-        onGetColor(colors)
+private fun AsyncImagePainter.GetColorsBackground(onGetColors: (List<Color>) -> Unit) {
+    getDrawableSuccessState()?.let { drawable ->
+        onGetColors(drawable.generatePalette().extractColors())
     }
 }
+
+@Composable
+private fun AsyncImagePainter.getDrawableSuccessState(): Drawable? =
+    if (this.state is AsyncImagePainter.State.Success)
+        (this.state as AsyncImagePainter.State.Success).result.drawable
+    else null
+
+private fun Drawable.generatePalette() = Palette.from(this.toBitmap()).generate()
+
+private fun Palette.extractColors() =
+    listOfNotNull(
+        this.lightVibrantSwatch?.let { Color(it.rgb) },
+        this.dominantSwatch?.let { Color(it.rgb) }
+    ).let { colors ->
+        if (colors.size == 1) colors + colors else colors
+    }
 
 @Preview
 @Composable
