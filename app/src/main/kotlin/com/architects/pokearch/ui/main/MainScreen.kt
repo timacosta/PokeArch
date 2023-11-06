@@ -14,7 +14,7 @@ import com.architects.pokearch.ui.navigation.BottomNavigationBar
 import com.architects.pokearch.ui.navigation.MainNavigation
 
 @Composable
-fun MainScreen(onNavigationDetailClick:(pokemonId: Int) -> Unit){
+fun MainScreen(modifier: Modifier = Modifier, onNavigationDetailClick:(pokemonId: Int) -> Unit){
     val navHostController = rememberNavController()
 
 

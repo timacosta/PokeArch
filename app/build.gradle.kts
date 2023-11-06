@@ -88,6 +88,7 @@ dependencies {
     ksp(libs.hilt.androix.compiler)
     detektPlugins(libs.detetkcompose)
     implementation(libs.navigation)
+    implementation(libs.splashscreen)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

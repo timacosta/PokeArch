@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="Theme.PokeArch.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/light_gray</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/pokeball_anim</item>
+        <item name="windowSplashScreenAnimationDuration">2000</item>
+        <item name="postSplashScreenTheme">@style/Theme.PokeArch</item>
+    </style>
+
     <style name="Theme.PokeArch" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>
