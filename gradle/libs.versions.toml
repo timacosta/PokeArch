@@ -45,6 +45,9 @@ androidx-hilt = "1.0.0"
 #Kotlin-ksp
 ksp = "1.9.10-1.0.13"
 
+#Splashscreen
+splashscreen = "1.0.1"
+
 #Coil
 coil = "2.5.0"
 
@@ -101,6 +104,9 @@ navigation = { group = "androidx.navigation", name = "navigation-compose", versi
 #Detekt
 detetkcompose = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "detekt-compose" }
 
+#Splashscreen
+splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
+
 #Coil
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
@@ -129,8 +135,6 @@ io-gitlab-arturbosch-detekt = {  id = "io.gitlab.arturbosch.detekt", version.ref
 
 #KTLint
 org-jlleitschuh-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
-
-
 
 [bundles]
 

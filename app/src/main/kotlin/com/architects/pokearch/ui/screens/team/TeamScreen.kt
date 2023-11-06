@@ -1,4 +1,4 @@
-package com.architects.pokearch.ui.detail
+package com.architects.pokearch.ui.screens.team
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,11 +8,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun DetailScreen(pokemonId: Int) {
+fun TeamScreen(modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
-        Text(text = "DetailScreen")
+        Text(text = "TeamScreen")
     }
 }

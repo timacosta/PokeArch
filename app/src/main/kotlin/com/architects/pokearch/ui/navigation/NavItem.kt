@@ -1,10 +1,26 @@
 package com.architects.pokearch.ui.navigation
 
+import androidx.annotation.StringRes
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import com.architects.pokearch.R
 
-sealed class NavItem(val baseRoute: String, navArgs: List<NavArg> = emptyList()) {
+enum class NavItem(
+    val navCommand: NavCommand,
+    val icon: ImageVector,
+    @StringRes val title: Int
+) {
+    HOME(NavCommand.Home, Icons.Default.Home, R.string.home_title),
+    TEAM(NavCommand.Team, Icons.Default.Star, R.string.team_title),
+    FEATURE(NavCommand.Feature, Icons.Default.Face, R.string.feature_title)
+}
+sealed class NavCommand(val baseRoute: String, navArgs: List<NavArg> = emptyList()) {
 
     val route = run {
         val args = navArgs.map { "{${it.key}}" }
@@ -17,13 +33,15 @@ sealed class NavItem(val baseRoute: String, navArgs: List<NavArg> = emptyList())
         navArgument(it.key) { type = it.navType }
     }
 
-    object Main : NavItem("mainScreen")
+    data object Main : NavCommand("mainScreen")
 
-    object Home : NavItem("homeScreen")
+    data object Home : NavCommand("homeScreen")
 
-    object Team : NavItem("teamScreen")
+    data object Team : NavCommand("teamScreen")
 
-    object Detail : NavItem("detailScreen", listOf(NavArg.PokemonId)) {
+    data object Feature : NavCommand("featureScreen")
+
+    data object Detail : NavCommand("detailScreen", listOf(NavArg.PokemonId)) {
         fun createRoute(pokemonId: Int): String = "$baseRoute/$pokemonId"
     }
 

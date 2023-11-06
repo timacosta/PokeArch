@@ -70,10 +70,10 @@ fun PokeArchTheme(
 
 
 @Composable
-fun MyPokeArchTheme(content: @Composable () -> Unit){
+fun MyPokeArchTheme(modifier: Modifier = Modifier, content: @Composable () -> Unit){
     PokeArchTheme {
         Surface(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
             content()

@@ -6,23 +6,23 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.architects.pokearch.ui.detail.DetailScreen
+import com.architects.pokearch.ui.screens.detail.DetailScreen
 import com.architects.pokearch.ui.main.MainScreen
 
 @Composable
-fun Navigation(){
+fun PokeArchNavHost(){
     val navHostController = rememberNavController()
 
     NavHost(
         navController = navHostController,
-        startDestination = NavItem.Main.route
+        startDestination = NavCommand.Main.route
     ){
-        composable(NavItem.Main){
+        composable(NavCommand.Main){
             MainScreen { pokemonId ->
-                navHostController.navigate(NavItem.Detail.createRoute(pokemonId))
+                navHostController.navigate(NavCommand.Detail.createRoute(pokemonId))
             }
         }
-        composable(NavItem.Detail){ backStackEntry ->
+        composable(NavCommand.Detail){ backStackEntry ->
             DetailScreen(NavArg.PokemonId.getArg(backStackEntry))
         }
     }
@@ -30,7 +30,7 @@ fun Navigation(){
 }
 
 fun NavGraphBuilder.composable(
-    navItem: NavItem,
+    navItem: NavCommand,
     content: @Composable (NavBackStackEntry) -> Unit
 ){
     composable(
