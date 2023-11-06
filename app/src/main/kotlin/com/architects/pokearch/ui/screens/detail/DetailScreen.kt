@@ -13,6 +13,6 @@ fun DetailScreen(pokemonId: Int, modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center,
         modifier = modifier.fillMaxSize()
     ) {
-        Text(text = "DetailScreen")
+        Text(text = "DetailScreen: Pokemon $pokemonId")
     }
 }
