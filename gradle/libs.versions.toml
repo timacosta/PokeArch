@@ -56,6 +56,12 @@ kotlinx-coroutines-android = "1.7.0"
 #Splashscreen
 splashscreen = "1.0.1"
 
+#Coil
+coil = "2.5.0"
+
+#Palette
+palette = "1.0.0"
+
 [libraries]
 
 kotlinx_coroutines_test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines-test" }
@@ -117,6 +123,12 @@ arrow = { group = "io.arrow-kt", name = "arrow-core", version.ref = "arrow" }
 
 #Splashscreen
 splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
+
+#Coil
+coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+
+#Palette
+palette = { group = "androidx.palette", name = "palette", version.ref = "palette" }
 
 [plugins]
 

@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">PokeArch</string>
+    <string name="home_title">Home</string>
+    <string name="team_title">Team</string>
+    <string name="feature_title">Feature</string>
 </resources>

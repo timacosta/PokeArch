@@ -94,6 +94,8 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.splashscreen)
+    implementation(libs.coil)
+    implementation(libs.palette)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
