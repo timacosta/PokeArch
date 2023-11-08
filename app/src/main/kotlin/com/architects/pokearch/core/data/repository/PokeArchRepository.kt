@@ -4,6 +4,7 @@ import arrow.core.Either
 import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
 import com.architects.pokearch.core.model.Failure
 import com.architects.pokearch.core.model.Pokemon
+import com.architects.pokearch.core.model.PokemonInfo
 import com.architects.pokearch.core.network.service.PokedexService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -14,8 +15,6 @@ class PokeArchRepository(
 
     override suspend fun fetchPokemonList(): Flow<Either<Failure, List<Pokemon>>> = flow {
 
-        //TODO: Add call to Room first when configured
-
         val response = pokedexService.fetchPokemonList()
 
         if (response.isSuccessful) {
@@ -23,7 +22,16 @@ class PokeArchRepository(
                 emit(Either.Right(it.results))
             }
         }
+    }
 
-        //TODO: Add missing Error Handling
+    override suspend fun fetchPokemonInfo(id: Int): Flow<Either<Failure, PokemonInfo>> = flow {
+
+        val response = pokedexService.fetchPokemonInfo(id)
+
+        if (response.isSuccessful) {
+            response.body()?.let {
+                emit(Either.Right(it))
+            }
+        }
     }
 }

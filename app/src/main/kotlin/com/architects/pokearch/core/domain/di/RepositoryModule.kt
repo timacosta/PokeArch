@@ -16,5 +16,4 @@ object RepositoryModule {
     fun providePokeArchRepository(pokedexService: PokedexService): PokeArchRepositoryContract {
         return PokeArchRepository(pokedexService)
     }
-
 }

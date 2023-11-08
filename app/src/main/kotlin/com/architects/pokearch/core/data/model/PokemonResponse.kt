@@ -12,4 +12,4 @@ data class PokemonResponse(
     val previous: String?,
     @SerializedName("results")
     val results: List<Pokemon>,
-    )
+)

@@ -9,9 +9,9 @@ data class Pokemon(
     @SerializedName("url")
     val url: String,
 ) {
+    fun getIndex():Int = url.split("/".toRegex()).dropLast(1).last().toIntOrNull() ?: 0
     fun getImageUrl(): String {
-        val index = url.split("/".toRegex()).dropLast(1).last()
         return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/" +
-                "pokemon/other/official-artwork/$index.png"
+                "pokemon/other/official-artwork/${getIndex()}.png"
     }
 }

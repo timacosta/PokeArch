@@ -34,7 +34,7 @@ class HomeViewModel @Inject constructor(
     private suspend fun getPokemonList() {
         repositoryContract.fetchPokemonList().collectLatest { result ->
             result.fold(
-                ifLeft = { failure ->
+                ifLeft = {
                     _uiState.value = HomeUiState.Error
                 },
                 ifRight = { pokemonList ->
