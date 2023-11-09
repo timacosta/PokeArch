@@ -1,6 +1,6 @@
 package com.architects.pokearch.core.data.repository
 
-import com.architects.pokearch.core.domain.model.Pokemon
+import com.architects.pokearch.core.model.Pokemon
 
 object PokemonRepository {
     fun getPokemons() = listOf(
