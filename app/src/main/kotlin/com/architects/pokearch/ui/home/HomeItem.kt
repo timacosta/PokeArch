@@ -8,9 +8,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -27,19 +24,20 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.graphics.drawable.toBitmap
 import androidx.palette.graphics.Palette
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.architects.pokearch.R
-import com.architects.pokearch.core.data.repository.PokemonRepository
-import com.architects.pokearch.core.domain.model.Pokemon
-import com.architects.pokearch.ui.theme.MyPokeArchTheme
+import com.architects.pokearch.core.model.Pokemon
 
 @Composable
-fun HomeItem(pokemon: Pokemon, modifier: Modifier = Modifier, onDetailClick: (Int) -> Unit) {
+fun HomeItem(
+    modifier: Modifier = Modifier,
+    pokemon: Pokemon,
+    onItemClick: (Int) -> Unit,
+) {
 
     val image = rememberAsyncImagePainter(
         model = pokemon.getImageUrl().buildImageRequest(LocalContext.current)
@@ -58,7 +56,7 @@ fun HomeItem(pokemon: Pokemon, modifier: Modifier = Modifier, onDetailClick: (In
         modifier
             .fillMaxSize()
             .padding(dimensionResource(id = R.dimen.card_external_padding))
-            .clickable { onDetailClick(pokemon.getId()) }
+            .clickable { onItemClick(pokemon.getIndex()) }
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -74,7 +72,7 @@ fun HomeItem(pokemon: Pokemon, modifier: Modifier = Modifier, onDetailClick: (In
 }
 
 private fun String.buildImageRequest(context: Context) =
-    if (this.contains("http")){
+    if (this.contains("http")) {
         ImageRequest.Builder(context)
             .data(this)
             .size(coil.size.Size.ORIGINAL)
@@ -105,18 +103,3 @@ private fun Palette.extractColors() =
         if (colors.size == 1) colors + colors else colors
     }
 
-@Preview
-@Composable
-private fun HomeItemList() {
-    val pokemons = PokemonRepository.getPokemons()
-
-    MyPokeArchTheme {
-        LazyVerticalGrid(
-            columns = GridCells.Adaptive(minSize = dimensionResource(id = R.dimen.grid_cell_min_size))
-        ) {
-            items(pokemons) { pokemon ->
-                HomeItem(pokemon = pokemon, onDetailClick = {})
-            }
-        }
-    }
-}

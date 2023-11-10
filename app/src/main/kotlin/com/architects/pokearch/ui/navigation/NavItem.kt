@@ -20,7 +20,11 @@ enum class NavItem(
     TEAM(NavCommand.Team, Icons.Default.Star, R.string.team_title),
     FEATURE(NavCommand.Feature, Icons.Default.Face, R.string.feature_title)
 }
-sealed class NavCommand(val baseRoute: String, navArgs: List<NavArg> = emptyList()) {
+
+sealed class NavCommand(
+    val baseRoute: String,
+    navArgs: List<NavArg> = emptyList(),
+) {
 
     val route = run {
         val args = navArgs.map { "{${it.key}}" }
@@ -54,13 +58,13 @@ sealed class NavArg(val key: String, val navTypeWrapper: NavTypeWrapper) {
     inline fun <reified T> getArg(navBackStackEntry: NavBackStackEntry): T =
         navTypeWrapper.getArg(navBackStackEntry, key) as T
 
-    object PokemonId : NavArg("pokemonId", NavTypeWrapper.IntType)
+    data object PokemonId : NavArg("pokemonId", NavTypeWrapper.IntType)
 }
 
 sealed class NavTypeWrapper(val navType: NavType<*>) {
     abstract fun getArg(navBackStackEntry: NavBackStackEntry, key: String): Any
 
-    object IntType : NavTypeWrapper(NavType.IntType) {
+    data object IntType : NavTypeWrapper(NavType.IntType) {
         override fun getArg(navBackStackEntry: NavBackStackEntry, key: String): Any =
             navBackStackEntry.arguments?.getInt(key) as Any
     }
