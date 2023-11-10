@@ -31,7 +31,7 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.architects.pokearch.R
 import com.architects.pokearch.core.model.Pokemon
-import com.architects.pokearch.ui.components.image.Image
+import com.architects.pokearch.ui.components.image.PokeArchAsyncImage
 
 @Composable
 fun HomeItem(
@@ -66,7 +66,7 @@ fun HomeItem(
                 .fillMaxSize()
                 .padding(dimensionResource(id = R.dimen.card_internal_padding))
         ) {
-            Image(asyncPainter = image, contentDescription = pokemon.name)
+            PokeArchAsyncImage(asyncImagePainter = image, contentDescription = pokemon.name)
             Text(text = pokemon.name.capitalize(Locale.current))
         }
     }
