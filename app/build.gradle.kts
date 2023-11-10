@@ -72,6 +72,8 @@ dependencies {
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.lifecycle.runtime.compose)
     implementation(libs.activity.compose)
     implementation(platform(libs.compose.bom))
     implementation(libs.ui)
@@ -88,6 +90,9 @@ dependencies {
     ksp(libs.hilt.androix.compiler)
     detektPlugins(libs.detetkcompose)
     implementation(libs.navigation)
+    implementation(libs.arrow)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
     implementation(libs.splashscreen)
     implementation(libs.coil)
     implementation(libs.palette)

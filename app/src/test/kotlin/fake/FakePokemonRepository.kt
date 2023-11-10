@@ -1,8 +1,9 @@
-package com.architects.pokearch.core.data.repository
+package fake
 
 import com.architects.pokearch.core.model.Pokemon
 
-object PokemonRepository {
+
+object FakePokemonRepository {
     fun getPokemons() = listOf(
         Pokemon(name = "bulbasaur", url = "https://pokeapi.co/api/v2/pokemon/1/"),
         Pokemon(name = "ivysaur", url = "https://pokeapi.co/api/v2/pokemon/2/"),
