@@ -15,9 +15,12 @@ import com.architects.pokearch.ui.components.progressIndicators.PokeArchLoadingI
 import com.architects.pokearch.ui.details.state.DetailUiState
 
 @Composable
-fun DetailScreen(pokemonId: Int, modifier: Modifier = Modifier) {
+fun DetailScreen(
+    pokemonId: Int,
+    modifier: Modifier = Modifier,
+    viewModel: DetailViewModel = hiltViewModel(),
+) {
 
-    val viewModel = hiltViewModel<PokemonDetailViewModel>()
     val uiState by viewModel.pokemonDetailInfo.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = pokemonId) {
@@ -29,13 +32,15 @@ fun DetailScreen(pokemonId: Int, modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxSize()
     ) {
 
-        when(val state = uiState) {
+        when (val state = uiState) {
             is DetailUiState.Loading -> {
                 PokeArchLoadingIndicator()
             }
+
             is DetailUiState.Error -> {
                 Text(text = "Error")
             }
+
             is DetailUiState.Success -> {
                 Column {
                     Text(text = "Name ${state.pokemonInfo.name}")

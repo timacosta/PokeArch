@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PokemonDetailViewModel @Inject constructor(
+class DetailViewModel @Inject constructor(
     private val repositoryContract: PokeArchRepositoryContract,
     @IO private val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {

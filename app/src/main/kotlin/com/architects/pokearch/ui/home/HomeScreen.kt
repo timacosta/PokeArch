@@ -17,13 +17,16 @@ import com.architects.pokearch.ui.components.progressIndicators.PokeArchLoadingI
 import com.architects.pokearch.ui.home.state.HomeUiState
 
 @Composable
-fun HomeScreen(onNavigationClick: (Int) -> Unit) {
+fun HomeScreen(
+    onNavigationClick: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: HomeViewModel = hiltViewModel(),
+) {
 
-    val viewModel = hiltViewModel<HomeViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(8.dp)
     ) {

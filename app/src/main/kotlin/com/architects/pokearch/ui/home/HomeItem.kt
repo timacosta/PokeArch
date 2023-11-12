@@ -35,9 +35,9 @@ import com.architects.pokearch.ui.components.image.PokeArchAsyncImage
 
 @Composable
 fun HomeItem(
-    modifier: Modifier = Modifier,
     pokemon: Pokemon,
     onItemClick: (Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
 
     val image = rememberAsyncImagePainter(

@@ -2,7 +2,6 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.SARIF
 
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
@@ -26,6 +25,11 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
+            arg("room.incremental", "true")
         }
     }
 
@@ -96,6 +100,9 @@ dependencies {
     implementation(libs.splashscreen)
     implementation(libs.coil)
     implementation(libs.palette)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+    implementation(libs.room.paging)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

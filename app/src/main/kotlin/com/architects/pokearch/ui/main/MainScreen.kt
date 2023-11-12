@@ -3,7 +3,6 @@ package com.architects.pokearch.ui.main
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -25,21 +24,22 @@ fun MainScreen(
         },
         content = { padding ->
             MainContent(
-                modifier = modifier,
+                modifier = Modifier,
                 padding = padding,
                 navHostController = navHostController,
                 onItemClick = onItemClick
             )
-        }
+        },
+        modifier = modifier
     )
 }
 
 @Composable
 private fun MainContent(
-    modifier: Modifier = Modifier,
     padding: PaddingValues,
     navHostController: NavHostController,
-    onItemClick: (pokemonId: Int) -> Unit
+    onItemClick: (pokemonId: Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Box(modifier.padding(padding)) {
         MainNavHost(
