@@ -2,7 +2,6 @@ package com.architects.pokearch.ui.home
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -29,8 +28,10 @@ import androidx.palette.graphics.Palette
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import coil.size.Size
 import com.architects.pokearch.R
 import com.architects.pokearch.core.model.Pokemon
+import com.architects.pokearch.ui.components.image.PokeArchAsyncImage
 
 @Composable
 fun HomeItem(
@@ -43,7 +44,7 @@ fun HomeItem(
         model = pokemon.getImageUrl().buildImageRequest(LocalContext.current)
     )
 
-    val colorDefault = MaterialTheme.colorScheme.background
+    val colorDefault = MaterialTheme.colorScheme.surfaceVariant
     val colorsDefault = listOf(colorDefault, colorDefault)
 
     var colors by remember { mutableStateOf(colorsDefault) }
@@ -65,7 +66,7 @@ fun HomeItem(
                 .fillMaxSize()
                 .padding(dimensionResource(id = R.dimen.card_internal_padding))
         ) {
-            Image(painter = image, contentDescription = pokemon.name)
+            PokeArchAsyncImage(asyncImagePainter = image, contentDescription = pokemon.name)
             Text(text = pokemon.name.capitalize(Locale.current))
         }
     }
@@ -75,7 +76,7 @@ private fun String.buildImageRequest(context: Context) =
     if (this.contains("http")) {
         ImageRequest.Builder(context)
             .data(this)
-            .size(coil.size.Size.ORIGINAL)
+            .size(Size.ORIGINAL)
             .allowHardware(false)
             .build()
     } else null
@@ -102,4 +103,3 @@ private fun Palette.extractColors() =
     ).let { colors ->
         if (colors.size == 1) colors + colors else colors
     }
-
