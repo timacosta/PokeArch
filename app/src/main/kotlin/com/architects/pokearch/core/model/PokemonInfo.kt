@@ -1,5 +1,6 @@
 package com.architects.pokearch.core.model
 
+import com.architects.pokearch.core.data.database.entities.PokemonInfoEntity
 import com.architects.pokearch.core.data.database.entities.TypeEntity
 import com.architects.pokearch.core.data.database.entities.TypesEntity
 import com.architects.pokearch.core.data.database.entities.TypesHolder
@@ -23,7 +24,7 @@ data class PokemonInfo(
     val attack: Int = Random.nextInt(maxAttack),
     val defense: Int = Random.nextInt(maxDefense),
     val speed: Int = Random.nextInt(maxSpeed),
-    val exp: Int = Random.nextInt(maxExp)
+    val exp: Int = Random.nextInt(maxExp),
 ) {
     companion object {
         const val maxHp = 300
@@ -34,11 +35,26 @@ data class PokemonInfo(
     }
 }
 
+fun PokemonInfoEntity.asPokemonInfo() = PokemonInfo(
+    id,
+    name,
+    height,
+    weight,
+    experience,
+    types.asTyperesponse(),
+    team,
+    hp,
+    attack,
+    defense,
+    speed,
+    exp
+)
+
 data class TypeResponse(
     @SerializedName("slot")
     val slot: Int,
     @SerializedName("type")
-    val type: Type
+    val type: Type,
 )
 
 fun TypesHolder.asTyperesponse() = types.map { it.asTypeResponse() }
@@ -46,7 +62,7 @@ fun TypesEntity.asTypeResponse() = TypeResponse(slot, type.asType())
 
 data class Type(
     @SerializedName("name")
-    val name: String
+    val name: String,
 )
 
 fun TypeEntity.asType() = Type(name)

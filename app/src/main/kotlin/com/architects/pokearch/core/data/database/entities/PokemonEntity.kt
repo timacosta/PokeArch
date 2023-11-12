@@ -7,8 +7,9 @@ import com.architects.pokearch.core.model.Pokemon
 @Entity
 data class PokemonEntity (
     @PrimaryKey
+    val id: Int,
     val name: String,
     val url: String,
 )
 
-fun Pokemon.asPokemonInfo() = PokemonEntity(name, url)
+fun Pokemon.asPokemonInfo() = PokemonEntity(getIndex(), name, url)
