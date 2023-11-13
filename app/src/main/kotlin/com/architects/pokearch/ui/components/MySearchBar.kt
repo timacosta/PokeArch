@@ -90,7 +90,7 @@ fun MySearchBar(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
-                focusedLeadingIconColor =
+                focusedLeadingIconColor = Color.Black
             ),
             modifier = modifier
                 .fillMaxWidth()
