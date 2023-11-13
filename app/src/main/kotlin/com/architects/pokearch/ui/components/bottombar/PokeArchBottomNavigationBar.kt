@@ -1,7 +1,6 @@
-package com.architects.pokearch.ui.navigation
+package com.architects.pokearch.ui.components.bottombar
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -11,22 +10,25 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.architects.pokearch.ui.navigation.NavItem
 
 @Composable
-fun BottomNavigationBar(
+fun PokeArchBottomNavigationBar(
     navController: NavController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    contentColor: Color = MaterialTheme.colorScheme.onPrimary,
+    containerColor: Color = MaterialTheme.colorScheme.primary
 ) {
 
     NavigationBar(
         modifier = modifier.fillMaxWidth(),
-        contentColor = MaterialTheme.colorScheme.onPrimary,
-        containerColor = MaterialTheme.colorScheme.primary
+        contentColor = contentColor,
+        containerColor = containerColor
     ) {
 
         val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -38,13 +40,15 @@ fun BottomNavigationBar(
 
             NavigationBarItem(
                 icon = {
-                    Icon(imageVector = item.icon, contentDescription = title)
+                    Icon(
+                        imageVector = item.icon,
+                        contentDescription = title
+                    )
                 },
                 label = { Text(text = title) },
                 selected = isCurrentRoute == true,
                 onClick = {
                     navController.navigate(item.navCommand.route) {
-
                         navigateToTopLevelDestination(navController)
                     }
                 },

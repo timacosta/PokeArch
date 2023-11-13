@@ -1,35 +1,50 @@
 package com.architects.pokearch.ui.main
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.architects.pokearch.ui.navigation.BottomNavigationBar
-import com.architects.pokearch.ui.navigation.MainNavigation
+import com.architects.pokearch.ui.components.bottombar.PokeArchBottomNavigationBar
+import com.architects.pokearch.ui.navigation.MainNavHost
 
 @Composable
-fun MainScreen(modifier: Modifier = Modifier, onNavigationDetailClick:(pokemonId: Int) -> Unit){
+fun MainScreen(
+    modifier: Modifier = Modifier,
+    onItemClick: (pokemonId: Int) -> Unit,
+) {
     val navHostController = rememberNavController()
 
-
     Scaffold(
-        topBar = {},
         bottomBar = {
-            BottomNavigationBar(navController = navHostController)
+            PokeArchBottomNavigationBar(navController = navHostController)
         },
         content = { padding ->
-            Box(modifier.padding(padding)){
-                MainNavigation(
-                    navHostController = navHostController,
-                    onNavigationDetailClick = onNavigationDetailClick
-                )
-            }
+            MainContent(
+                modifier = modifier,
+                padding = padding,
+                navHostController = navHostController,
+                onItemClick = onItemClick
+            )
         }
     )
+}
+
+@Composable
+private fun MainContent(
+    modifier: Modifier = Modifier,
+    padding: PaddingValues,
+    navHostController: NavHostController,
+    onItemClick: (pokemonId: Int) -> Unit
+) {
+    Box(modifier.padding(padding)) {
+        MainNavHost(
+            navHostController = navHostController,
+            onNavigationDetailClick = onItemClick
+        )
+    }
 }
