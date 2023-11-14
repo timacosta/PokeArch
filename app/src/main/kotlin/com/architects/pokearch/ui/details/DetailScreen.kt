@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.architects.pokearch.ui.components.progressIndicators.PokeArchLoadingIndicator
+import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
 import com.architects.pokearch.ui.details.state.DetailUiState
 
 @Composable
@@ -31,7 +31,7 @@ fun DetailScreen(pokemonId: Int, modifier: Modifier = Modifier) {
 
         when(val state = uiState) {
             is DetailUiState.Loading -> {
-                PokeArchLoadingIndicator()
+                ArchLoadingIndicator()
             }
             is DetailUiState.Error -> {
                 Text(text = "Error")
