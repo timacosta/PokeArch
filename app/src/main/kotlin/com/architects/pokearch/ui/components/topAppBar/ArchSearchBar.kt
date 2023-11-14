@@ -63,7 +63,10 @@ fun ArchSearchBar(
                 modifier = modifier
                     .padding(start = 16.dp, end = 16.dp)
                     .size(24.dp),
-                onClick = { onCloseClicked() }) {
+                onClick = {
+                    onCloseClicked()
+                }
+            ) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
                     contentDescription = null
@@ -71,39 +74,54 @@ fun ArchSearchBar(
             }
         },
         trailingIcon = {
-            if (text.isNotEmpty()) {
-                Icon(
-                    modifier = modifier
-                        .padding(start = 16.dp, end = 16.dp)
-                        .clickable {
-                            if (text.isNotEmpty()) {
-                                text = ""
-                            }
-                        },
-                    imageVector = Icons.Default.Clear,
-                    contentDescription = null
-                )
+            TrailingIcon(text = text){
+                text = ""
             }
         },
         shape = SearchBarDefaults.inputFieldShape,
-        colors = SearchBarDefaults.colors(
-            containerColor = MaterialTheme.colorScheme.surface,
-            dividerColor = Color.LightGray,
-            inputFieldColors = TextFieldDefaults.colors(
-                focusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.8f),
-                unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                cursorColor = MaterialTheme.colorScheme.inversePrimary,
-                selectionColors = TextSelectionColors(
-                    handleColor = Color.White,
-                    backgroundColor = Color.Transparent
-                ),
-                focusedLeadingIconColor = MaterialTheme.colorScheme.inversePrimary,
-                unfocusedLeadingIconColor = MaterialTheme.colorScheme.inversePrimary,
-                focusedTrailingIconColor = MaterialTheme.colorScheme.inversePrimary,
-                unfocusedTrailingIconColor = MaterialTheme.colorScheme.inversePrimary
-            )
-        )
+        colors = searchBarColors()
     ) { }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun searchBarColors() = SearchBarDefaults.colors(
+    containerColor = MaterialTheme.colorScheme.surface,
+    dividerColor = Color.LightGray,
+    inputFieldColors = TextFieldDefaults.colors(
+        focusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.8f),
+        unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        cursorColor = MaterialTheme.colorScheme.inversePrimary,
+        selectionColors = TextSelectionColors(
+            handleColor = Color.White,
+            backgroundColor = Color.Transparent
+        ),
+        focusedLeadingIconColor = MaterialTheme.colorScheme.inversePrimary,
+        unfocusedLeadingIconColor = MaterialTheme.colorScheme.inversePrimary,
+        focusedTrailingIconColor = MaterialTheme.colorScheme.inversePrimary,
+        unfocusedTrailingIconColor = MaterialTheme.colorScheme.inversePrimary
+    )
+)
+
+@Composable
+private fun TrailingIcon(
+    text: String,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {}
+) {
+    if (text.isNotEmpty()) {
+        Icon(
+            modifier = modifier
+                .padding(start = 16.dp, end = 16.dp)
+                .clickable {
+                    if (text.isNotEmpty()) {
+                        onClick()
+                    }
+                },
+            imageVector = Icons.Default.Clear,
+            contentDescription = null
+        )
+    }
 }
 
 @Preview(showBackground = true, heightDp = 300)

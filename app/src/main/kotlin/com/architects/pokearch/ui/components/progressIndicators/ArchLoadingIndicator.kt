@@ -23,7 +23,7 @@ fun ArchLoadingIndicator(
     ) {
 
         CircularProgressIndicator(
-            modifier = modifier.width(64.dp),
+            modifier = Modifier.width(64.dp),
             color = color,
             trackColor = trackColor
         )
