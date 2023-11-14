@@ -10,10 +10,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.architects.pokearch.R
 
@@ -21,6 +21,7 @@ import com.architects.pokearch.R
 @Composable
 fun ArchTopAppBar(
     modifier: Modifier = Modifier,
+    scrollBehavior: TopAppBarScrollBehavior,
     onSearchClicked: () -> Unit
 ) {
     TopAppBar(
@@ -46,13 +47,7 @@ fun ArchTopAppBar(
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary,
             titleContentColor = MaterialTheme.colorScheme.onPrimary,
-        )
+        ),
+        scrollBehavior = scrollBehavior
     )
-
-}
-
-@Preview
-@Composable
-fun PokeArchTopAppBarPreview() {
-    ArchTopAppBar(onSearchClicked = {})
 }
