@@ -1,31 +1,45 @@
 package com.architects.pokearch.ui.main
 
-import androidx.compose.animation.scaleIn
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.architects.pokearch.ui.components.bottombar.PokeArchBottomNavigationBar
+import com.architects.pokearch.ui.components.bottombar.ArchBottomNavigationBar
+import com.architects.pokearch.ui.main.state.SearchWidgetState
 import com.architects.pokearch.ui.navigation.MainNavHost
+import com.architects.pokearch.ui.components.topAppBar.ArchMainAppTopBar
 
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
+    mainViewModel: MainViewModel,
     onItemClick: (pokemonId: Int) -> Unit,
 ) {
     val navHostController = rememberNavController()
 
+    val searchWidgetState by mainViewModel.searchWidgetState.collectAsStateWithLifecycle()
+
     Scaffold(
+        topBar = {
+            ArchMainAppTopBar(
+                searchWidgetState =  searchWidgetState,
+                onCloseClicked = { mainViewModel.updateSearchWidgetState(newValue = SearchWidgetState.CLOSED) },
+                onSearchTriggeredClicked = { mainViewModel.updateSearchWidgetState(newValue = SearchWidgetState.OPENED) },
+                onSearchClicked = { Log.d("MainScreen", "onSearchClicked: $it")  })
+
+        },
         bottomBar = {
-            PokeArchBottomNavigationBar(navController = navHostController)
+            ArchBottomNavigationBar(navController = navHostController)
         },
         content = { padding ->
+
             MainContent(
                 modifier = Modifier,
                 padding = padding,

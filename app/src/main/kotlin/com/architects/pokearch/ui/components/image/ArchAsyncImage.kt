@@ -16,10 +16,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.core.graphics.drawable.toBitmap
 import coil.compose.AsyncImagePainter
 import com.architects.pokearch.R
-import com.architects.pokearch.ui.components.progressIndicators.PokeArchLoadingIndicator
+import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
 
 @Composable
-fun PokeArchAsyncImage(
+fun ArchAsyncImage(
     asyncImagePainter: AsyncImagePainter,
     contentDescription: String?,
     modifier: Modifier = Modifier,
@@ -36,7 +36,7 @@ fun PokeArchAsyncImage(
                 painter = painterResource(id = R.drawable.broken_image_icon),
                 contentDescription = stringResource(id = R.string.error_async_image_painter)
             )
-        is AsyncImagePainter.State.Loading -> PokeArchLoadingIndicator()
+        is AsyncImagePainter.State.Loading -> ArchLoadingIndicator()
         is AsyncImagePainter.State.Success -> {
             Image(
                 bitmap = state.result.drawable.toBitmap().asImageBitmap(),

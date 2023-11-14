@@ -1,5 +1,7 @@
 package com.architects.pokearch.ui.theme
 
+import android.view.Surface
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.graphics.Color
 
 val Purple80 = Color(0xFFD0BCFF)
