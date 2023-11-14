@@ -22,8 +22,8 @@ import com.architects.pokearch.ui.navigation.MainNavHost
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-    modifier: Modifier = Modifier,
     mainViewModel: MainViewModel,
+    modifier: Modifier = Modifier,
     onItemClick: (pokemonId: Int) -> Unit,
 ) {
     val navHostController = rememberNavController()
@@ -36,11 +36,18 @@ fun MainScreen(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             ArchMainAppTopBar(
-                searchWidgetState =  searchWidgetState,
+                searchWidgetState = searchWidgetState,
                 scrollBehavior = scrollBehavior,
-                onCloseClicked = { mainViewModel.updateSearchWidgetState(newValue = SearchWidgetState.CLOSED) },
-                onSearchTriggeredClicked = { mainViewModel.updateSearchWidgetState(newValue = SearchWidgetState.OPENED) },
-                onSearchClicked = { Log.d("MainScreen", "onSearchClicked: $it")  } //TODO: Implement Logic to search Pokemon
+                onCloseClicked = { mainViewModel.updateSearchWidgetState(
+                    newValue = SearchWidgetState.CLOSED) },
+                onSearchTriggeredClicked = { mainViewModel.updateSearchWidgetState(
+                    newValue = SearchWidgetState.OPENED) },
+                onSearchClicked = {
+                    Log.d(
+                        "MainScreen",
+                        "onSearchClicked: $it"
+                    )
+                } //TODO: Implement Logic to search Pokemon
             )
         },
         bottomBar = {
@@ -60,9 +67,9 @@ fun MainScreen(
 
 @Composable
 private fun MainContent(
-    modifier: Modifier = Modifier,
     padding: PaddingValues,
     navHostController: NavHostController,
+    modifier: Modifier = Modifier,
     onItemClick: (pokemonId: Int) -> Unit
 ) {
     Box(modifier.padding(padding)) {

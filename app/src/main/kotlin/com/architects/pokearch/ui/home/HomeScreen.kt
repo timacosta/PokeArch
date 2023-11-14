@@ -19,13 +19,15 @@ import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndic
 import com.architects.pokearch.ui.home.state.HomeUiState
 
 @Composable
-fun HomeScreen(onNavigationClick: (Int) -> Unit) {
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    onNavigationClick: (Int) -> Unit) {
 
     val viewModel = hiltViewModel<HomeViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(8.dp)
     ) {
@@ -47,6 +49,8 @@ fun HomeScreen(onNavigationClick: (Int) -> Unit) {
             is HomeUiState.Error -> {
                 Text(text = "Something went wrong")
             }
+
+            else -> {}
         }
     }
 }

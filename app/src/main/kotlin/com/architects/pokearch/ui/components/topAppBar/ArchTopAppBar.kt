@@ -20,8 +20,8 @@ import com.architects.pokearch.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArchTopAppBar(
-    modifier: Modifier = Modifier,
     scrollBehavior: TopAppBarScrollBehavior,
+    modifier: Modifier = Modifier,
     onSearchClicked: () -> Unit
 ) {
     TopAppBar(
