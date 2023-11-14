@@ -36,6 +36,7 @@ import com.architects.pokearch.ui.components.image.ArchAsyncImage
 @Composable
 fun HomeItem(
     pokemon: Pokemon,
+    modifier: Modifier = Modifier,
     onItemClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {

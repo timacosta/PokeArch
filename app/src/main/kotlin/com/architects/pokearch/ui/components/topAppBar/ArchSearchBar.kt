@@ -108,7 +108,7 @@ fun ArchSearchBar(
 
 @Preview(showBackground = true, heightDp = 300)
 @Composable
-fun MySearchBarPreview() {
+private fun MySearchBarPreview() {
     ArchSearchBar(
         onCloseClicked = {},
         onSearchClicked = {}

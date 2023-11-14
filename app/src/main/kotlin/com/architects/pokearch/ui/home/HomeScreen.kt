@@ -50,6 +50,8 @@ fun HomeScreen(
             is HomeUiState.Error -> {
                 Text(text = "Something went wrong")
             }
+
+            else -> {}
         }
     }
 }
