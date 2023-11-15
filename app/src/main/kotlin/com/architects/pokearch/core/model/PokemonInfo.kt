@@ -1,9 +1,5 @@
 package com.architects.pokearch.core.model
 
-import com.architects.pokearch.core.data.database.entities.PokemonInfoEntity
-import com.architects.pokearch.core.data.database.entities.TypeEntity
-import com.architects.pokearch.core.data.database.entities.TypesEntity
-import com.architects.pokearch.core.data.database.entities.TypesHolder
 import com.google.gson.annotations.SerializedName
 import kotlin.random.Random
 
@@ -35,21 +31,6 @@ data class PokemonInfo(
     }
 }
 
-fun PokemonInfoEntity.asPokemonInfo() = PokemonInfo(
-    id,
-    name,
-    height,
-    weight,
-    experience,
-    types.asTyperesponse(),
-    team,
-    hp,
-    attack,
-    defense,
-    speed,
-    exp
-)
-
 data class TypeResponse(
     @SerializedName("slot")
     val slot: Int,
@@ -57,12 +38,7 @@ data class TypeResponse(
     val type: Type,
 )
 
-fun TypesHolder.asTyperesponse() = types.map { it.asTypeResponse() }
-fun TypesEntity.asTypeResponse() = TypeResponse(slot, type.asType())
-
 data class Type(
     @SerializedName("name")
     val name: String,
 )
-
-fun TypeEntity.asType() = Type(name)

@@ -17,4 +17,7 @@ interface PokemonDao {
                 "ORDER BY id ASC LIMIT :limit OFFSET :offset"
     )
     suspend fun getPokemonList(filter: String = "", limit: Int = 20, offset: Int = 0): List<PokemonEntity>
+
+    @Query("SELECT COUNT(*) FROM PokemonEntity")
+    suspend fun countPokemonList(): Int
 }

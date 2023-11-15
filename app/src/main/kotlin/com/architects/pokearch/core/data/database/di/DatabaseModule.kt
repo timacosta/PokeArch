@@ -17,7 +17,7 @@ private const val POKEARCH_DATABASE = "PokeArchDB"
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DatabasModule {
+object DatabaseModule {
     @Provides
     @Singleton
     fun providePokeArchDatabase(
@@ -33,7 +33,7 @@ object DatabasModule {
 
     @Provides
     @Singleton
-    fun providePokemonInfoDaoDao(database: PokeArchDatabase): PokemonInfoDao =
+    fun providePokemonInfoDao(database: PokeArchDatabase): PokemonInfoDao =
         database.pokemonInfoDao()
 
     @Provides

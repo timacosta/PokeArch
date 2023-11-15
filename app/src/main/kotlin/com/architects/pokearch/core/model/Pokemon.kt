@@ -1,6 +1,5 @@
 package com.architects.pokearch.core.model
 
-import com.architects.pokearch.core.data.database.entities.PokemonEntity
 import com.google.gson.annotations.SerializedName
 
 data class Pokemon(
@@ -15,6 +14,3 @@ data class Pokemon(
                 "pokemon/other/official-artwork/${getIndex()}.png"
     }
 }
-
-fun PokemonEntity.asPokemon() = Pokemon(name, url)
-

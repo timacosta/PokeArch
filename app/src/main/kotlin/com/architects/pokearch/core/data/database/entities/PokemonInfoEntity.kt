@@ -22,18 +22,3 @@ data class PokemonInfoEntity(
     val speed: Int = Random.nextInt(PokemonInfo.maxSpeed),
     val exp: Int = Random.nextInt(PokemonInfo.maxExp),
 )
-
-fun PokemonInfo.asPokemonInfoEntity() = PokemonInfoEntity(
-    id,
-    name,
-    height,
-    weight,
-    experience,
-    TypesHolder(types.map { it.asTypesEntity() }),
-    team,
-    hp,
-    attack,
-    defense,
-    speed,
-    exp
-)
