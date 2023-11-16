@@ -68,7 +68,7 @@ class PokeArchRepository(
 
     override suspend fun fetchPokemonInfo(id: Int): Flow<Either<Failure, PokemonInfo>> = flow {
         val pokemon = pokemonInfoDao.getPokemonInfo(id)?.let { pokemon ->
-            Either.Right(PokemonInfoEntityMapper.asDomain(pokemon))
+            emit(Either.Right(PokemonInfoEntityMapper.asDomain(pokemon)))
         }
 
         if (pokemon == null) {
