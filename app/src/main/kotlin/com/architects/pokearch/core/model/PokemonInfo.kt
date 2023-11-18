@@ -14,13 +14,13 @@ data class PokemonInfo(
     val weight: Int,
     @SerializedName("base_experience") val experience: Int,
     @SerializedName("types") val types: List<TypeResponse>,
-
+    val team: Boolean = false,
 
     val hp: Int = Random.nextInt(maxHp),
     val attack: Int = Random.nextInt(maxAttack),
     val defense: Int = Random.nextInt(maxDefense),
     val speed: Int = Random.nextInt(maxSpeed),
-    val exp: Int = Random.nextInt(maxExp)
+    val exp: Int = Random.nextInt(maxExp),
 ) {
     companion object {
         const val maxHp = 300
@@ -35,10 +35,10 @@ data class TypeResponse(
     @SerializedName("slot")
     val slot: Int,
     @SerializedName("type")
-    val type: Type
+    val type: Type,
 )
 
 data class Type(
     @SerializedName("name")
-    val name: String
+    val name: String,
 )

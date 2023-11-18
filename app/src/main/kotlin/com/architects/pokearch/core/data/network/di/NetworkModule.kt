@@ -1,6 +1,6 @@
-package com.architects.pokearch.core.network.di
+package com.architects.pokearch.core.data.network.di
 
-import com.architects.pokearch.core.network.service.PokedexService
+import com.architects.pokearch.core.data.network.service.PokedexService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,11 +12,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-
-
 private const val BASE_POKE_API_URL = "https://pokeapi.co/api/v2/"
 private const val RESPONSE_TIME_OUT_SECONDS: Long = 100
-
 
 @Module
 @InstallIn(SingletonComponent::class)

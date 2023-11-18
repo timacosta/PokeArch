@@ -19,9 +19,11 @@ fun MainNavHost(
         startDestination = NavCommand.Home.route
     ) {
         composable(NavCommand.Home) {
-            HomeScreen { pokemonId ->
-                onNavigationDetailClick(pokemonId)
-            }
+            HomeScreen(
+                onNavigationClick = { pokemonId ->
+                    onNavigationDetailClick(pokemonId)
+                }
+            )
         }
         composable(NavCommand.Team) {
             TeamScreen()
