@@ -57,17 +57,12 @@ fun ArchSearchBar(
             textStyle = MaterialTheme.typography.bodyLarge,
             singleLine = true,
             leadingIcon = {
-                leadingIconSearchBar {
+                LeadingIconSearchBar {
                     onCloseClicked()
                 }
             },
             trailingIcon = {
-                trailingIconSearchBar(
-                    text = text,
-                    onTextChange = { onTextChange(text) },
-                ) {
-                    onCloseClicked()
-                }
+                TrailingIconSearchBar(text, onTextChange)
             },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Search
@@ -81,6 +76,25 @@ fun ArchSearchBar(
         )
     }
 
+}
+
+@Composable
+private fun TrailingIconSearchBar(text: String, onTextChange: (String) -> Unit) {
+    if (text.isNotEmpty()) {
+        Icon(
+            modifier = Modifier
+                .padding(start = 16.dp, end = 16.dp)
+                .alpha(0.5f)
+                .clickable {
+                    if (text.isNotEmpty()) {
+                        onTextChange("")
+                    }
+                },
+            imageVector = Icons.Default.Clear,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.inversePrimary
+        )
+    }
 }
 
 @Composable
@@ -98,7 +112,7 @@ private fun textFieldColors() = TextFieldDefaults.colors(
 )
 
 @Composable
-private fun leadingIconSearchBar(onCloseClicked: () -> Unit) {
+private fun LeadingIconSearchBar(onCloseClicked: () -> Unit) {
     IconButton(
         modifier = Modifier
             .alpha(0.5f)
@@ -110,31 +124,6 @@ private fun leadingIconSearchBar(onCloseClicked: () -> Unit) {
     ) {
         Icon(
             imageVector = Icons.Default.ArrowBack,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.inversePrimary
-        )
-    }
-}
-
-@Composable
-private fun trailingIconSearchBar(
-    text: String,
-    onTextChange: (String) -> Unit,
-    onCloseClicked: () -> Unit
-) {
-    if (text.isNotEmpty()) {
-        Icon(
-            modifier = Modifier
-                .padding(start = 16.dp, end = 16.dp)
-                .alpha(0.5f)
-                .clickable {
-                    if (text.isNotEmpty()) {
-                        onTextChange("")
-                    } else {
-                        onCloseClicked()
-                    }
-                },
-            imageVector = Icons.Default.Clear,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.inversePrimary
         )
