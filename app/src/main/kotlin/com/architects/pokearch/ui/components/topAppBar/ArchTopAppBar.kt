@@ -24,6 +24,7 @@ import com.architects.pokearch.R
 @Composable
 fun ArchTopAppBar(
     scrollBehavior: TopAppBarScrollBehavior,
+    modifier: Modifier = Modifier,
     onSearchClicked: () -> Unit,
 ) {
         TopAppBar(
@@ -45,6 +46,7 @@ fun ArchTopAppBar(
                     )
                 }
             },
+            modifier = modifier,
             colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                 containerColor = MaterialTheme.colorScheme.primary,
                 titleContentColor = MaterialTheme.colorScheme.onPrimary,
@@ -57,7 +59,7 @@ fun ArchTopAppBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview()
 @Composable
-fun ArchTopAppBarPreview() {
+private fun ArchTopAppBarPreview() {
 
     Box(modifier = Modifier.height(56.dp)){
 

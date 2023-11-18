@@ -7,10 +7,14 @@ import kotlinx.coroutines.flow.StateFlow
 
 class MainViewModel : ViewModel() {
 
-    private val _searchWidgetState: MutableStateFlow<SearchWidgetState> = MutableStateFlow(value = SearchWidgetState.CLOSED)
+    private val _searchWidgetState: MutableStateFlow<SearchWidgetState>
+    = MutableStateFlow(value = SearchWidgetState.CLOSED)
+
     val searchWidgetState: StateFlow<SearchWidgetState> = _searchWidgetState
 
-    private val _searchTextState: MutableStateFlow<String> = MutableStateFlow(value = "")
+    private val _searchTextState: MutableStateFlow<String> =
+        MutableStateFlow(value = "")
+
     val searchTextState: StateFlow<String> = _searchTextState
 
     fun updateSearchWidgetState(newValue: SearchWidgetState) {

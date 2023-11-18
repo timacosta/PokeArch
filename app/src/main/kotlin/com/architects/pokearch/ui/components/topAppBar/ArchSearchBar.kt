@@ -28,15 +28,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.architects.pokearch.R
 
+private const val CONS_MEDIUM_ALPHA = 0.5f
+
 @Composable
 fun ArchSearchBar(
     text: String,
     onTextChange: (String) -> Unit,
     onCloseClicked: () -> Unit,
+    modifier: Modifier = Modifier,
     onSearchClicked: (String) -> Unit,
 ) {
     Surface(
-        modifier = Modifier.height(64.dp),
+        modifier = modifier.height(64.dp),
         shadowElevation = 3.dp,
         color = MaterialTheme.colorScheme.primary, //TODO: Change color with animation
     ) {
@@ -49,7 +52,7 @@ fun ArchSearchBar(
             placeholder = {
                 Text(
                     modifier = Modifier
-                        .alpha(0.5f),
+                        .alpha(CONS_MEDIUM_ALPHA),
                     text = stringResource(R.string.search_label_place_holder),
                     color = MaterialTheme.colorScheme.onPrimary
                 )
@@ -84,7 +87,7 @@ private fun TrailingIconSearchBar(text: String, onTextChange: (String) -> Unit) 
         Icon(
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp)
-                .alpha(0.5f)
+                .alpha(CONS_MEDIUM_ALPHA)
                 .clickable {
                     if (text.isNotEmpty()) {
                         onTextChange("")
@@ -115,7 +118,7 @@ private fun textFieldColors() = TextFieldDefaults.colors(
 private fun LeadingIconSearchBar(onCloseClicked: () -> Unit) {
     IconButton(
         modifier = Modifier
-            .alpha(0.5f)
+            .alpha(CONS_MEDIUM_ALPHA)
             .padding(start = 16.dp, end = 16.dp)
             .size(24.dp),
         onClick = {

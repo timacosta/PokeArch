@@ -41,7 +41,7 @@ fun ArchMainAppTopBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Composable
-fun ArchMainAppTopBarPreviewClosed(
+private fun ArchMainAppTopBarPreviewClosed(
 ) {
     ArchMainAppTopBar(
         searchWidgetState = SearchWidgetState.CLOSED,
@@ -56,7 +56,7 @@ fun ArchMainAppTopBarPreviewClosed(
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Composable
-fun ArchMainAppTopBarPreviewOpened(
+private fun ArchMainAppTopBarPreviewOpened(
 ) {
     ArchMainAppTopBar(
         searchWidgetState = SearchWidgetState.OPENED,
