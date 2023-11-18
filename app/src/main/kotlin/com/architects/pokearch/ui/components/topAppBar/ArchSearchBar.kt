@@ -5,131 +5,150 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.architects.pokearch.R
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArchSearchBar(
-    modifier: Modifier = Modifier,
-    onCloseClicked: () -> Unit = {},
-    onSearchClicked: (String) -> Unit = {}
+    text: String,
+    onTextChange: (String) -> Unit,
+    onCloseClicked: () -> Unit,
+    onSearchClicked: (String) -> Unit,
 ) {
-    var text by remember { mutableStateOf("") }
-
-    SearchBar(
-        modifier = modifier
-            .height(56.dp)
-            .padding(start = 16.dp, end = 16.dp)
-            .fillMaxWidth(1f)
-            .wrapContentHeight(),
-        query = text,
-        onQueryChange = { text = it },
-        onSearch = {
-            onSearchClicked(text)
-        },
-        active = false,
-        onActiveChange = {},
-        placeholder = {
-            Text(
-                text = stringResource(R.string.search_label_place_holder),
-                color = Color.Black.copy(alpha = 0.5f)
-            )
-        },
-        leadingIcon = {
-            IconButton(
-                modifier = modifier
-                    .padding(start = 16.dp, end = 16.dp)
-                    .size(24.dp),
-                onClick = {
+    Surface(
+        modifier = Modifier.height(64.dp),
+        shadowElevation = 3.dp,
+        color = MaterialTheme.colorScheme.primary, //TODO: Change color with animation
+    ) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = text,
+            onValueChange = {
+                onTextChange(it)
+            },
+            placeholder = {
+                Text(
+                    modifier = Modifier
+                        .alpha(0.5f),
+                    text = stringResource(R.string.search_label_place_holder),
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+            },
+            textStyle = MaterialTheme.typography.bodyLarge,
+            singleLine = true,
+            leadingIcon = {
+                leadingIconSearchBar {
                     onCloseClicked()
                 }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = null
-                )
-            }
-        },
-        trailingIcon = {
-            TrailingIcon(text = text){
-                text = ""
-            }
-        },
-        shape = SearchBarDefaults.inputFieldShape,
-        colors = searchBarColors()
-    ) { }
+            },
+            trailingIcon = {
+                trailingIconSearchBar(
+                    text = text,
+                    onTextChange = { onTextChange(text) },
+                ) {
+                    onCloseClicked()
+                }
+            },
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Search
+            ),
+            keyboardActions = KeyboardActions(
+                onSearch = {
+                    onSearchClicked(text)
+                }
+            ),
+            colors = textFieldColors(),
+        )
+    }
+
 }
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
-private fun searchBarColors() = SearchBarDefaults.colors(
-    containerColor = MaterialTheme.colorScheme.surface,
-    dividerColor = Color.LightGray,
-    inputFieldColors = TextFieldDefaults.colors(
-        focusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.8f),
-        unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        cursorColor = MaterialTheme.colorScheme.inversePrimary,
-        selectionColors = TextSelectionColors(
-            handleColor = Color.White,
-            backgroundColor = Color.Transparent
-        ),
-        focusedLeadingIconColor = MaterialTheme.colorScheme.inversePrimary,
-        unfocusedLeadingIconColor = MaterialTheme.colorScheme.inversePrimary,
-        focusedTrailingIconColor = MaterialTheme.colorScheme.inversePrimary,
-        unfocusedTrailingIconColor = MaterialTheme.colorScheme.inversePrimary
+private fun textFieldColors() = TextFieldDefaults.colors(
+    focusedTextColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f),
+    unfocusedTextColor = MaterialTheme.colorScheme.inversePrimary.copy(alpha = 0.8f),
+    focusedContainerColor = MaterialTheme.colorScheme.primary,
+    unfocusedContainerColor = MaterialTheme.colorScheme.primary,
+    disabledContainerColor = MaterialTheme.colorScheme.primary,
+    cursorColor = MaterialTheme.colorScheme.inversePrimary,
+    selectionColors = TextSelectionColors(
+        handleColor = MaterialTheme.colorScheme.inversePrimary,
+        backgroundColor = Color.Transparent
     )
 )
 
 @Composable
-private fun TrailingIcon(
-    text: String,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit = {}
-) {
-    if (text.isNotEmpty()) {
+private fun leadingIconSearchBar(onCloseClicked: () -> Unit) {
+    IconButton(
+        modifier = Modifier
+            .alpha(0.5f)
+            .padding(start = 16.dp, end = 16.dp)
+            .size(24.dp),
+        onClick = {
+            onCloseClicked()
+        }
+    ) {
         Icon(
-            modifier = modifier
-                .padding(start = 16.dp, end = 16.dp)
-                .clickable {
-                    if (text.isNotEmpty()) {
-                        onClick()
-                    }
-                },
-            imageVector = Icons.Default.Clear,
-            contentDescription = null
+            imageVector = Icons.Default.ArrowBack,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.inversePrimary
         )
     }
 }
 
-@Preview(showBackground = true, heightDp = 300)
 @Composable
-private fun MySearchBarPreview() {
+private fun trailingIconSearchBar(
+    text: String,
+    onTextChange: (String) -> Unit,
+    onCloseClicked: () -> Unit
+) {
+    if (text.isNotEmpty()) {
+        Icon(
+            modifier = Modifier
+                .padding(start = 16.dp, end = 16.dp)
+                .alpha(0.5f)
+                .clickable {
+                    if (text.isNotEmpty()) {
+                        onTextChange("")
+                    } else {
+                        onCloseClicked()
+                    }
+                },
+            imageVector = Icons.Default.Clear,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.inversePrimary
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ArchSearchBarPreview() {
     ArchSearchBar(
         onCloseClicked = {},
-        onSearchClicked = {}
+        onSearchClicked = {},
+        onTextChange = {},
+        text = "Some text"
     )
 
 }

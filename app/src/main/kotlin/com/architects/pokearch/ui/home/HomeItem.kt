@@ -38,7 +38,6 @@ fun HomeItem(
     pokemon: Pokemon,
     modifier: Modifier = Modifier,
     onItemClick: (Int) -> Unit,
-    modifier: Modifier = Modifier,
 ) {
 
     val image = rememberAsyncImagePainter(
