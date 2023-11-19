@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.architects.pokearch.ui.main.state.SearchWidgetState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 
 class MainViewModel : ViewModel() {
 
@@ -17,10 +18,19 @@ class MainViewModel : ViewModel() {
 
     val searchTextState: StateFlow<String> = _searchTextState
 
+    private val _searchBarIsExpandedState = MutableStateFlow(value = true)
+    val searchBarIsExpandedState: StateFlow<Boolean> = _searchBarIsExpandedState
+
     fun updateSearchWidgetState(newValue: SearchWidgetState) {
         _searchWidgetState.value = newValue
     }
     fun updateSearchTextState(newValue: String) {
         _searchTextState.value = newValue
+    }
+
+    fun updateSearchBarIsExpandedState(newValue: Boolean) {
+        _searchBarIsExpandedState.update {
+            !newValue
+        }
     }
 }

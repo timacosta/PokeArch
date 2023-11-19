@@ -13,17 +13,22 @@ import com.architects.pokearch.ui.main.state.SearchWidgetState
 fun ArchMainAppTopBar(
     searchWidgetState: SearchWidgetState,
     searchTextState: String,
+    searchBarIsExpandedState: Boolean,
     scrollBehavior: TopAppBarScrollBehavior,
     onTextChange: (String) -> Unit,
     onCloseClicked: () -> Unit,
     onSearchClicked: (String) -> Unit,
     onSearchTriggeredClicked: () -> Unit,
+    onSearchBarIsExpandedClicked: (Boolean) -> Unit
 ) {
         when (searchWidgetState) {
             SearchWidgetState.CLOSED -> {
                 ArchTopAppBar(
                     onSearchClicked = onSearchTriggeredClicked,
                     scrollBehavior = scrollBehavior,
+                    searchBarIsExpandedState = searchBarIsExpandedState,
+                    onSearchbarIsExpanded = onSearchBarIsExpandedClicked
+
                 )
             }
 
@@ -32,7 +37,9 @@ fun ArchMainAppTopBar(
                     text = searchTextState,
                     onTextChange = onTextChange,
                     onCloseClicked = onCloseClicked,
-                    onSearchClicked = onSearchClicked
+                    onSearchClicked = onSearchClicked,
+                    searchBarIsExpandedState = searchBarIsExpandedState,
+                    onSearchBarIsExpanded = onSearchBarIsExpandedClicked
                 )
             }
         }
@@ -46,11 +53,13 @@ private fun ArchMainAppTopBarPreviewClosed(
     ArchMainAppTopBar(
         searchWidgetState = SearchWidgetState.CLOSED,
         searchTextState = "",
+        searchBarIsExpandedState = false,
         scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
         onTextChange = {},
         onCloseClicked = {},
         onSearchClicked = {},
-        onSearchTriggeredClicked = {}
+        onSearchTriggeredClicked = {},
+        onSearchBarIsExpandedClicked = {}
     )
 }
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,11 +70,14 @@ private fun ArchMainAppTopBarPreviewOpened(
     ArchMainAppTopBar(
         searchWidgetState = SearchWidgetState.OPENED,
         searchTextState = "",
+        searchBarIsExpandedState = false,
         scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
         onTextChange = {},
         onCloseClicked = {},
         onSearchClicked = {},
-        onSearchTriggeredClicked = {}
+        onSearchTriggeredClicked = {},
+        onSearchBarIsExpandedClicked = {}
+
     )
 }
 

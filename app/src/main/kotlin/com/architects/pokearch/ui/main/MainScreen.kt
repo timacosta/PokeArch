@@ -34,6 +34,8 @@ fun MainScreen(
 
     val searchTextState by mainViewModel.searchTextState.collectAsStateWithLifecycle()
 
+    val searchBarIsExpandedState by mainViewModel.searchBarIsExpandedState.collectAsStateWithLifecycle()
+
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     Scaffold(
@@ -42,6 +44,7 @@ fun MainScreen(
             ArchMainAppTopBar(
                 searchWidgetState = searchWidgetState,
                 searchTextState = searchTextState,
+                searchBarIsExpandedState = searchBarIsExpandedState,
                 scrollBehavior = scrollBehavior,
                 onTextChange = {
                     mainViewModel.updateSearchTextState(
@@ -64,6 +67,16 @@ fun MainScreen(
                         newValue = SearchWidgetState.OPENED
                     )
                 },
+                onSearchBarIsExpandedClicked = {
+                    mainViewModel.updateSearchBarIsExpandedState(
+                        newValue = it
+                    )
+                    Log.d(
+                        "EXPANDED",
+                        "onSearchClicked: $it"
+                    )
+
+                }
             )
         },
         bottomBar = {

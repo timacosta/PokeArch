@@ -37,6 +37,8 @@ fun ArchSearchBar(
     onCloseClicked: () -> Unit,
     modifier: Modifier = Modifier,
     onSearchClicked: (String) -> Unit,
+    searchBarIsExpandedState: Boolean,
+    onSearchBarIsExpanded: (Boolean) -> Unit
 ) {
     Surface(
         modifier = modifier.height(64.dp),
@@ -60,7 +62,7 @@ fun ArchSearchBar(
             textStyle = MaterialTheme.typography.bodyLarge,
             singleLine = true,
             leadingIcon = {
-                LeadingIconSearchBar {
+                LeadingIconSearchBar(searchBarIsExpandedState, onSearchBarIsExpanded){
                     onCloseClicked()
                 }
             },
@@ -115,7 +117,7 @@ private fun textFieldColors() = TextFieldDefaults.colors(
 )
 
 @Composable
-private fun LeadingIconSearchBar(onCloseClicked: () -> Unit) {
+private fun LeadingIconSearchBar(onSearchBarIsExpanded: Boolean, onSearchBarIsExpandedClicked: (Boolean) -> Unit, onCloseClicked: () -> Unit) {
     IconButton(
         modifier = Modifier
             .alpha(CONS_MEDIUM_ALPHA)
@@ -123,6 +125,7 @@ private fun LeadingIconSearchBar(onCloseClicked: () -> Unit) {
             .size(24.dp),
         onClick = {
             onCloseClicked()
+            onSearchBarIsExpandedClicked(onSearchBarIsExpanded)
         }
     ) {
         Icon(
@@ -140,7 +143,9 @@ private fun ArchSearchBarPreview() {
         onCloseClicked = {},
         onSearchClicked = {},
         onTextChange = {},
-        text = "Some text"
+        text = "Some text",
+        onSearchBarIsExpanded = {},
+        searchBarIsExpandedState = false
     )
 
 }

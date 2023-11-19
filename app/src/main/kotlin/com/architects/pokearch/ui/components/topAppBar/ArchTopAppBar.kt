@@ -26,6 +26,8 @@ fun ArchTopAppBar(
     scrollBehavior: TopAppBarScrollBehavior,
     modifier: Modifier = Modifier,
     onSearchClicked: () -> Unit,
+    onSearchbarIsExpanded: (Boolean) -> Unit,
+    searchBarIsExpandedState: Boolean
 ) {
         TopAppBar(
             title = {
@@ -37,7 +39,10 @@ fun ArchTopAppBar(
 
                 IconButton(modifier = Modifier
                     .padding(end = 16.dp),
-                    onClick = { onSearchClicked() }
+                    onClick = {
+                        onSearchClicked()
+                        onSearchbarIsExpanded(searchBarIsExpandedState)
+                    }
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Search,
@@ -66,6 +71,8 @@ private fun ArchTopAppBarPreview() {
         ArchTopAppBar(
             scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
             onSearchClicked = { },
+            onSearchbarIsExpanded = { },
+            searchBarIsExpandedState = false
         )
     }
 
