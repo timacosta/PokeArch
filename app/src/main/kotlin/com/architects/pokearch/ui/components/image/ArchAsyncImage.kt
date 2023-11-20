@@ -34,6 +34,11 @@ fun ArchAsyncImage(
     filterQuality: FilterQuality = DrawScope.DefaultFilterQuality,
 ) {
     when (val state = asyncImagePainter.state) {
+
+        is AsyncImagePainter.State.Loading -> {
+            ArchImagePlaceHolder()
+        }
+
         is AsyncImagePainter.State.Error -> {
             Icon(
                 painter = painterResource(id = R.drawable.broken_image_icon),
@@ -53,7 +58,7 @@ fun ArchAsyncImage(
             )
         }
         else -> {
-            Log.i("ArchAsyncImage", "Loading image")
+            Log.i("ArchAsyncImage", "ArchAsyncImage: ${state.javaClass}")
         }
     }
 }

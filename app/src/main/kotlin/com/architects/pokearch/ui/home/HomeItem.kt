@@ -72,18 +72,9 @@ fun HomeItem(
                 }
                 .padding(dimensionResource(id = R.dimen.card_internal_padding))
         ) {
-            PokemonImage(image = image, name = pokemon.name)
+            ArchAsyncImage(asyncImagePainter = image, contentDescription = pokemon.name)
             Text(text = pokemon.name.capitalize(Locale.current))
         }
-    }
-}
-
-@Composable
-private fun PokemonImage(image: AsyncImagePainter, name: String) {
-    if (image.state is AsyncImagePainter.State.Loading) {
-        ArchImagePlaceHolder()
-    } else {
-        ArchAsyncImage(asyncImagePainter = image, contentDescription = name)
     }
 }
 
