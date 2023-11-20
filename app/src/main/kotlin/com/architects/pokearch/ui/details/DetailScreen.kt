@@ -17,11 +17,9 @@ import com.architects.pokearch.ui.details.state.DetailUiState
 fun DetailScreen(
     modifier: Modifier = Modifier,
     viewModel: DetailViewModel = hiltViewModel(),
+    detailState: DetailState = rememberDetailState(viewModel.dispatcher),
 ) {
-    val detailState = rememberDetailState()
     val uiState by viewModel.pokemonDetailInfo.collectAsStateWithLifecycle()
-
-    detailState.PlayCry(url = viewModel.getCryUrl())
 
     Box(
         contentAlignment = Alignment.Center,
@@ -38,6 +36,7 @@ fun DetailScreen(
             }
 
             is DetailUiState.Success -> {
+                detailState.PlayCry(url = viewModel.getCryUrl())
                 Column {
                     Text(text = "Name ${state.pokemonInfo.name}")
                     Text(text = "Experience ${state.pokemonInfo.experience}")

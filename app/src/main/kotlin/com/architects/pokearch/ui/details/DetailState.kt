@@ -5,27 +5,41 @@ import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.util.Log
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.net.toUri
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 
 @Composable
 fun rememberDetailState(
+    dispatcher: CoroutineDispatcher,
     context: Context = LocalContext.current,
-    mediaPlayer: MediaPlayer = MediaPlayer()
-): DetailState = remember(context, mediaPlayer) {
-    DetailState(context, mediaPlayer)
+    mediaPlayer: MediaPlayer = MediaPlayer(),
+    once: MutableState<Boolean> = rememberSaveable { mutableStateOf(false) },
+): DetailState = remember(dispatcher, context, mediaPlayer, once) {
+    DetailState(dispatcher, context, mediaPlayer, once)
 }
 
 class DetailState(
+    private val dispatcher: CoroutineDispatcher,
     private val context: Context,
-    private val mediaPlayer: MediaPlayer
+    private val mediaPlayer: MediaPlayer,
+    private val once: MutableState<Boolean>
 ) {
     @Composable
     fun PlayCry(url: String){
-        SideEffect {
-            playCry(url)
+        LaunchedEffect(Unit) {
+            withContext(dispatcher){
+                if (!once.value) {
+                    playCry(url)
+                    once.value = true
+                }
+            }
         }
     }
 
@@ -39,6 +53,8 @@ class DetailState(
             }
         } catch (e: Exception){
             Log.e(this.javaClass.simpleName, e.message.toString())
+            mediaPlayer.stop()
+            mediaPlayer.release()
         }
     }
 

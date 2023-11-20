@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val repositoryContract: PokeArchRepositoryContract,
-    @IO private val dispatcher: CoroutineDispatcher,
+    @IO val dispatcher: CoroutineDispatcher,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -49,7 +49,7 @@ class DetailViewModel @Inject constructor(
     fun getCryUrl(): String {
         with(_pokemonDetailInfo.value) {
             if (this is DetailUiState.Success) {
-                return repositoryContract.fetchCry(this.pokemonInfo.name)
+                return repositoryContract.fetchCry(pokemonInfo.name)
             } else {
                 return ""
             }
