@@ -22,8 +22,8 @@ fun PokeArchNavHost(){
                 navHostController.navigate(NavCommand.Detail.createRoute(pokemonId))
             }
         }
-        composable(NavCommand.Detail){ backStackEntry ->
-            DetailScreen(NavArg.PokemonId.getArg(backStackEntry))
+        composable(NavCommand.Detail){
+            DetailScreen()
         }
     }
 

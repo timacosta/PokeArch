@@ -21,6 +21,8 @@ class PokeArchRepository(
 
     companion object {
         private const val LIMIT_ALL = 10000
+        private const val PREFIX_URL = "https://play.pokemonshowdown.com/audio/cries/"
+        private const val SUBFIX_URL = ".mp3"
     }
 
     override suspend fun fetchPokemonList(
@@ -92,4 +94,6 @@ class PokeArchRepository(
             else -> Either.Left(Failure.UnknownError)
         }
     }
+
+    override fun fetchCry(name: String) = "$PREFIX_URL$name$SUBFIX_URL"
 }

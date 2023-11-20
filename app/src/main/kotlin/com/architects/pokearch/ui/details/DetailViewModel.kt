@@ -1,13 +1,14 @@
 package com.architects.pokearch.ui.details
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.architects.pokearch.core.di.IO
 import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
 import com.architects.pokearch.ui.details.state.DetailUiState
+import com.architects.pokearch.ui.navigation.NavArg
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -17,9 +18,10 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(
     private val repositoryContract: PokeArchRepositoryContract,
     @IO private val dispatcher: CoroutineDispatcher,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val pokemonIdArgs: MutableSharedFlow<Int> = MutableSharedFlow(replay = 1)
+    private val pokemonId = savedStateHandle.get<Int>(NavArg.PokemonId.key) ?: 0
 
     private val _pokemonDetailInfo: MutableStateFlow<DetailUiState> =
         MutableStateFlow(DetailUiState.Loading)
@@ -27,9 +29,7 @@ class DetailViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(dispatcher) {
-            pokemonIdArgs.collectLatest { pokemonId ->
-                getPokemonDetails(pokemonId)
-            }
+            getPokemonDetails(pokemonId)
         }
     }
 
@@ -46,5 +46,15 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun getCurrentPokemonId(id: Int) = pokemonIdArgs.tryEmit(id)
+    fun getCryUrl(): String {
+        with(_pokemonDetailInfo.value) {
+            if (this is DetailUiState.Success) {
+                return repositoryContract.fetchCry(this.pokemonInfo.name)
+            } else {
+                return ""
+            }
+        }
+    }
+
+
 }
