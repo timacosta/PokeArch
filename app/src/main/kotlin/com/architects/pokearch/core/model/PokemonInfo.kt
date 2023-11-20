@@ -1,6 +1,7 @@
 package com.architects.pokearch.core.model
 
 import com.google.gson.annotations.SerializedName
+import java.util.Locale
 import kotlin.random.Random
 
 data class PokemonInfo(
@@ -28,6 +29,17 @@ data class PokemonInfo(
         const val maxDefense = 300
         const val maxSpeed = 300
         const val maxExp = 1000
+    }
+
+    fun capitalizedName(): String = name.replaceFirstChar {
+        if (it.isLowerCase()) it.titlecase(
+            Locale.ROOT
+        ) else it.toString()
+    }
+
+    fun getImageUrl(): String {
+        return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/" +
+                "pokemon/other/official-artwork/$id.png"
     }
 }
 

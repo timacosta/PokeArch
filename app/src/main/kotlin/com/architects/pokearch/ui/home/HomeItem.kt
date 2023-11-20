@@ -72,7 +72,7 @@ fun HomeItem(
     }
 }
 
-private fun String.buildImageRequest(context: Context) =
+fun String.buildImageRequest(context: Context) =
     if (this.contains("http")) {
         ImageRequest.Builder(context)
             .data(this)
