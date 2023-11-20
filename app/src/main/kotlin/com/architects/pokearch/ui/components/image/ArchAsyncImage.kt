@@ -1,5 +1,6 @@
 package com.architects.pokearch.ui.components.image
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
@@ -33,13 +34,12 @@ fun ArchAsyncImage(
     filterQuality: FilterQuality = DrawScope.DefaultFilterQuality,
 ) {
     when (val state = asyncImagePainter.state) {
-        AsyncImagePainter.State.Empty -> {}
-        is AsyncImagePainter.State.Error ->
+        is AsyncImagePainter.State.Error -> {
             Icon(
                 painter = painterResource(id = R.drawable.broken_image_icon),
                 contentDescription = stringResource(id = R.string.error_async_image_painter)
             )
-        is AsyncImagePainter.State.Loading -> {}
+        }
         is AsyncImagePainter.State.Success -> {
             Image(
                 bitmap = state.result.drawable.toBitmap().asImageBitmap(),
@@ -51,6 +51,9 @@ fun ArchAsyncImage(
                 colorFilter = colorFilter,
                 filterQuality = filterQuality
             )
+        }
+        else -> {
+            Log.i("ArchAsyncImage", "Loading image")
         }
     }
 }
