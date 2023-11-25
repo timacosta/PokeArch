@@ -46,12 +46,12 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun getCryUrl(): String {
-        with(_pokemonDetailInfo.value) {
-            if (this is DetailUiState.Success) {
-                return repositoryContract.fetchCry(pokemonInfo.name)
-            } else {
-                return ""
+    fun getCryUrl(cry: suspend (String) -> Unit) {
+        viewModelScope.launch(dispatcher) {
+            with(_pokemonDetailInfo.value) {
+                if (this is DetailUiState.Success) {
+                    cry(repositoryContract.fetchCry(pokemonInfo.name))
+                }
             }
         }
     }

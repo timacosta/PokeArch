@@ -36,7 +36,7 @@ fun DetailScreen(
             }
 
             is DetailUiState.Success -> {
-                detailState.PlayCry(url = viewModel.getCryUrl())
+                viewModel.getCryUrl { detailState.playCry(url = it) }
                 Column {
                     Text(text = "Name ${state.pokemonInfo.name}")
                     Text(text = "Experience ${state.pokemonInfo.experience}")

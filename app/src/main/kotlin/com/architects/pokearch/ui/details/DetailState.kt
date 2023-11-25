@@ -5,7 +5,6 @@ import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.util.Log
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,19 +30,17 @@ class DetailState(
     private val mediaPlayer: MediaPlayer,
     private val once: MutableState<Boolean>
 ) {
-    @Composable
-    fun PlayCry(url: String){
-        LaunchedEffect(Unit) {
-            withContext(dispatcher){
-                if (!once.value) {
-                    playCry(url)
-                    once.value = true
-                }
+
+    suspend fun playCry(url: String){
+        withContext(dispatcher){
+            if (!once.value) {
+                mediaPlayCry(url)
+                once.value = true
             }
         }
     }
 
-    private fun playCry(url: String){
+    private fun mediaPlayCry(url: String){
         try {
             mediaPlayer.apply {
                 setAudioAttributes(getAudioAtrributes())

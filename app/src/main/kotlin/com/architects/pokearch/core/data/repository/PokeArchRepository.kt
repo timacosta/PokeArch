@@ -1,10 +1,12 @@
 package com.architects.pokearch.core.data.repository
 
+import android.util.Log
 import arrow.core.Either
 import com.architects.pokearch.core.data.database.dao.PokemonDao
 import com.architects.pokearch.core.data.database.dao.PokemonInfoDao
 import com.architects.pokearch.core.data.mappers.PokemonEntityMapper
 import com.architects.pokearch.core.data.mappers.PokemonInfoEntityMapper
+import com.architects.pokearch.core.data.network.service.CryService
 import com.architects.pokearch.core.data.network.service.PokedexService
 import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
 import com.architects.pokearch.core.model.Failure
@@ -15,9 +17,10 @@ import kotlinx.coroutines.flow.flow
 
 class PokeArchRepository(
     private val pokedexService: PokedexService,
+    private val cryService: CryService,
     private val pokemonDao: PokemonDao,
     private val pokemonInfoDao: PokemonInfoDao,
-    ) : PokeArchRepositoryContract {
+) : PokeArchRepositoryContract {
 
     companion object {
         private const val LIMIT_ALL = 10000
@@ -31,7 +34,17 @@ class PokeArchRepository(
         limit: Int,
     ): Flow<Either<Failure, List<Pokemon>>> = flow {
         val offset = page * limit
-        emit(Either.Right(PokemonEntityMapper.asDomain(pokemonDao.getPokemonList(filter, limit, offset))))
+        emit(
+            Either.Right(
+                PokemonEntityMapper.asDomain(
+                    pokemonDao.getPokemonList(
+                        filter,
+                        limit,
+                        offset
+                    )
+                )
+            )
+        )
 
         if (thereArePokemonsRemote()) {
             emit(getRemotePokemonList(filter, limit, offset))
@@ -59,7 +72,15 @@ class PokeArchRepository(
                 response.isSuccessful -> {
                     response.body()?.let { pokemonResponse ->
                         pokemonDao.insertPokemonList(PokemonEntityMapper.asEntity(pokemonResponse.results))
-                        Either.Right(PokemonEntityMapper.asDomain(pokemonDao.getPokemonList(filter, limit, offset)))
+                        Either.Right(
+                            PokemonEntityMapper.asDomain(
+                                pokemonDao.getPokemonList(
+                                    filter,
+                                    limit,
+                                    offset
+                                )
+                            )
+                        )
                     } ?: Either.Left(Failure.UnknownError)
                 }
 
@@ -95,5 +116,23 @@ class PokeArchRepository(
         }
     }
 
-    override fun fetchCry(name: String) = "$PREFIX_URL$name$SUBFIX_URL"
+
+    override suspend fun fetchCry(name: String): String {
+        var result = ""
+        tryCatchCry(name) { result = it }
+        if (name.contains("-") && result.isEmpty()){
+            tryCatchCry(name.replace("-", "")) { result = it }
+            tryCatchCry(name.split("-")[0]) { result = it }
+        }
+        return "$PREFIX_URL$result$SUBFIX_URL"
+    }
+
+    private suspend fun tryCatchCry(name: String, isSuccessful: (String) -> Unit) {
+        try {
+            val fetchCry = cryService.thereIsCry(name)
+            if(fetchCry.isSuccessful) isSuccessful(name)
+        } catch (e: Exception) {
+            Log.e("CryException", e.stackTraceToString())
+        }
+    }
 }
