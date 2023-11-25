@@ -14,6 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.architects.pokearch.R
 import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
+import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
 import com.architects.pokearch.ui.home.state.HomeUiState
 
 @Composable
@@ -47,8 +48,6 @@ fun HomeScreen(
             is HomeUiState.Error -> {
                 Text(text = "Something went wrong")
             }
-
-            else -> {}
         }
     }
 }

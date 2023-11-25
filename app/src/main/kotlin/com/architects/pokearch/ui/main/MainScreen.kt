@@ -19,6 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import com.architects.pokearch.ui.components.bottombar.ArchBottomNavigationBar
 import com.architects.pokearch.ui.components.topAppBar.ArchMainAppTopBar
 import com.architects.pokearch.ui.main.state.SearchWidgetState
+import com.architects.pokearch.ui.components.bottombar.ArchBottomNavigationBar
 import com.architects.pokearch.ui.navigation.MainNavHost
 
 @OptIn(ExperimentalMaterial3Api::class)
