@@ -31,7 +31,10 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.architects.pokearch.R
 import com.architects.pokearch.core.model.Pokemon
-import com.architects.pokearch.ui.components.image.PokeArchAsyncImage
+import com.architects.pokearch.ui.components.animations.shimmerEffect
+import com.architects.pokearch.ui.components.extensions.modifyIf
+import com.architects.pokearch.ui.components.image.ArchAsyncImage
+import com.architects.pokearch.ui.components.image.ArchImagePlaceHolder
 
 @Composable
 fun HomeItem(
@@ -64,9 +67,12 @@ fun HomeItem(
             modifier = Modifier
                 .background(Brush.linearGradient(colors))
                 .fillMaxSize()
+                .modifyIf(image.state is AsyncImagePainter.State.Loading) {
+                    it.shimmerEffect()
+                }
                 .padding(dimensionResource(id = R.dimen.card_internal_padding))
         ) {
-            PokeArchAsyncImage(asyncImagePainter = image, contentDescription = pokemon.name)
+            ArchAsyncImage(asyncImagePainter = image, contentDescription = pokemon.name)
             Text(text = pokemon.name.capitalize(Locale.current))
         }
     }
@@ -103,3 +109,4 @@ private fun Palette.extractColors() =
     ).let { colors ->
         if (colors.size == 1) colors + colors else colors
     }
+

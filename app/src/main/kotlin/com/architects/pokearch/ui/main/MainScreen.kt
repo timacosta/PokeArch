@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.architects.pokearch.ui.components.bottombar.PokeArchBottomNavigationBar
+import com.architects.pokearch.ui.components.bottombar.ArchBottomNavigationBar
 import com.architects.pokearch.ui.navigation.MainNavHost
 
 @Composable
@@ -20,7 +20,7 @@ fun MainScreen(
 
     Scaffold(
         bottomBar = {
-            PokeArchBottomNavigationBar(navController = navHostController)
+            ArchBottomNavigationBar(navController = navHostController)
         },
         content = { padding ->
             MainContent(

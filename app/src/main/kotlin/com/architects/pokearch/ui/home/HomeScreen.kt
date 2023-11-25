@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.architects.pokearch.ui.components.progressIndicators.PokeArchLoadingIndicator
+import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
 import com.architects.pokearch.ui.home.state.HomeUiState
 
 @Composable
@@ -33,7 +33,7 @@ fun HomeScreen(
 
         when (val state = uiState) {
             is HomeUiState.Loading -> {
-                PokeArchLoadingIndicator()
+                ArchLoadingIndicator()
             }
 
             is HomeUiState.Success -> {

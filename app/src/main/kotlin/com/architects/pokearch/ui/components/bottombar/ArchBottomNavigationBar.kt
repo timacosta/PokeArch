@@ -18,7 +18,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.architects.pokearch.ui.navigation.NavItem
 
 @Composable
-fun PokeArchBottomNavigationBar(
+fun ArchBottomNavigationBar(
     navController: NavController,
     modifier: Modifier = Modifier,
     contentColor: Color = MaterialTheme.colorScheme.onPrimary,
