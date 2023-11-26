@@ -5,7 +5,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.architects.pokearch.ui.main.state.SearchWidgetState
+import com.architects.pokearch.ui.main.MainUiState.SearchWidgetState
 
 
 @OptIn(ExperimentalMaterial3Api::class)

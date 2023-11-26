@@ -1,36 +1,52 @@
 package com.architects.pokearch.ui.main
 
 import androidx.lifecycle.ViewModel
-import com.architects.pokearch.ui.main.state.SearchWidgetState
+import com.architects.pokearch.ui.main.MainUiState.SearchWidgetState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import javax.inject.Inject
 
-class MainViewModel : ViewModel() {
+data class MainUiState(
+    val searchTextState: String = "",
+    val isSearchBarExpanded: Boolean = true,
+    val searchWidgetState: SearchWidgetState = SearchWidgetState.CLOSED
+) {
+    enum class SearchWidgetState {
+        OPENED,
+        CLOSED
+    }
+}
 
-    private val _searchWidgetState: MutableStateFlow<SearchWidgetState>
-    = MutableStateFlow(value = SearchWidgetState.CLOSED)
+@HiltViewModel
+class MainViewModel @Inject constructor() : ViewModel() {
 
-    val searchWidgetState: StateFlow<SearchWidgetState> = _searchWidgetState
-
-    private val _searchTextState: MutableStateFlow<String> =
-        MutableStateFlow(value = "")
-
-    val searchTextState: StateFlow<String> = _searchTextState
-
-    private val _searchBarIsExpandedState = MutableStateFlow(value = true)
-    val searchBarIsExpandedState: StateFlow<Boolean> = _searchBarIsExpandedState
+    private val _uiState = MutableStateFlow(MainUiState())
+    val uiState: StateFlow<MainUiState> = _uiState
 
     fun updateSearchWidgetState(newValue: SearchWidgetState) {
-        _searchWidgetState.value = newValue
+        _uiState.update {
+            it.copy(
+                searchWidgetState = newValue
+            )
+        }
     }
+
     fun updateSearchTextState(newValue: String) {
-        _searchTextState.value = newValue
+        _uiState.update {
+            it.copy(
+                searchTextState = newValue
+            )
+        }
     }
 
     fun updateSearchBarIsExpandedState(newValue: Boolean) {
-        _searchBarIsExpandedState.update {
-            !newValue
+        _uiState.update {
+            it.copy(
+                isSearchBarExpanded = newValue
+            )
         }
     }
 }
+

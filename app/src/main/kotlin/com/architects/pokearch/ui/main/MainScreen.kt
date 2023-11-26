@@ -13,39 +13,37 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.architects.pokearch.ui.components.bottombar.ArchBottomNavigationBar
 import com.architects.pokearch.ui.components.topAppBar.ArchMainAppTopBar
-import com.architects.pokearch.ui.main.state.SearchWidgetState
-import com.architects.pokearch.ui.components.bottombar.ArchBottomNavigationBar
+import com.architects.pokearch.ui.main.MainUiState.SearchWidgetState
 import com.architects.pokearch.ui.navigation.MainNavHost
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-    mainViewModel: MainViewModel,
+    mainViewModel: MainViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
     onItemClick: (pokemonId: Int) -> Unit,
 ) {
     val navHostController = rememberNavController()
 
-    val searchWidgetState by mainViewModel.searchWidgetState.collectAsStateWithLifecycle()
-
-    val searchTextState by mainViewModel.searchTextState.collectAsStateWithLifecycle()
-
-    val searchBarIsExpandedState by mainViewModel.searchBarIsExpandedState.collectAsStateWithLifecycle()
+    val state by mainViewModel.uiState.collectAsStateWithLifecycle()
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     Scaffold(
-        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection).height(56.dp),
+        modifier = modifier
+            .nestedScroll(scrollBehavior.nestedScrollConnection)
+            .height(56.dp),
         topBar = {
             ArchMainAppTopBar(
-                searchWidgetState = searchWidgetState,
-                searchTextState = searchTextState,
-                searchBarIsExpandedState = searchBarIsExpandedState,
+                searchWidgetState = state.searchWidgetState,
+                searchTextState = state.searchTextState,
+                searchBarIsExpandedState = state.isSearchBarExpanded,
                 scrollBehavior = scrollBehavior,
                 onTextChange = {
                     mainViewModel.updateSearchTextState(
