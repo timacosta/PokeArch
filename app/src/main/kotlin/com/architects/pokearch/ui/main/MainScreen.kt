@@ -1,8 +1,8 @@
 package com.architects.pokearch.ui.main
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -18,8 +18,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.architects.pokearch.ui.components.bottombar.ArchBottomNavigationBar
-import com.architects.pokearch.ui.components.topAppBar.ArchMainAppTopBar
-import com.architects.pokearch.ui.main.MainUiState.SearchWidgetState
+import com.architects.pokearch.ui.components.topAppBar.ArchTopAppBar
 import com.architects.pokearch.ui.navigation.MainNavHost
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -27,7 +26,7 @@ import com.architects.pokearch.ui.navigation.MainNavHost
 fun MainScreen(
     mainViewModel: MainViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
-    onItemClick: (pokemonId: Int) -> Unit,
+    onItemClick: (pokemonId: Int) -> Unit
 ) {
     val navHostController = rememberNavController()
 
@@ -35,47 +34,17 @@ fun MainScreen(
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
+
     Scaffold(
         modifier = modifier
             .nestedScroll(scrollBehavior.nestedScrollConnection)
+            .fillMaxWidth()
             .height(56.dp),
         topBar = {
-            ArchMainAppTopBar(
-                searchWidgetState = state.searchWidgetState,
-                searchTextState = state.searchTextState,
-                searchBarIsExpandedState = state.isSearchBarExpanded,
-                scrollBehavior = scrollBehavior,
-                onTextChange = {
-                    mainViewModel.updateSearchTextState(
-                        newValue = it
-                    )
-                },
-                onCloseClicked = {
-                    mainViewModel.updateSearchWidgetState(
-                        newValue = SearchWidgetState.CLOSED
-                    )
-                },
-                onSearchClicked = {
-                    Log.d(
-                        "MainScreen",
-                        "onSearchClicked: $it"
-                    )
-                }, //TODO: Implement Logic to search Pokemon
-                onSearchTriggeredClicked = {
-                    mainViewModel.updateSearchWidgetState(
-                        newValue = SearchWidgetState.OPENED
-                    )
-                },
-                onSearchBarIsExpandedClicked = {
-                    mainViewModel.updateSearchBarIsExpandedState(
-                        newValue = it
-                    )
-                    Log.d(
-                        "EXPANDED",
-                        "onSearchClicked: $it"
-                    )
-
-                }
+            ArchTopAppBar(
+                text = state.searchText,
+                onTextChange = mainViewModel::updateSearchTextState,
+                scrollBehavior = scrollBehavior
             )
         },
         bottomBar = {
@@ -103,7 +72,7 @@ private fun MainContent(
     Box(modifier.padding(padding)) {
         MainNavHost(
             navHostController = navHostController,
-            onNavigationDetailClick = onItemClick
+            onNavigationDetailClick = onItemClick,
         )
     }
 }

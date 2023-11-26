@@ -13,7 +13,6 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -30,21 +29,13 @@ import com.architects.pokearch.R
 private const val CONS_MEDIUM_ALPHA = 0.5f
 
 @Composable
-fun ArchSearchBar(
+fun ArchSearchTextField(
     text: String,
     onTextChange: (String) -> Unit,
     onCloseClicked: () -> Unit,
-    modifier: Modifier = Modifier,
-    searchBarIsExpandedState: Boolean,
-    onSearchBarIsExpanded: (Boolean) -> Unit
 ) {
-    Surface(
-        modifier = modifier.height(64.dp),
-        shadowElevation = 3.dp,
-        color = MaterialTheme.colorScheme.primary, //TODO: Change color with animation
-    ) {
         TextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().height(64.dp),
             value = text,
             onValueChange = {
                 onTextChange(it)
@@ -60,12 +51,12 @@ fun ArchSearchBar(
             textStyle = MaterialTheme.typography.bodyLarge,
             singleLine = true,
             leadingIcon = {
-                LeadingIconSearchBar(searchBarIsExpandedState, onSearchBarIsExpanded){
+                LeadingIconSearchBar{
                     onCloseClicked()
                 }
             },
             trailingIcon = {
-                TrailingIconSearchBar(text, onTextChange)
+                TrailingIconSearchBar(text = text, onTextChange = onTextChange)
             },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done
@@ -74,14 +65,12 @@ fun ArchSearchBar(
         )
     }
 
-}
-
 @Composable
 private fun TrailingIconSearchBar(text: String, onTextChange: (String) -> Unit) {
     if (text.isNotEmpty()) {
         Icon(
             modifier = Modifier
-                .padding(start = 16.dp, end = 16.dp)
+                .padding(start = 16.dp, end = 10.dp)
                 .alpha(CONS_MEDIUM_ALPHA)
                 .clickable {
                     if (text.isNotEmpty()) {
@@ -112,7 +101,7 @@ private fun textFieldColors() = TextFieldDefaults.colors(
 )
 
 @Composable
-private fun LeadingIconSearchBar(onSearchBarIsExpanded: Boolean, onSearchBarIsExpandedClicked: (Boolean) -> Unit, onCloseClicked: () -> Unit) {
+private fun LeadingIconSearchBar(onCloseClicked: () -> Unit) {
     IconButton(
         modifier = Modifier
             .alpha(CONS_MEDIUM_ALPHA)
@@ -120,7 +109,6 @@ private fun LeadingIconSearchBar(onSearchBarIsExpanded: Boolean, onSearchBarIsEx
             .size(24.dp),
         onClick = {
             onCloseClicked()
-            onSearchBarIsExpandedClicked(onSearchBarIsExpanded)
         }
     ) {
         Icon(
@@ -131,17 +119,14 @@ private fun LeadingIconSearchBar(onSearchBarIsExpanded: Boolean, onSearchBarIsEx
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 360)
 @Composable
 private fun ArchSearchBarPreview() {
-    ArchSearchBar(
+    ArchSearchTextField(
         onCloseClicked = {},
         onTextChange = {},
         text = "Some text",
-        onSearchBarIsExpanded = {},
-        searchBarIsExpandedState = false
     )
-
 }
 
 

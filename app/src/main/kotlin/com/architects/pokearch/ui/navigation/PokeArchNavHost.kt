@@ -8,7 +8,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.architects.pokearch.ui.details.DetailScreen
 import com.architects.pokearch.ui.main.MainScreen
-import com.architects.pokearch.ui.main.MainViewModel
 
 @Composable
 fun PokeArchNavHost(){
@@ -19,7 +18,8 @@ fun PokeArchNavHost(){
         startDestination = NavCommand.Main.route
     ){
         composable(NavCommand.Main){
-            MainScreen(mainViewModel = MainViewModel()) { pokemonId ->
+            MainScreen(
+            ) { pokemonId ->
                 navHostController.navigate(NavCommand.Detail.createRoute(pokemonId))
             }
         }
