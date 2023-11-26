@@ -101,6 +101,8 @@ private fun textFieldColors() = TextFieldDefaults.colors(
     unfocusedTextColor = MaterialTheme.colorScheme.inversePrimary.copy(alpha = 0.8f),
     focusedContainerColor = MaterialTheme.colorScheme.primary,
     unfocusedContainerColor = MaterialTheme.colorScheme.primary,
+    focusedIndicatorColor = Color.Transparent,
+    unfocusedIndicatorColor = Color.Transparent,
     disabledContainerColor = MaterialTheme.colorScheme.primary,
     cursorColor = MaterialTheme.colorScheme.inversePrimary,
     selectionColors = TextSelectionColors(
