@@ -92,4 +92,8 @@ class PokeArchRepository(
             else -> Either.Left(Failure.UnknownError)
         }
     }
+
+    override suspend fun randomPokemon(): Flow<Either<Failure, PokemonInfo>> {
+        return fetchPokemonInfo(pokemonDao.randomId())
+    }
 }

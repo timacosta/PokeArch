@@ -8,21 +8,30 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.capitalize
+import androidx.compose.ui.text.intl.Locale
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
 
 @Composable
 fun FeatureScreen(
     modifier: Modifier = Modifier,
     viewModel: FeatureViewModel = hiltViewModel(),
 ) {
-    val openPokeball by viewModel.openPokeball.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
 
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier.fillMaxSize()
     ) {
-
-        Text(text = "Pokeball open $openPokeball")
+        when {
+            !uiState.openedPokeball -> { Text(text = "Shake phone") }
+            uiState.isLoading -> { ArchLoadingIndicator() }
+            uiState.pokemonInfo != null -> {
+                Text("${uiState.pokemonInfo?.name?.capitalize(Locale.current)}")
+            }
+            else -> { Text(text = "Error") }
+        }
     }
 
 }

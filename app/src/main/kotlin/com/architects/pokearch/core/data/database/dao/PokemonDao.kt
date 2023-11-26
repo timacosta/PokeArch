@@ -20,4 +20,7 @@ interface PokemonDao {
 
     @Query("SELECT COUNT(*) FROM PokemonEntity")
     suspend fun countPokemonList(): Int
+
+    @Query("SELECT id FROM PokemonEntity ORDER BY RANDOM() LIMIT 1")
+    suspend fun randomId(): Int
 }
