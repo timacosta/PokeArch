@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.icons.Icons
@@ -36,7 +35,6 @@ fun ArchSearchBar(
     onTextChange: (String) -> Unit,
     onCloseClicked: () -> Unit,
     modifier: Modifier = Modifier,
-    onSearchClicked: (String) -> Unit,
     searchBarIsExpandedState: Boolean,
     onSearchBarIsExpanded: (Boolean) -> Unit
 ) {
@@ -70,12 +68,7 @@ fun ArchSearchBar(
                 TrailingIconSearchBar(text, onTextChange)
             },
             keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Search
-            ),
-            keyboardActions = KeyboardActions(
-                onSearch = {
-                    onSearchClicked(text)
-                }
+                imeAction = ImeAction.Done
             ),
             colors = textFieldColors(),
         )
@@ -141,7 +134,6 @@ private fun LeadingIconSearchBar(onSearchBarIsExpanded: Boolean, onSearchBarIsEx
 private fun ArchSearchBarPreview() {
     ArchSearchBar(
         onCloseClicked = {},
-        onSearchClicked = {},
         onTextChange = {},
         text = "Some text",
         onSearchBarIsExpanded = {},

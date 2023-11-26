@@ -37,7 +37,6 @@ fun ArchMainAppTopBar(
                     text = searchTextState,
                     onTextChange = onTextChange,
                     onCloseClicked = onCloseClicked,
-                    onSearchClicked = onSearchClicked,
                     searchBarIsExpandedState = searchBarIsExpandedState,
                     onSearchBarIsExpanded = onSearchBarIsExpandedClicked
                 )
