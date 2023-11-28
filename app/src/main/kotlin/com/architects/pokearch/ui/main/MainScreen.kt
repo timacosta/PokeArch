@@ -42,12 +42,16 @@ fun MainScreen(
         topBar = {
             ArchTopAppBar(
                 text = state.searchText,
-                onTextChange = mainViewModel::updateSearchTextState,
-                scrollBehavior = scrollBehavior
+                scrollBehavior = scrollBehavior,
+                isTopBarVisible = state.isTopBarVisible,
+                onTextChange = mainViewModel::updateSearchTextState
             )
         },
         bottomBar = {
-            ArchBottomNavigationBar(navController = navHostController)
+            ArchBottomNavigationBar(
+                isBottomBarVisible = state.isBottomBarVisible,
+                navController = navHostController
+            )
         },
         content = { padding ->
 

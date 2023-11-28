@@ -11,6 +11,9 @@ import javax.inject.Inject
 @Stable
 data class MainUiState(
     val searchText: String = "",
+    val isSearchIconVisible: Boolean = true,
+    val isTopBarVisible: Boolean = true,
+    val isBottomBarVisible: Boolean = true
 )
 
 @HiltViewModel

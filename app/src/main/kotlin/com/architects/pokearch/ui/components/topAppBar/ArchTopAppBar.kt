@@ -32,58 +32,61 @@ import com.architects.pokearch.R
 @Composable
 fun ArchTopAppBar(
     text: String,
-    onTextChange: (String) -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
     modifier: Modifier = Modifier,
+    isTopBarVisible: Boolean,
+    onTextChange: (String) -> Unit,
 ) {
     var isExpanded by remember { mutableStateOf(false) }
 
-    TopAppBar(
-        title = {
-            if (!isExpanded) {
-                Row(
-                    modifier = modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = stringResource(R.string.app_name),
-                        modifier = Modifier.align(Alignment.CenterVertically),
-                    )
-                    IconButton(modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .padding(end = 16.dp),
-                        onClick = {
-                            isExpanded = !isExpanded
-                        }
+    if (isTopBarVisible) {
+
+        TopAppBar(
+            title = {
+                if (!isExpanded) {
+                    Row(
+                        modifier = modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Icon(
-                            imageVector = Icons.Filled.Search,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onPrimary
+                        Text(
+                            text = stringResource(R.string.app_name),
+                            modifier = Modifier.align(Alignment.CenterVertically),
                         )
+                        IconButton(modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(end = 16.dp),
+                            onClick = {
+                                isExpanded = !isExpanded
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.Search,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onPrimary
+                            )
+                        }
                     }
                 }
-            }
 
-        },
-        actions = {
-            if (isExpanded) {
-                ArchSearchTextField(text = text, onTextChange = onTextChange) {
-                    isExpanded = !isExpanded
+            },
+            actions = {
+                if (isExpanded) {
+                    ArchSearchTextField(text = text, onTextChange = onTextChange) {
+                        isExpanded = !isExpanded
+                    }
                 }
-            }
 
-        },
-        modifier = modifier,
-        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onPrimary,
-        ),
-        scrollBehavior = scrollBehavior
-    )
+            },
+            modifier = modifier,
+            colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary,
+            ),
+            scrollBehavior = scrollBehavior
+        )
+    }
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview()
@@ -91,12 +94,11 @@ fun ArchTopAppBar(
 private fun ArchTopAppBarPreview() {
 
     Box(modifier = Modifier.height(56.dp)) {
-
         ArchTopAppBar(
             text = "",
             onTextChange = {},
+            isTopBarVisible = true,
             scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
         )
     }
-
 }
