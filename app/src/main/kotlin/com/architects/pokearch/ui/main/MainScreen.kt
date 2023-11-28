@@ -34,7 +34,6 @@ fun MainScreen(
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
-
     Scaffold(
         modifier = modifier
             .nestedScroll(scrollBehavior.nestedScrollConnection)
@@ -54,6 +53,7 @@ fun MainScreen(
 
             MainContent(
                 modifier = Modifier,
+                pokemonName = state.searchText,
                 padding = padding,
                 navHostController = navHostController,
                 onItemClick = onItemClick
@@ -64,6 +64,7 @@ fun MainScreen(
 
 @Composable
 private fun MainContent(
+    pokemonName: String,
     padding: PaddingValues,
     navHostController: NavHostController,
     onItemClick: (pokemonId: Int) -> Unit,
@@ -71,6 +72,7 @@ private fun MainContent(
 ) {
     Box(modifier.padding(padding)) {
         MainNavHost(
+            pokemonName = pokemonName,
             navHostController = navHostController,
             onNavigationDetailClick = onItemClick,
         )

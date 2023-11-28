@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -14,17 +15,21 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.architects.pokearch.R
 import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
-import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
 import com.architects.pokearch.ui.home.state.HomeUiState
 
 @Composable
 fun HomeScreen(
     onNavigationClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
+    pokemonName: String,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(key1 = pokemonName) {
+        viewModel.getPokemonList(pokemonName)
+    }
 
     Box(
         modifier = modifier

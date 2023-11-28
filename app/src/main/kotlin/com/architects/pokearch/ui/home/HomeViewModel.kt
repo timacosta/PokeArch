@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,24 +22,18 @@ class HomeViewModel @Inject constructor(
     private val _uiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState.Loading)
     val uiState: StateFlow<HomeUiState> = _uiState
 
-    init {
-        viewModelScope.launch {
-            withContext(dispatcher) {
-                getPokemonList()
+    suspend fun getPokemonList(pokemonName: String) = viewModelScope.launch(dispatcher) {
+            repositoryContract.fetchPokemonList(
+                filter = pokemonName,
+            ).collectLatest { result ->
+                result.fold(
+                    ifLeft = {
+                        _uiState.value = HomeUiState.Error
+                    },
+                    ifRight = { pokemonList ->
+                        _uiState.value = HomeUiState.Success(pokemonList)
+                    }
+                )
             }
-        }
-    }
-
-    private suspend fun getPokemonList() {
-        repositoryContract.fetchPokemonList().collectLatest { result ->
-            result.fold(
-                ifLeft = {
-                    _uiState.value = HomeUiState.Error
-                },
-                ifRight = { pokemonList ->
-                    _uiState.value = HomeUiState.Success(pokemonList)
-                }
-            )
-        }
     }
 }
