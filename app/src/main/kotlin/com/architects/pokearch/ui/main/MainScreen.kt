@@ -24,8 +24,8 @@ import com.architects.pokearch.ui.navigation.MainNavHost
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-    mainViewModel: MainViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
+    mainViewModel: MainViewModel = hiltViewModel(),
     onItemClick: (pokemonId: Int) -> Unit
 ) {
     val navHostController = rememberNavController()
@@ -44,6 +44,7 @@ fun MainScreen(
                 text = state.searchText,
                 scrollBehavior = scrollBehavior,
                 isTopBarVisible = state.isTopBarVisible,
+                onBackButtonClicked = mainViewModel::restoreSearchTextState,
                 onTextChange = mainViewModel::updateSearchTextState
             )
         },
@@ -56,7 +57,6 @@ fun MainScreen(
         content = { padding ->
 
             MainContent(
-                modifier = Modifier,
                 pokemonName = state.searchText,
                 padding = padding,
                 navHostController = navHostController,
@@ -71,8 +71,8 @@ private fun MainContent(
     pokemonName: String,
     padding: PaddingValues,
     navHostController: NavHostController,
-    onItemClick: (pokemonId: Int) -> Unit,
     modifier: Modifier = Modifier,
+    onItemClick: (pokemonId: Int) -> Unit,
 ) {
     Box(modifier.padding(padding)) {
         MainNavHost(

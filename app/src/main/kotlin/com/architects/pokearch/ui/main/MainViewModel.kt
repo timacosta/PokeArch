@@ -29,5 +29,12 @@ class MainViewModel @Inject constructor() : ViewModel() {
             )
         }
     }
+    fun restoreSearchTextState() {
+        _uiState.update {
+            it.copy(
+                searchText = ""
+            )
+        }
+    }
 }
 

@@ -1,10 +1,8 @@
 package com.architects.pokearch.ui.components.topAppBar
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -24,7 +22,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.architects.pokearch.R
 
@@ -33,8 +30,9 @@ import com.architects.pokearch.R
 fun ArchTopAppBar(
     text: String,
     scrollBehavior: TopAppBarScrollBehavior,
-    modifier: Modifier = Modifier,
     isTopBarVisible: Boolean,
+    onBackButtonClicked: () -> Unit,
+    modifier: Modifier = Modifier,
     onTextChange: (String) -> Unit,
 ) {
     var isExpanded by remember { mutableStateOf(false) }
@@ -45,7 +43,7 @@ fun ArchTopAppBar(
             title = {
                 if (!isExpanded) {
                     Row(
-                        modifier = modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
@@ -74,6 +72,7 @@ fun ArchTopAppBar(
                 if (isExpanded) {
                     ArchSearchTextField(text = text, onTextChange = onTextChange) {
                         isExpanded = !isExpanded
+                        onBackButtonClicked()
                     }
                 }
 
@@ -84,21 +83,6 @@ fun ArchTopAppBar(
                 titleContentColor = MaterialTheme.colorScheme.onPrimary,
             ),
             scrollBehavior = scrollBehavior
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Preview()
-@Composable
-private fun ArchTopAppBarPreview() {
-
-    Box(modifier = Modifier.height(56.dp)) {
-        ArchTopAppBar(
-            text = "",
-            onTextChange = {},
-            isTopBarVisible = true,
-            scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
         )
     }
 }
