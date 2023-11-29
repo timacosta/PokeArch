@@ -22,7 +22,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.architects.pokearch.R
 
@@ -32,10 +31,11 @@ private const val CONS_MEDIUM_ALPHA = 0.5f
 fun ArchSearchTextField(
     text: String,
     onTextChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
     onCloseClicked: () -> Unit,
 ) {
         TextField(
-            modifier = Modifier.fillMaxWidth().height(64.dp),
+            modifier = modifier.fillMaxWidth().height(64.dp),
             value = text,
             onValueChange = {
                 onTextChange(it)
@@ -117,16 +117,6 @@ private fun LeadingIconSearchBar(onCloseClicked: () -> Unit) {
             tint = MaterialTheme.colorScheme.inversePrimary
         )
     }
-}
-
-@Preview(showBackground = true, widthDp = 360)
-@Composable
-private fun ArchSearchBarPreview() {
-    ArchSearchTextField(
-        onCloseClicked = {},
-        onTextChange = {},
-        text = "Some text",
-    )
 }
 
 

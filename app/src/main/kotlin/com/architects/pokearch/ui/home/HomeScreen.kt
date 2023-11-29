@@ -19,9 +19,9 @@ import com.architects.pokearch.ui.home.state.HomeUiState
 
 @Composable
 fun HomeScreen(
+    pokemonName: String,
     onNavigationClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
-    pokemonName: String,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
 
