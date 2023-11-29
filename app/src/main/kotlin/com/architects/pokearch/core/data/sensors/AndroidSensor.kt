@@ -5,13 +5,12 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import com.architects.pokearch.core.domain.MeasurableSensor
 
 abstract class AndroidSensor(
     private val context: Context,
     private val sensorFeature: String,
     sensorType: Int
-): MeasurableSensor(sensorType), SensorEventListener {
+): SensorSource(sensorType), SensorEventListener {
 
     override val doesSensorExist: Boolean
         get() = context.packageManager.hasSystemFeature(sensorFeature)

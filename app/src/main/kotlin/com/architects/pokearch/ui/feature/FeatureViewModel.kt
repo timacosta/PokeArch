@@ -2,8 +2,8 @@ package com.architects.pokearch.ui.feature
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.architects.pokearch.core.domain.MeasurableSensor
 import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
+import com.architects.pokearch.core.domain.repository.SensorRepositoryContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,35 +15,36 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FeatureViewModel @Inject constructor(
-    accelerometerSensor: MeasurableSensor,
+    sensorRepository: SensorRepositoryContract,
     pokeArchRepository: PokeArchRepositoryContract,
 ) : ViewModel() {
 
+    private val _uiState: MutableStateFlow<FeatureUiState> = MutableStateFlow(FeatureUiState())
+    val uiState = _uiState.asStateFlow()
+
     companion object {
-        private const val accelerationThreshold = 15
+        private const val accelerationThreshold = 8
     }
 
     private var accelerationMin = 0f
     private var accelerationMax = 0f
 
-    private val _uiState: MutableStateFlow<FeatureUiState> = MutableStateFlow(FeatureUiState())
-    val uiState = _uiState.asStateFlow()
-
     init {
-        configAccelerometerSensor(accelerometerSensor)
+        getAccelerometerValue(sensorRepository)
         randomPokemon(pokeArchRepository)
     }
 
-    private fun configAccelerometerSensor(accelerometerSensor: MeasurableSensor) {
-        accelerometerSensor.startListening()
-        accelerometerSensor.setOnSensorValuesChangedListener { values ->
-            calculateOpenPokeball(values)
+    private fun getAccelerometerValue(sensorRepository: SensorRepositoryContract) {
+        viewModelScope.launch {
+            sensorRepository.getAccelerometerValue().collectLatest {
+                calculateOpenPokeball(it)
+            }
         }
     }
 
-    private fun calculateOpenPokeball(values: List<Float>) {
-        if (values[0] < accelerationMin) accelerationMin = values[0]
-        if (values[0] > accelerationMax) accelerationMax = values[0]
+    private fun calculateOpenPokeball(value: Float) {
+        if (value < accelerationMin) accelerationMin = value
+        if (value > accelerationMax) accelerationMax = value
         _uiState.value =
             _uiState.value.copy(
                 openedPokeball = accelerationMin < -accelerationThreshold &&

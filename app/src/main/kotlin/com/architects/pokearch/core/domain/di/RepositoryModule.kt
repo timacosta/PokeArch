@@ -4,7 +4,9 @@ import com.architects.pokearch.core.data.database.dao.PokemonDao
 import com.architects.pokearch.core.data.database.dao.PokemonInfoDao
 import com.architects.pokearch.core.data.network.service.PokedexService
 import com.architects.pokearch.core.data.repository.PokeArchRepository
+import com.architects.pokearch.core.data.repository.SensorRepository
 import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
+import com.architects.pokearch.core.domain.repository.SensorRepositoryContract
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,4 +28,10 @@ object RepositoryModule {
             pokemonInfoDao
         )
     }
+
+    @Provides
+    fun provideSensorRepository(
+        sensorRepository: SensorRepository
+    ): SensorRepositoryContract =
+        sensorRepository
 }

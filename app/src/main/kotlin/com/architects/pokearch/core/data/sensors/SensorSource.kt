@@ -1,6 +1,6 @@
-package com.architects.pokearch.core.domain
+package com.architects.pokearch.core.data.sensors
 
-abstract class MeasurableSensor(
+abstract class SensorSource(
     protected val sensorType: Int
 ) {
 
