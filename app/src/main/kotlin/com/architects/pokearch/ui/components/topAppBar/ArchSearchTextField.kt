@@ -34,36 +34,38 @@ fun ArchSearchTextField(
     modifier: Modifier = Modifier,
     onCloseClicked: () -> Unit,
 ) {
-        TextField(
-            modifier = modifier.fillMaxWidth().height(64.dp),
-            value = text,
-            onValueChange = {
-                onTextChange(it)
-            },
-            placeholder = {
-                Text(
-                    modifier = Modifier
-                        .alpha(CONS_MEDIUM_ALPHA),
-                    text = stringResource(R.string.search_label_place_holder),
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
-            },
-            textStyle = MaterialTheme.typography.bodyLarge,
-            singleLine = true,
-            leadingIcon = {
-                LeadingIconSearchBar{
-                    onCloseClicked()
-                }
-            },
-            trailingIcon = {
-                TrailingIconSearchBar(text = text, onTextChange = onTextChange)
-            },
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Done
-            ),
-            colors = textFieldColors(),
-        )
-    }
+    TextField(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(64.dp),
+        value = text,
+        onValueChange = {
+            onTextChange(it)
+        },
+        placeholder = {
+            Text(
+                modifier = Modifier
+                    .alpha(CONS_MEDIUM_ALPHA),
+                text = stringResource(R.string.search_label_place_holder),
+                color = MaterialTheme.colorScheme.onPrimary
+            )
+        },
+        textStyle = MaterialTheme.typography.bodyLarge,
+        singleLine = true,
+        leadingIcon = {
+            LeadingIconSearchBar {
+                onCloseClicked()
+            }
+        },
+        trailingIcon = {
+            TrailingIconSearchBar(text = text, onTextChange = onTextChange)
+        },
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Done
+        ),
+        colors = textFieldColors(),
+    )
+}
 
 @Composable
 private fun TrailingIconSearchBar(text: String, onTextChange: (String) -> Unit) {
@@ -73,9 +75,7 @@ private fun TrailingIconSearchBar(text: String, onTextChange: (String) -> Unit) 
                 .padding(start = 16.dp, end = 10.dp)
                 .alpha(CONS_MEDIUM_ALPHA)
                 .clickable {
-                    if (text.isNotEmpty()) {
-                        onTextChange("")
-                    }
+                    onTextChange("")
                 },
             imageVector = Icons.Default.Clear,
             contentDescription = null,

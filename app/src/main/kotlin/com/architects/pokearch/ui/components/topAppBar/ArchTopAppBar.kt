@@ -1,8 +1,5 @@
 package com.architects.pokearch.ui.components.topAppBar
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -42,31 +39,10 @@ fun ArchTopAppBar(
         TopAppBar(
             title = {
                 if (!isExpanded) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            text = stringResource(R.string.app_name),
-                            modifier = Modifier.align(Alignment.CenterVertically),
-                        )
-                        IconButton(modifier = Modifier
-                            .align(Alignment.CenterVertically)
-                            .padding(end = 16.dp),
-                            onClick = {
-                                isExpanded = !isExpanded
-                            }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Filled.Search,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onPrimary
-                            )
-                        }
-                    }
+                    Text(
+                        text = stringResource(R.string.app_name),
+                    )
                 }
-
             },
             actions = {
                 if (isExpanded) {
@@ -74,8 +50,21 @@ fun ArchTopAppBar(
                         isExpanded = !isExpanded
                         onBackButtonClicked()
                     }
+                } else {
+                    IconButton(modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(end = 16.dp),
+                        onClick = {
+                            isExpanded = !isExpanded
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Search,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onPrimary
+                        )
+                    }
                 }
-
             },
             modifier = modifier,
             colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
