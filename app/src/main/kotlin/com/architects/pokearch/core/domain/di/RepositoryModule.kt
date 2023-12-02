@@ -4,7 +4,9 @@ import com.architects.pokearch.core.data.database.dao.PokemonDao
 import com.architects.pokearch.core.data.database.dao.PokemonInfoDao
 import com.architects.pokearch.core.data.network.service.CryService
 import com.architects.pokearch.core.data.network.service.PokedexService
+import com.architects.pokearch.core.data.repository.MediaPlayerRepository
 import com.architects.pokearch.core.data.repository.PokeArchRepository
+import com.architects.pokearch.core.domain.repository.MediaPlayerRepositoryContract
 import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
 import dagger.Module
 import dagger.Provides
@@ -29,4 +31,9 @@ object RepositoryModule {
             pokemonInfoDao
         )
     }
+
+    @Provides
+    fun providesMediaPlayerRepository(
+        mediaPlayerRepository: MediaPlayerRepository
+    ): MediaPlayerRepositoryContract = mediaPlayerRepository
 }

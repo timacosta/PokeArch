@@ -3,6 +3,7 @@ package com.architects.pokearch.ui.details
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.architects.pokearch.core.data.repository.MediaPlayerRepository
 import com.architects.pokearch.core.di.IO
 import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
 import com.architects.pokearch.ui.details.state.DetailUiState
@@ -12,11 +13,13 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val repositoryContract: PokeArchRepositoryContract,
+    private val mediaPlayerRepository: MediaPlayerRepository,
     @IO val dispatcher: CoroutineDispatcher,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -26,6 +29,8 @@ class DetailViewModel @Inject constructor(
     private val _pokemonDetailInfo: MutableStateFlow<DetailUiState> =
         MutableStateFlow(DetailUiState.Loading)
     val pokemonDetailInfo: MutableStateFlow<DetailUiState> = _pokemonDetailInfo
+
+    private var once = false
 
     init {
         viewModelScope.launch(dispatcher) {
@@ -46,15 +51,19 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun getCryUrl(cry: suspend (String) -> Unit) {
+    fun playCry(){
         viewModelScope.launch(dispatcher) {
             with(_pokemonDetailInfo.value) {
-                if (this is DetailUiState.Success) {
-                    cry(repositoryContract.fetchCry(pokemonInfo.name))
+                if (this is DetailUiState.Success && !once) {
+                    mediaPlayerRepository.playCry(getCryUrl(pokemonInfo.name))
+                    once = true
                 }
             }
         }
     }
 
-
+    private suspend fun getCryUrl(pokemonName: String): String =
+        withContext(dispatcher) {
+            repositoryContract.fetchCry(pokemonName)
+        }
 }
