@@ -13,4 +13,5 @@ interface PokeArchRepositoryContract {
         limit: Int = 20
     ): Flow<Either<Failure, List<Pokemon>>>
     suspend fun fetchPokemonInfo(id: Int): Flow<Either<Failure, PokemonInfo>>
+    suspend fun fetchCry(name: String): String
 }
