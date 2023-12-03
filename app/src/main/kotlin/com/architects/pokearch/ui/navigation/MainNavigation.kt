@@ -9,6 +9,7 @@ import com.architects.pokearch.ui.team.TeamScreen
 
 @Composable
 fun MainNavHost(
+    pokemonName: String,
     navHostController: NavHostController,
     onNavigationDetailClick: (Int) -> Unit,
 ) {
@@ -20,6 +21,7 @@ fun MainNavHost(
     ) {
         composable(NavCommand.Home) {
             HomeScreen(
+                pokemonName = pokemonName,
                 onNavigationClick = { pokemonId ->
                     onNavigationDetailClick(pokemonId)
                 }

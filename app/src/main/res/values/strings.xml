@@ -4,4 +4,5 @@
     <string name="team_title">Team</string>
     <string name="feature_title">Feature</string>
     <string name="error_async_image_painter">Error</string>
+    <string name="search_label_place_holder">Search...</string>
 </resources>

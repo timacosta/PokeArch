@@ -35,12 +35,13 @@ import com.architects.pokearch.ui.components.animations.shimmerEffect
 import com.architects.pokearch.ui.components.extensions.modifyIf
 import com.architects.pokearch.ui.components.image.ArchAsyncImage
 import com.architects.pokearch.ui.components.image.ArchImagePlaceHolder
+import com.architects.pokearch.ui.components.image.ArchAsyncImage
 
 @Composable
 fun HomeItem(
     pokemon: Pokemon,
-    onItemClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
+    onItemClick: (Int) -> Unit,
 ) {
 
     val image = rememberAsyncImagePainter(
