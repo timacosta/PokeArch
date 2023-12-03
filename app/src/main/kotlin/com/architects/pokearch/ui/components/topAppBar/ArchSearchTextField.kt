@@ -58,7 +58,9 @@ fun ArchSearchTextField(
             }
         },
         trailingIcon = {
-            TrailingIconSearchBar(text = text, onTextChange = onTextChange)
+            if (text.isNotEmpty()) {
+                TrailingIcon(onTextChange = onTextChange)
+            }
         },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done
@@ -68,8 +70,8 @@ fun ArchSearchTextField(
 }
 
 @Composable
-private fun TrailingIconSearchBar(text: String, onTextChange: (String) -> Unit) {
-    if (text.isNotEmpty()) {
+private fun TrailingIcon(onTextChange: (String) -> Unit) {
+
         Icon(
             modifier = Modifier
                 .padding(start = 16.dp, end = 10.dp)
@@ -82,7 +84,6 @@ private fun TrailingIconSearchBar(text: String, onTextChange: (String) -> Unit) 
             tint = MaterialTheme.colorScheme.inversePrimary
         )
     }
-}
 
 @Composable
 private fun textFieldColors() = TextFieldDefaults.colors(

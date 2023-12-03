@@ -1,5 +1,6 @@
 package com.architects.pokearch.ui.components.topAppBar
 
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -46,23 +47,17 @@ fun ArchTopAppBar(
             },
             actions = {
                 if (isExpanded) {
-                    ArchSearchTextField(text = text, onTextChange = onTextChange) {
-                        isExpanded = !isExpanded
-                        onBackButtonClicked()
-                    }
-                } else {
-                    IconButton(modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .padding(end = 16.dp),
-                        onClick = {
+                    ArchTextField(
+                        text = text,
+                        onTextChange = onTextChange,
+                        onBackButtonClicked = {
+                            onBackButtonClicked()
                             isExpanded = !isExpanded
                         }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.Search,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onPrimary
-                        )
+                    )
+                } else {
+                    SearchIconButton {
+                        isExpanded = !isExpanded
                     }
                 }
             },
@@ -72,6 +67,35 @@ fun ArchTopAppBar(
                 titleContentColor = MaterialTheme.colorScheme.onPrimary,
             ),
             scrollBehavior = scrollBehavior
+        )
+    }
+}
+
+@Composable
+private fun RowScope.ArchTextField(
+    text: String,
+    onTextChange: (String) -> Unit,
+    onBackButtonClicked: () -> Unit
+) {
+    ArchSearchTextField(text = text, onTextChange = onTextChange) {
+        onBackButtonClicked()
+    }
+}
+
+@Composable
+private fun RowScope.SearchIconButton(onClick: () -> Unit) {
+    IconButton(
+        modifier = Modifier
+            .align(Alignment.CenterVertically)
+            .padding(end = 16.dp),
+        onClick = {
+            onClick()
+        }
+    ) {
+        Icon(
+            imageVector = Icons.Filled.Search,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onPrimary
         )
     }
 }
