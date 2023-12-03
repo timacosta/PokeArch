@@ -13,7 +13,7 @@ import com.architects.pokearch.core.data.database.entities.PokemonInfoEntity
     version = 1,
     exportSchema = true
 )
-@TypeConverters(TypesHolderConverter::class)
+@TypeConverters(TypesHolderConverter::class, StatsHolderConverter::class)
 abstract class PokeArchDatabase : RoomDatabase() {
     abstract fun pokemonDao(): PokemonDao
     abstract fun pokemonInfoDao(): PokemonInfoDao

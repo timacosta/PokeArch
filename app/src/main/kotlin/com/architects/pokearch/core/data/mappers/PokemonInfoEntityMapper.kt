@@ -12,12 +12,8 @@ object PokemonInfoEntityMapper : EntityMapper<PokemonInfo, PokemonInfoEntity> {
             weight = domain.weight,
             experience = domain.experience,
             types = TypeEntityMapper.asEntity(domain.types),
+            stats = StatEntityMapper.asEntity(domain.stats),
             team = domain.team,
-            hp = domain.hp,
-            attack = domain.attack,
-            defense = domain.defense,
-            speed = domain.speed,
-            exp = domain.exp,
         )
 
     override fun asDomain(entity: PokemonInfoEntity) =
@@ -28,12 +24,8 @@ object PokemonInfoEntityMapper : EntityMapper<PokemonInfo, PokemonInfoEntity> {
             weight = entity.weight,
             experience = entity.experience,
             types = TypeEntityMapper.asDomain(entity.types),
+            stats = StatEntityMapper.asDomain(entity.stats),
             team = entity.team,
-            hp = entity.hp,
-            attack = entity.attack,
-            defense = entity.defense,
-            speed = entity.speed,
-            exp = entity.exp
         )
 
 }

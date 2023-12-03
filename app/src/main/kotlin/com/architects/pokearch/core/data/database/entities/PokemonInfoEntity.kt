@@ -14,11 +14,6 @@ data class PokemonInfoEntity(
     val weight: Int,
     val experience: Int,
     val types: TypesHolder,
+    val stats: StatsHolder,
     val team: Boolean,
-
-    val hp: Int = Random.nextInt(PokemonInfo.maxHp),
-    val attack: Int = Random.nextInt(PokemonInfo.maxAttack),
-    val defense: Int = Random.nextInt(PokemonInfo.maxDefense),
-    val speed: Int = Random.nextInt(PokemonInfo.maxSpeed),
-    val exp: Int = Random.nextInt(PokemonInfo.maxExp),
 )
