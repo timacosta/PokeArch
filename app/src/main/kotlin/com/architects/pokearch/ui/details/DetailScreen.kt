@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,16 +15,10 @@ import com.architects.pokearch.ui.details.state.DetailUiState
 
 @Composable
 fun DetailScreen(
-    pokemonId: Int,
     modifier: Modifier = Modifier,
-    viewModel: DetailViewModel = hiltViewModel(),
+    viewModel: DetailViewModel = hiltViewModel()
 ) {
-
     val uiState by viewModel.pokemonDetailInfo.collectAsStateWithLifecycle()
-
-    LaunchedEffect(key1 = pokemonId) {
-        viewModel.getCurrentPokemonId(pokemonId)
-    }
 
     Box(
         contentAlignment = Alignment.Center,
@@ -42,6 +35,7 @@ fun DetailScreen(
             }
 
             is DetailUiState.Success -> {
+                viewModel.playCry()
                 Column {
                     Text(text = "Name ${state.pokemonInfo.name}")
                     Text(text = "Experience ${state.pokemonInfo.experience}")

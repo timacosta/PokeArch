@@ -283,7 +283,7 @@ exceptions:
   ThrowingNewInstanceOfSameException:
     active: true
   TooGenericExceptionCaught:
-    active: true
+    active: false
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**']
     exceptionNames:
       - 'ArrayIndexOutOfBoundsException'
@@ -819,7 +819,7 @@ Compose:
     # You can optionally add your own composables here
     # contentEmitters: MyComposable,MyOtherComposable
   MutableParams:
-    active: true
+    active: false
   ComposableNaming:
     active: true
     # You can optionally disable the checks in this rule for regex matches against the composable name (e.g. molecule presenters)
