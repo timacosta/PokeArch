@@ -18,7 +18,8 @@ fun PokeArchNavHost(){
         startDestination = NavCommand.Main.route
     ){
         composable(NavCommand.Main){
-            MainScreen { pokemonId ->
+            MainScreen(
+            ) { pokemonId ->
                 navHostController.navigate(NavCommand.Detail.createRoute(pokemonId))
             }
         }

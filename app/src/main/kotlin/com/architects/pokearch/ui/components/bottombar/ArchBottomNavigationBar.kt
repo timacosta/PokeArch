@@ -19,46 +19,49 @@ import com.architects.pokearch.ui.navigation.NavItem
 
 @Composable
 fun ArchBottomNavigationBar(
+    isBottomBarVisible: Boolean,
     navController: NavController,
     modifier: Modifier = Modifier,
     contentColor: Color = MaterialTheme.colorScheme.onPrimary,
     containerColor: Color = MaterialTheme.colorScheme.primary
 ) {
 
-    NavigationBar(
-        modifier = modifier.fillMaxWidth(),
-        contentColor = contentColor,
-        containerColor = containerColor
-    ) {
+    if (isBottomBarVisible) {
+        NavigationBar(
+            modifier = modifier.fillMaxWidth(),
+            contentColor = contentColor,
+            containerColor = containerColor
+        ) {
 
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry?.destination?.route
 
-        NavItem.values().forEach { item ->
-            val title = stringResource(id = item.title)
-            val isCurrentRoute = currentRoute?.contains(item.navCommand.route)
+            NavItem.values().forEach { item ->
+                val title = stringResource(id = item.title)
+                val isCurrentRoute = currentRoute?.contains(item.navCommand.route)
 
-            NavigationBarItem(
-                icon = {
-                    Icon(
-                        imageVector = item.icon,
-                        contentDescription = title
+                NavigationBarItem(
+                    icon = {
+                        Icon(
+                            imageVector = item.icon,
+                            contentDescription = title
+                        )
+                    },
+                    label = { Text(text = title) },
+                    selected = isCurrentRoute == true,
+                    onClick = {
+                        navController.navigate(item.navCommand.route) {
+                            navigateToTopLevelDestination(navController)
+                        }
+                    },
+                    colors = NavigationBarItemDefaults.colors(
+                        unselectedIconColor = MaterialTheme.colorScheme.inversePrimary,
+                        unselectedTextColor = MaterialTheme.colorScheme.inversePrimary,
+                        selectedTextColor = MaterialTheme.colorScheme.onPrimary
+
                     )
-                },
-                label = { Text(text = title) },
-                selected = isCurrentRoute == true,
-                onClick = {
-                    navController.navigate(item.navCommand.route) {
-                        navigateToTopLevelDestination(navController)
-                    }
-                },
-                colors = NavigationBarItemDefaults.colors(
-                    unselectedIconColor = MaterialTheme.colorScheme.inversePrimary,
-                    unselectedTextColor = MaterialTheme.colorScheme.inversePrimary,
-                    selectedTextColor = MaterialTheme.colorScheme.onPrimary
-
                 )
-            )
+            }
         }
     }
 }
