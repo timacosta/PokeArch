@@ -135,4 +135,8 @@ class PokeArchRepository(
             Log.e("CryException", e.stackTraceToString())
         }
     }
+
+    override suspend fun randomPokemon(): Flow<Either<Failure, PokemonInfo>> {
+        return fetchPokemonInfo(pokemonDao.randomId())
+    }
 }

@@ -12,6 +12,10 @@ interface PokeArchRepositoryContract {
         page: Int = 0,
         limit: Int = 20
     ): Flow<Either<Failure, List<Pokemon>>>
+
     suspend fun fetchPokemonInfo(id: Int): Flow<Either<Failure, PokemonInfo>>
+
     suspend fun fetchCry(name: String): String
+
+    suspend fun randomPokemon(): Flow<Either<Failure, PokemonInfo>>
 }
