@@ -44,7 +44,7 @@ class HomeViewModel @Inject constructor(
             }
         }
 
-    fun onLoadMore(pokemonName: String) {
+    suspend fun onLoadMore(pokemonName: String) {
         currentPage++
         viewModelScope.launch(dispatcher) {
             getPokemonList(pokemonName, currentPage)

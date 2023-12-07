@@ -14,6 +14,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
@@ -22,6 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.architects.pokearch.R
 import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
 import com.architects.pokearch.ui.home.state.HomeUiState
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
@@ -32,6 +34,7 @@ fun HomeScreen(
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = pokemonName) {
         viewModel.getPokemonList(pokemonName)
@@ -50,12 +53,14 @@ fun HomeScreen(
 
             is HomeUiState.Success -> {
                 HomeSuccessScreen(
-                    uiState = state,
+                    state = state,
                     onItemClick = { pokemonId ->
                         onNavigationClick(pokemonId)
                     },
                     onLoadMore = {
-                        viewModel.onLoadMore(pokemonName)
+                        scope.launch {
+                            viewModel.onLoadMore(pokemonName)
+                        }
                     }
                 )
             }
@@ -67,19 +72,21 @@ fun HomeScreen(
     }
 }
 
+
 @Composable
 private fun HomeSuccessScreen(
-    uiState: HomeUiState.Success,
+    state: HomeUiState.Success,
     onItemClick: (Int) -> Unit,
     onLoadMore: () -> Unit,
 ) {
     val lazyGridState = rememberLazyGridState()
+
     val shouldLoadMore = remember {
         derivedStateOf {
             val layoutInfo = lazyGridState.layoutInfo
             val totalItemCount = layoutInfo.totalItemsCount
             val lastVisibleItem = layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
-            totalItemCount - lastVisibleItem <= 5 // Load more items when 5 items left to scroll
+            totalItemCount - lastVisibleItem <= 5
         }
     }
 
@@ -87,7 +94,7 @@ private fun HomeSuccessScreen(
         state = lazyGridState,
         columns = GridCells.Adaptive(dimensionResource(id = R.dimen.grid_cell_min_size))
     ) {
-        items(uiState.pokemonList) {
+        items(state.pokemonList) {
             HomeItem(
                 pokemon = it,
                 onItemClick = { pokemonId ->
@@ -95,9 +102,7 @@ private fun HomeSuccessScreen(
                 }
             )
         }
-    }
 
-    LaunchedEffect(key1 = shouldLoadMore) {
         if (shouldLoadMore.value) {
             onLoadMore()
         }
