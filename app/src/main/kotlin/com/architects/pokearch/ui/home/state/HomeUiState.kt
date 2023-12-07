@@ -5,5 +5,5 @@ import com.architects.pokearch.core.domain.model.Pokemon
 sealed class HomeUiState {
     data object Loading : HomeUiState()
     data object Error : HomeUiState()
-    data class Success(val networkPokemonList: List<Pokemon>) : HomeUiState()
+    data class Success(val pokemonList: List<Pokemon>) : HomeUiState()
 }

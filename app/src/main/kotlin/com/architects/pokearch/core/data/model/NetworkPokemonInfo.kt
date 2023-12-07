@@ -26,12 +26,12 @@ data class NetworkPokemonInfo(
     val team: Boolean = false,
 ) {
     companion object {
-        const val maxHp = 150
-        const val maxAttack = 150
-        const val maxSpAttack = 150
-        const val maxDefense = 150
-        const val maxSpDefense = 150
-        const val maxSpeed = 150
+        const val maxHp = 300
+        const val maxAttack = 300
+        const val maxSpAttack = 300
+        const val maxDefense = 300
+        const val maxSpDefense = 300
+        const val maxSpeed = 300
     }
 }
 

@@ -1,6 +1,6 @@
 package com.architects.pokearch.ui.feature
 
-import com.architects.pokearch.core.model.PokemonInfo
+import com.architects.pokearch.core.domain.model.PokemonInfo
 
 data class FeatureUiState(
     val openedPokeball: Boolean = false,

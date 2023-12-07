@@ -1,7 +1,5 @@
 package com.architects.pokearch.ui.theme
 
-import android.view.Surface
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.graphics.Color
 
 val LightBlue = Color(0xFFBAC7FF)
