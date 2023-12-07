@@ -28,54 +28,51 @@ import com.architects.pokearch.R
 fun ArchTopAppBar(
     text: String,
     scrollBehavior: TopAppBarScrollBehavior,
-    isTopBarVisible: Boolean,
+    isTopBarVisible: ArchTopAppBarrType,// TODO
     onBackButtonClicked: () -> Unit,
     modifier: Modifier = Modifier,
     onTextChange: (String) -> Unit,
 ) {
     var isExpanded by remember { mutableStateOf(false) }
 
-    if (isTopBarVisible) {
-
-        TopAppBar(
-            title = {
-                if (!isExpanded) {
-                    Text(
-                        text = stringResource(R.string.app_name),
-                    )
+    TopAppBar(
+        title = {
+            if (!isExpanded) {
+                Text(
+                    text = stringResource(R.string.app_name),
+                )
+            }
+        },
+        actions = {
+            if (isExpanded) {
+                ArchTextField(
+                    text = text,
+                    onTextChange = onTextChange
+                ) {
+                    onBackButtonClicked()
+                    isExpanded = !isExpanded
                 }
-            },
-            actions = {
-                if (isExpanded) {
-                    ArchTextField(
-                        text = text,
-                        onTextChange = onTextChange,
-                        onBackButtonClicked = {
-                            onBackButtonClicked()
-                            isExpanded = !isExpanded
-                        }
-                    )
-                } else {
-                    SearchIconButton {
-                        isExpanded = !isExpanded
-                    }
+            } else {
+                SearchIconButton {
+                    isExpanded = !isExpanded
                 }
-            },
-            modifier = modifier,
-            colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-                titleContentColor = MaterialTheme.colorScheme.onPrimary,
-            ),
-            scrollBehavior = scrollBehavior
-        )
-    }
+            }
+        },
+        modifier = modifier,
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.onPrimary,
+        ),
+        scrollBehavior = scrollBehavior
+    )
 }
 
+
 @Composable
-private fun RowScope.ArchTextField(
+private fun ArchTextField(
     text: String,
     onTextChange: (String) -> Unit,
-    onBackButtonClicked: () -> Unit
+    onBackButtonClicked: () -> Unit,
 ) {
     ArchSearchTextField(text = text, onTextChange = onTextChange) {
         onBackButtonClicked()

@@ -7,16 +7,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.capitalize
-import androidx.compose.ui.text.intl.Locale
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
 
 @Composable
-fun FeatureScreen(
+fun RandomCatchScreen(
     modifier: Modifier = Modifier,
     viewModel: FeatureViewModel = hiltViewModel(),
+    onNavigationClick: (Int) -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -28,7 +27,7 @@ fun FeatureScreen(
             !uiState.openedPokeball -> { Text(text = "Shake phone") }
             uiState.isLoading -> { ArchLoadingIndicator() }
             uiState.pokemonInfo != null -> {
-                Text("${uiState.pokemonInfo?.name?.capitalize(Locale.current)}")
+                onNavigationClick(uiState.pokemonInfo?.id ?: 0)
             }
             else -> { Text(text = "Error") }
         }
