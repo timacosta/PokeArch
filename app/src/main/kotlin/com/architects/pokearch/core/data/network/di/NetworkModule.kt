@@ -1,5 +1,6 @@
 package com.architects.pokearch.core.data.network.di
 
+import com.architects.pokearch.core.data.network.service.CryService
 import com.architects.pokearch.core.data.network.service.PokedexService
 import dagger.Module
 import dagger.Provides
@@ -10,9 +11,11 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 private const val BASE_POKE_API_URL = "https://pokeapi.co/api/v2/"
+private const val BASE_CRY_API_URL = "https://play.pokemonshowdown.com/audio/cries/"
 private const val RESPONSE_TIME_OUT_SECONDS: Long = 100
 
 @Module
@@ -28,9 +31,10 @@ object NetworkModule {
             .build()
     }
 
+    @PokeRetrofit
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun providePokeRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(BASE_POKE_API_URL)
@@ -38,9 +42,34 @@ object NetworkModule {
             .build()
     }
 
+    @CryRetrofit
     @Provides
     @Singleton
-    fun providePokedexService(retrofit: Retrofit): PokedexService {
+    fun provideCryRetrofit(okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl(BASE_CRY_API_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun providePokedexService(@PokeRetrofit retrofit: Retrofit): PokedexService {
         return retrofit.create(PokedexService::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideCryService(@CryRetrofit retrofit: Retrofit): CryService {
+        return retrofit.create(CryService::class.java)
+    }
 }
+
+@Retention(AnnotationRetention.RUNTIME)
+@Qualifier
+annotation class PokeRetrofit
+
+@Retention(AnnotationRetention.RUNTIME)
+@Qualifier
+annotation class CryRetrofit

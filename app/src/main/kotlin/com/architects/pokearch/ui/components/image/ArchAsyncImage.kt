@@ -1,6 +1,9 @@
 package com.architects.pokearch.ui.components.image
 
+import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,13 +16,14 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import coil.compose.AsyncImagePainter
 import com.architects.pokearch.R
-import com.architects.pokearch.ui.components.progressIndicators.PokeArchLoadingIndicator
+import com.architects.pokearch.ui.components.animations.shimmerEffect
 
 @Composable
-fun PokeArchAsyncImage(
+fun ArchAsyncImage(
     asyncImagePainter: AsyncImagePainter,
     contentDescription: String?,
     modifier: Modifier = Modifier,
@@ -30,13 +34,17 @@ fun PokeArchAsyncImage(
     filterQuality: FilterQuality = DrawScope.DefaultFilterQuality,
 ) {
     when (val state = asyncImagePainter.state) {
-        AsyncImagePainter.State.Empty -> {}
-        is AsyncImagePainter.State.Error ->
+
+        is AsyncImagePainter.State.Loading -> {
+            ArchImagePlaceHolder()
+        }
+
+        is AsyncImagePainter.State.Error -> {
             Icon(
                 painter = painterResource(id = R.drawable.broken_image_icon),
                 contentDescription = stringResource(id = R.string.error_async_image_painter)
             )
-        is AsyncImagePainter.State.Loading -> PokeArchLoadingIndicator()
+        }
         is AsyncImagePainter.State.Success -> {
             Image(
                 bitmap = state.result.drawable.toBitmap().asImageBitmap(),
@@ -48,6 +56,9 @@ fun PokeArchAsyncImage(
                 colorFilter = colorFilter,
                 filterQuality = filterQuality
             )
+        }
+        else -> {
+            Log.i("ArchAsyncImage", "ArchAsyncImage: ${state.javaClass}")
         }
     }
 }

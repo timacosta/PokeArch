@@ -1,5 +1,7 @@
 package com.architects.pokearch.ui.theme
 
+import android.view.Surface
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.graphics.Color
 
 val LightBlue = Color(0xFFBAC7FF)
@@ -30,3 +32,6 @@ val TypeDragon = Color(0xFF6F35FC)
 val TypeDark = Color(0xFF705746)
 val TypeSteel = Color(0xFFB7B7CE)
 val TypeFairy = Color(0xFFD685AD)
+
+val ShimmerColorMain = Color(0xFFE0E0E0)
+val ShimmerColorSecondary = Color(0xFFBDBDBD)

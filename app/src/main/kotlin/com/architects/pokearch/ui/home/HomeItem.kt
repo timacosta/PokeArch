@@ -1,5 +1,7 @@
 package com.architects.pokearch.ui.home
 
+import android.content.Context
+import android.graphics.drawable.Drawable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -16,22 +18,26 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
+import androidx.core.graphics.drawable.toBitmap
+import androidx.palette.graphics.Palette
+import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
+import coil.size.Size
 import com.architects.pokearch.R
-import com.architects.pokearch.core.domain.model.Pokemon
-import com.architects.pokearch.ui.components.extensions.GetColorsBackground
-import com.architects.pokearch.ui.components.extensions.buildImageRequest
+import com.architects.pokearch.core.model.Pokemon
 import com.architects.pokearch.ui.components.image.PokeArchAsyncImage
 
 @Composable
 fun HomeItem(
     pokemon: Pokemon,
-    onItemClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
+    onItemClick: (Int) -> Unit,
 ) {
 
     val image = rememberAsyncImagePainter(
@@ -58,9 +64,12 @@ fun HomeItem(
             modifier = Modifier
                 .background(Brush.linearGradient(colors))
                 .fillMaxSize()
+                .modifyIf(image.state is AsyncImagePainter.State.Loading) {
+                    it.shimmerEffect()
+                }
                 .padding(dimensionResource(id = R.dimen.card_internal_padding))
         ) {
-            PokeArchAsyncImage(asyncImagePainter = image, contentDescription = pokemon.name)
+            ArchAsyncImage(asyncImagePainter = image, contentDescription = pokemon.name)
             Text(text = pokemon.name.capitalize(Locale.current))
         }
     }

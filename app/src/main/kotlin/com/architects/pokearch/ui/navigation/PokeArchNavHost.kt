@@ -18,12 +18,13 @@ fun PokeArchNavHost(){
         startDestination = NavCommand.Main.route
     ){
         composable(NavCommand.Main){
-            MainScreen { pokemonId ->
+            MainScreen(
+            ) { pokemonId ->
                 navHostController.navigate(NavCommand.Detail.createRoute(pokemonId))
             }
         }
-        composable(NavCommand.Detail){ backStackEntry ->
-            DetailScreen(NavArg.PokemonId.getArg(backStackEntry))
+        composable(NavCommand.Detail){
+            DetailScreen()
         }
     }
 

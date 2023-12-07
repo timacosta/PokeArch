@@ -5,4 +5,5 @@
     <string name="feature_title">Feature</string>
     <string name="error_async_image_painter">Error</string>
     <string name="base_stats">Base stats</string>
+    <string name="search_label_place_holder">Search...</string>
 </resources>
