@@ -6,6 +6,12 @@ import com.architects.pokearch.core.data.database.entities.converters.StatsHolde
 import com.architects.pokearch.core.data.model.NetworkStat
 import com.architects.pokearch.core.data.model.NetworkStats
 import com.architects.pokearch.core.domain.model.Stat
+import com.architects.pokearch.core.domain.model.Stat.Companion.ATK
+import com.architects.pokearch.core.domain.model.Stat.Companion.DEF
+import com.architects.pokearch.core.domain.model.Stat.Companion.HP
+import com.architects.pokearch.core.domain.model.Stat.Companion.SPEED
+import com.architects.pokearch.core.domain.model.Stat.Companion.SP_ATK
+import com.architects.pokearch.core.domain.model.Stat.Companion.SP_DEF
 import com.architects.pokearch.core.domain.model.Stats
 
 object StatEntityMapper : EntityMapper<List<NetworkStats>, List<Stats>, StatsHolder> {
@@ -33,12 +39,12 @@ object StatEntityMapper : EntityMapper<List<NetworkStats>, List<Stats>, StatsHol
     private fun mapToStat(statEntity: StatEntity) =
         Stat(
             name = when (statEntity.name) {
-                "hp" -> "HP"
-                "attack" -> "Atk"
-                "defense" -> "Def"
-                "speed" -> "Speed"
-                "special-attack" -> "Sp. Atk"
-                "special-defense" -> "Sp. Def"
+                "hp" -> HP
+                "attack" -> ATK
+                "defense" -> DEF
+                "speed" -> SPEED
+                "special-attack" -> SP_ATK
+                "special-defense" -> SP_DEF
                 else -> statEntity.name
             }
         )

@@ -31,5 +31,5 @@ object TypeEntityMapper : EntityMapper<List<NetworkTypes>, List<Types>, TypesHol
         )
 
     private fun mapToType(typeEntity: TypeEntity) =
-        Type(name = typeEntity.name)
+        Type(name = typeEntity.name.replaceFirstChar { it.uppercaseChar() })
 }

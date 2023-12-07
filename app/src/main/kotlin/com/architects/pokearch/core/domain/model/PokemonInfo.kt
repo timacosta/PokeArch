@@ -1,6 +1,12 @@
 package com.architects.pokearch.core.domain.model
 
 import com.architects.pokearch.core.data.model.NetworkPokemonInfo
+import com.architects.pokearch.core.domain.model.Stat.Companion.ATK
+import com.architects.pokearch.core.domain.model.Stat.Companion.DEF
+import com.architects.pokearch.core.domain.model.Stat.Companion.HP
+import com.architects.pokearch.core.domain.model.Stat.Companion.SPEED
+import com.architects.pokearch.core.domain.model.Stat.Companion.SP_ATK
+import com.architects.pokearch.core.domain.model.Stat.Companion.SP_DEF
 
 data class PokemonInfo(
     val id: Int,
@@ -34,12 +40,12 @@ data class Stats(
     val maxValue: Int
         get() {
             return when (stat.name) {
-                "HP" -> NetworkPokemonInfo.maxHp
-                "Atk" -> NetworkPokemonInfo.maxAttack
-                "Def" -> NetworkPokemonInfo.maxDefense
-                "Sp. Atk" -> NetworkPokemonInfo.maxSpAttack
-                "Sp. Def" -> NetworkPokemonInfo.maxSpDefense
-                "Speed" -> NetworkPokemonInfo.maxSpeed
+                HP -> NetworkPokemonInfo.maxHp
+                ATK -> NetworkPokemonInfo.maxAttack
+                DEF -> NetworkPokemonInfo.maxDefense
+                SP_ATK -> NetworkPokemonInfo.maxSpAttack
+                SP_DEF -> NetworkPokemonInfo.maxSpDefense
+                SPEED -> NetworkPokemonInfo.maxSpeed
                 else -> value
             }
         }
@@ -47,4 +53,13 @@ data class Stats(
 
 data class Stat(
     val name: String,
-)
+) {
+    companion object {
+        const val HP = "HP"
+        const val ATK = "Atk"
+        const val DEF = "Def"
+        const val SP_ATK = "Sp. Atk"
+        const val SP_DEF = "Sp. Def"
+        const val SPEED = "Speed"
+    }
+}

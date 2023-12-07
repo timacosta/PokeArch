@@ -1,7 +1,13 @@
 package com.architects.pokearch.ui.components.extensions
 
 import androidx.compose.ui.graphics.Color
+import com.architects.pokearch.ui.theme.AtkColor
+import com.architects.pokearch.ui.theme.DefColor
+import com.architects.pokearch.ui.theme.HPColor
 import com.architects.pokearch.ui.theme.LightBlue
+import com.architects.pokearch.ui.theme.SpAtkColor
+import com.architects.pokearch.ui.theme.SpDefColor
+import com.architects.pokearch.ui.theme.SpdColor
 import com.architects.pokearch.ui.theme.TypeBug
 import com.architects.pokearch.ui.theme.TypeDark
 import com.architects.pokearch.ui.theme.TypeDragon
@@ -22,24 +28,12 @@ import com.architects.pokearch.ui.theme.TypeSteel
 import com.architects.pokearch.ui.theme.TypeWater
 
 
-fun String.abilityColor(): Color = when(this) {
-    "Normal" -> TypeNormal
-    "Fighting" -> TypeFighting
-    "Flying" -> TypeFlying
-    "Poison" -> TypePoison
-    "Ground" -> TypeGround
-    "Rock" -> TypeRock
-    "Bug" -> TypeBug
-    "Ghost" -> TypeGhost
-    "Steel" -> TypeSteel
-    "Fire" -> TypeFire
-    "Water" -> TypeWater
-    "Grass" -> TypeGrass
-    "Electric" -> TypeElectric
-    "Psychic" -> TypePsychic
-    "Ice" -> TypeIce
-    "Dragon" -> TypeDragon
-    "Fairy" -> TypeFairy
-    "Dark" -> TypeDark
+fun String.statColor(): Color = when(this) {
+    "HP" -> HPColor
+    "Atk" -> AtkColor
+    "Def" -> DefColor
+    "Sp. Atk" -> SpAtkColor
+    "Sp. Defense" -> SpDefColor
+    "Speed" -> SpdColor
     else -> LightBlue
 }

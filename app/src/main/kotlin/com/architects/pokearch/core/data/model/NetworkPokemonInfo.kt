@@ -26,12 +26,12 @@ data class NetworkPokemonInfo(
     val team: Boolean = false,
 ) {
     companion object {
-        const val maxHp = 250
-        const val maxAttack = 250
-        const val maxSpAttack = 250
-        const val maxDefense = 250
-        const val maxSpDefense = 250
-        const val maxSpeed = 250
+        const val maxHp = 150
+        const val maxAttack = 150
+        const val maxSpAttack = 150
+        const val maxDefense = 150
+        const val maxSpDefense = 150
+        const val maxSpeed = 150
     }
 }
 
@@ -52,20 +52,7 @@ data class NetworkStats(
     val value: Int,
     @SerializedName("stat")
     val stat: NetworkStat,
-) {
-    val maxValue: Int
-        get() {
-            return when (stat.name) {
-                "hp" -> maxHp
-                "attack" -> maxAttack
-                "defense" -> maxDefense
-                "special-attack" -> maxSpAttack
-                "special-defense" -> maxSpDefense
-                "speed" -> maxSpeed
-                else -> value
-            }
-        }
-}
+)
 
 data class NetworkStat(
     val name: String,

@@ -61,6 +61,7 @@ import com.architects.pokearch.core.domain.model.Stats
 import com.architects.pokearch.ui.components.extensions.GetColorsBackground
 import com.architects.pokearch.ui.components.extensions.abilityColor
 import com.architects.pokearch.ui.components.extensions.buildImageRequest
+import com.architects.pokearch.ui.components.extensions.statColor
 import com.architects.pokearch.ui.components.image.PokeArchAsyncImage
 import com.architects.pokearch.ui.components.progressIndicators.PokeArchLoadingIndicator
 import com.architects.pokearch.ui.details.state.DetailUiState
@@ -239,7 +240,7 @@ private fun TypeItem(
     containerColor: Color,
 ) {
     Text(
-        text = name.replaceFirstChar { it.uppercaseChar() },
+        text = name,
         color = containerColor,
         style = MaterialTheme.typography.bodyLarge,
         modifier = modifier
@@ -403,7 +404,7 @@ private fun StatItem(
         val progress = stats.value.toFloat() / stats.maxValue
         val animatedProgress = progress * animationProgress.value
 
-        val progressColor = if (progress >= .5f) Color.Blue else Color.Red
+        //val progressColor = if (progress >= .5f) Color.Blue else Color.Red
         val progressTrackColor = MaterialTheme.colorScheme.outline.copy(.2f)
 
         Box(
@@ -419,13 +420,18 @@ private fun StatItem(
                     )
 
                     drawRoundRect(
-                        color = progressColor,
+                        color = stats.stat.name.statColor(),
                         topLeft = Offset.Zero,
                         size = Size(width = size.width * animatedProgress, height = size.height),
                         cornerRadius = CornerRadius(size.height, size.height),
                     )
                 }
-        )
+        ) {
+            Text(
+                modifier = Modifier.align(Alignment.Center),
+                text = "${stats.value}/${stats.maxValue}",
+            )
+        }
     }
 }
 
