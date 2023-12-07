@@ -1,9 +1,11 @@
 package com.architects.pokearch.core.domain.repository
 
 import arrow.core.Either
-import com.architects.pokearch.core.model.Failure
-import com.architects.pokearch.core.model.Pokemon
-import com.architects.pokearch.core.model.PokemonInfo
+import com.architects.pokearch.core.domain.model.Failure
+import com.architects.pokearch.core.data.model.NetworkPokemon
+import com.architects.pokearch.core.data.model.NetworkPokemonInfo
+import com.architects.pokearch.core.domain.model.Pokemon
+import com.architects.pokearch.core.domain.model.PokemonInfo
 import kotlinx.coroutines.flow.Flow
 
 interface PokeArchRepositoryContract {

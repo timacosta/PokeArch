@@ -1,25 +1,26 @@
 package com.architects.pokearch.core.data.mappers
 
 import com.architects.pokearch.core.data.database.entities.PokemonInfoEntity
-import com.architects.pokearch.core.model.PokemonInfo
+import com.architects.pokearch.core.data.model.NetworkPokemonInfo
+import com.architects.pokearch.core.domain.model.PokemonInfo
 
-object PokemonInfoEntityMapper : EntityMapper<PokemonInfo, PokemonInfoEntity> {
-    override fun asEntity(domain: PokemonInfo) =
+object PokemonInfoEntityMapper : EntityMapper<NetworkPokemonInfo, PokemonInfo, PokemonInfoEntity> {
+    override fun asEntity(network: NetworkPokemonInfo) =
         PokemonInfoEntity(
-            id = domain.id,
-            name = domain.name,
-            height = domain.height,
-            weight = domain.weight,
-            experience = domain.experience,
-            types = TypeEntityMapper.asEntity(domain.types),
-            stats = StatEntityMapper.asEntity(domain.stats),
-            team = domain.team,
+            id = network.id,
+            name = network.name,
+            height = network.height,
+            weight = network.weight,
+            experience = network.experience,
+            types = TypeEntityMapper.asEntity(network.types),
+            stats = StatEntityMapper.asEntity(network.stats),
+            team = network.team,
         )
 
     override fun asDomain(entity: PokemonInfoEntity) =
         PokemonInfo(
             id = entity.id,
-            name = entity.name,
+            name = entity.name.replaceFirstChar { it.uppercaseChar() },
             height = entity.height,
             weight = entity.weight,
             experience = entity.experience,

@@ -2,8 +2,8 @@ package com.architects.pokearch.core.data.database.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.architects.pokearch.core.model.PokemonInfo
-import kotlin.random.Random
+import com.architects.pokearch.core.data.database.entities.converters.StatsHolder
+import com.architects.pokearch.core.data.database.entities.converters.TypesHolder
 
 @Entity
 data class PokemonInfoEntity(

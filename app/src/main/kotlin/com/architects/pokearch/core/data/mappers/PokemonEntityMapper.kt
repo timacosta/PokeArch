@@ -1,17 +1,18 @@
 package com.architects.pokearch.core.data.mappers
 
 import com.architects.pokearch.core.data.database.entities.PokemonEntity
-import com.architects.pokearch.core.model.Pokemon
+import com.architects.pokearch.core.data.model.NetworkPokemon
+import com.architects.pokearch.core.domain.model.Pokemon
 
-object PokemonEntityMapper : EntityMapper<List<Pokemon>, List<PokemonEntity>> {
-    override fun asEntity(domain: List<Pokemon>): List<PokemonEntity> =
-        domain.map(::mapToPokemonEntity)
+object PokemonEntityMapper : EntityMapper<List<NetworkPokemon>, List<Pokemon>, List<PokemonEntity>> {
+    override fun asEntity(network: List<NetworkPokemon>): List<PokemonEntity> =
+        network.map(::mapToPokemonEntity)
 
-    private fun mapToPokemonEntity(pokemon: Pokemon) =
+    private fun mapToPokemonEntity(networkPokemon: NetworkPokemon) =
         PokemonEntity(
-            id = pokemon.getIndex(),
-            name = pokemon.name,
-            url = pokemon.url
+            id = networkPokemon.getIndex(),
+            name = networkPokemon.name,
+            url = networkPokemon.url
         )
 
     override fun asDomain(entity: List<PokemonEntity>): List<Pokemon> =

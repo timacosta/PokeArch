@@ -22,7 +22,7 @@ import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
 import coil.compose.rememberAsyncImagePainter
 import com.architects.pokearch.R
-import com.architects.pokearch.core.model.Pokemon
+import com.architects.pokearch.core.domain.model.Pokemon
 import com.architects.pokearch.ui.components.extensions.GetColorsBackground
 import com.architects.pokearch.ui.components.extensions.buildImageRequest
 import com.architects.pokearch.ui.components.image.PokeArchAsyncImage

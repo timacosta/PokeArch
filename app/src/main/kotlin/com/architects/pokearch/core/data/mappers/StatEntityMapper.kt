@@ -1,33 +1,45 @@
 package com.architects.pokearch.core.data.mappers
 
-import com.architects.pokearch.core.data.database.entities.StatEntity
-import com.architects.pokearch.core.data.database.entities.StatsEntity
-import com.architects.pokearch.core.data.database.entities.StatsHolder
-import com.architects.pokearch.core.model.Stat
-import com.architects.pokearch.core.model.StatsResponse
+import com.architects.pokearch.core.data.database.entities.converters.StatEntity
+import com.architects.pokearch.core.data.database.entities.converters.StatsEntity
+import com.architects.pokearch.core.data.database.entities.converters.StatsHolder
+import com.architects.pokearch.core.data.model.NetworkStat
+import com.architects.pokearch.core.data.model.NetworkStats
+import com.architects.pokearch.core.domain.model.Stat
+import com.architects.pokearch.core.domain.model.Stats
 
-object StatEntityMapper : EntityMapper<List<StatsResponse>, StatsHolder>{
-    override fun asEntity(domain: List<StatsResponse>): StatsHolder =
-        StatsHolder(domain.map(::mapToStatsEntity))
+object StatEntityMapper : EntityMapper<List<NetworkStats>, List<Stats>, StatsHolder> {
+    override fun asEntity(network: List<NetworkStats>): StatsHolder =
+        StatsHolder(network.map(::mapToStatsEntity))
 
-    private fun mapToStatsEntity(statsResponse: StatsResponse) =
+    private fun mapToStatsEntity(networkStats: NetworkStats) =
         StatsEntity(
-            value = statsResponse.value,
-            stat = mapToStatEntity(statsResponse.stat)
+            value = networkStats.value,
+            stat = mapToStatEntity(networkStats.stat)
         )
 
-    private fun mapToStatEntity(stat: Stat) =
-        StatEntity(name = stat.name)
+    private fun mapToStatEntity(networkStat: NetworkStat) =
+        StatEntity(name = networkStat.name)
 
-    override fun asDomain(entity: StatsHolder): List<StatsResponse> =
-        entity.stats.map(::mapToStatResponse)
+    override fun asDomain(entity: StatsHolder): List<Stats> =
+        entity.stats.map(::mapToStats)
 
-    private fun mapToStatResponse(statsEntity: StatsEntity) =
-        StatsResponse(
+    private fun mapToStats(statsEntity: StatsEntity) =
+        Stats(
             value = statsEntity.value,
             stat = mapToStat(statsEntity.stat)
         )
 
     private fun mapToStat(statEntity: StatEntity) =
-        Stat(name = statEntity.name)
+        Stat(
+            name = when (statEntity.name) {
+                "hp" -> "HP"
+                "attack" -> "Atk"
+                "defense" -> "Def"
+                "speed" -> "Speed"
+                "special-attack" -> "Sp. Atk"
+                "special-defense" -> "Sp. Def"
+                else -> statEntity.name
+            }
+        )
 }

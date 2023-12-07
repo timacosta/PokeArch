@@ -1,9 +1,8 @@
 package com.architects.pokearch.core.data.model
 
-import com.architects.pokearch.core.model.Pokemon
 import com.google.gson.annotations.SerializedName
 
-data class PokemonResponse(
+data class NetworkPokemons(
     @SerializedName("count")
     val count: Int,
     @SerializedName("next")
@@ -11,5 +10,5 @@ data class PokemonResponse(
     @SerializedName("previous")
     val previous: String?,
     @SerializedName("results")
-    val results: List<Pokemon>,
+    val results: List<NetworkPokemon>,
 )

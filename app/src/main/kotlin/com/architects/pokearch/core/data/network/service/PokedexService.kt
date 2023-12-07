@@ -1,7 +1,7 @@
 package com.architects.pokearch.core.data.network.service
 
-import com.architects.pokearch.core.data.model.PokemonResponse
-import com.architects.pokearch.core.model.PokemonInfo
+import com.architects.pokearch.core.data.model.NetworkPokemons
+import com.architects.pokearch.core.data.model.NetworkPokemonInfo
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -12,8 +12,8 @@ interface PokedexService {
     suspend fun fetchPokemonList(
         @Query("limit") limit: Int = 20,
         @Query("offset") offset: Int = 0,
-    ): Response<PokemonResponse>
+    ): Response<NetworkPokemons>
 
     @GET("pokemon/{id}")
-    suspend fun fetchPokemonInfo(@Path("id") id: Int): Response<PokemonInfo>
+    suspend fun fetchPokemonInfo(@Path("id") id: Int): Response<NetworkPokemonInfo>
 }

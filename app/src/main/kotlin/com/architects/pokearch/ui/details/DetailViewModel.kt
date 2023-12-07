@@ -1,11 +1,9 @@
 package com.architects.pokearch.ui.details
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.architects.pokearch.core.di.IO
 import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
-import com.architects.pokearch.core.model.Pokemon
 import com.architects.pokearch.ui.details.state.DetailUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher

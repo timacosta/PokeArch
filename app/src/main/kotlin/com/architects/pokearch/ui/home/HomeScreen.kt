@@ -58,7 +58,7 @@ private fun HomeSuccessScreen(
     onItemClick: (Int) -> Unit,
 ) {
     LazyVerticalGrid(columns = GridCells.Adaptive(128.dp)) {
-        items(state.pokemonList) {
+        items(state.networkPokemonList) {
             HomeItem(
                 pokemon = it,
                 onItemClick = { pokemonId ->

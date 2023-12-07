@@ -7,6 +7,8 @@ import com.architects.pokearch.core.data.database.dao.PokemonDao
 import com.architects.pokearch.core.data.database.dao.PokemonInfoDao
 import com.architects.pokearch.core.data.database.entities.PokemonEntity
 import com.architects.pokearch.core.data.database.entities.PokemonInfoEntity
+import com.architects.pokearch.core.data.database.entities.converters.StatsHolderConverter
+import com.architects.pokearch.core.data.database.entities.converters.TypesHolderConverter
 
 @Database(
     entities = [PokemonEntity::class, PokemonInfoEntity::class],

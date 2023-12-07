@@ -1,6 +1,6 @@
 package com.architects.pokearch.ui.details.state
 
-import com.architects.pokearch.core.model.PokemonInfo
+import com.architects.pokearch.core.domain.model.PokemonInfo
 
 sealed class DetailUiState {
     data object Loading : DetailUiState()

@@ -23,9 +23,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Scale
-import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material.icons.outlined.Straighten
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -50,7 +48,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -58,9 +55,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import com.architects.pokearch.R
-import com.architects.pokearch.core.model.PokemonInfo
-import com.architects.pokearch.core.model.Stat
-import com.architects.pokearch.core.model.StatsResponse
+import com.architects.pokearch.core.domain.model.PokemonInfo
+import com.architects.pokearch.core.domain.model.Stat
+import com.architects.pokearch.core.domain.model.Stats
 import com.architects.pokearch.ui.components.extensions.GetColorsBackground
 import com.architects.pokearch.ui.components.extensions.abilityColor
 import com.architects.pokearch.ui.components.extensions.buildImageRequest
@@ -134,7 +131,7 @@ private fun DetailSuccessScreen(
 
         Title(
             modifier = Modifier.padding(bottom = 12.dp),
-            text = state.pokemonInfo.capitalizedName()
+            text = state.pokemonInfo.name
         )
 
         TypeRow(
@@ -377,7 +374,7 @@ private fun PokemonStats(
 private fun StatItem(
     modifier: Modifier = Modifier,
     height: Dp = 20.dp,
-    stats: StatsResponse,
+    stats: Stats,
 ) {
 
     val animationProgress = remember {
