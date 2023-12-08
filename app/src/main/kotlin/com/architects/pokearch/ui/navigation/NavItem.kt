@@ -16,19 +16,28 @@ enum class NavItem(
     val icon: ImageVector,
     @StringRes val title: Int
 ) {
-    HOME(NavCommand.Home, Icons.Default.Home, R.string.home_title),
-    TEAM(NavCommand.Team, Icons.Default.Star, R.string.team_title),
-    FEATURE(NavCommand.Feature, Icons.Default.Face, R.string.feature_title)
+    HOME(NavCommand.ContentType(Feature.MAIN), Icons.Default.Home, R.string.home_title),
+    TEAM(NavCommand.ContentType(Feature.TEAM), Icons.Default.Star, R.string.team_title),
+    FEATURE(NavCommand.ContentType(Feature.RANDOM), Icons.Default.Face, R.string.feature_title)
 }
 
 sealed class NavCommand(
-    val baseRoute: String,
+    internal val feature: Feature,
+    internal val subRoute: String = SubRoute.HOME.route,
     navArgs: List<NavArg> = emptyList(),
 ) {
 
+    class ContentType(feature: Feature) : NavCommand(feature)
+
+    class ContentDetail(feature: Feature):
+        NavCommand(feature, SubRoute.DETAIL.route, listOf(NavArg.PokemonId)){
+            fun createRoute(pokemonId: Int) = "${feature.route}/$subRoute/$pokemonId"
+        }
+
     val route = run {
         val args = navArgs.map { "{${it.key}}" }
-        listOf(baseRoute)
+        listOf(feature.route)
+            .plus(subRoute)
             .plus(args)
             .joinToString("/")
     }
@@ -36,21 +45,9 @@ sealed class NavCommand(
     val args = navArgs.map {
         navArgument(it.key) { type = it.navType }
     }
-
-    data object Main : NavCommand("mainScreen")
-
-    data object Home : NavCommand("homeScreen")
-
-    data object Team : NavCommand("teamScreen")
-
-    data object Feature : NavCommand("featureScreen")
-
-    data object Detail : NavCommand("detailScreen", listOf(NavArg.PokemonId)) {
-        fun createRoute(pokemonId: Int): String = "$baseRoute/$pokemonId"
-    }
-
 }
 
+//TODO
 sealed class NavArg(val key: String, val navTypeWrapper: NavTypeWrapper) {
 
     val navType = navTypeWrapper.navType

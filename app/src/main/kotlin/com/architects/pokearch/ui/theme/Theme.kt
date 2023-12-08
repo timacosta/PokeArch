@@ -70,7 +70,7 @@ fun PokeArchTheme(
 
 
 @Composable
-fun MyPokeArchTheme(modifier: Modifier = Modifier, content: @Composable () -> Unit){
+fun PokeArchScreen(modifier: Modifier = Modifier, content: @Composable () -> Unit){
     PokeArchTheme {
         Surface(
             modifier = modifier.fillMaxSize(),
