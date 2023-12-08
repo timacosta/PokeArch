@@ -73,11 +73,7 @@ fun DetailScreen(
 ) {
     val uiState by viewModel.pokemonDetailInfo.collectAsStateWithLifecycle()
 
-
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier.fillMaxSize()
-    ) {
+    Container {
 
         when (val state = uiState) {
             is DetailUiState.Loading -> {
