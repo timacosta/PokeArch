@@ -6,4 +6,5 @@ sealed class HomeUiState {
     data object Loading : HomeUiState()
     data object Error : HomeUiState()
     data class Success(val pokemonList: List<Pokemon>) : HomeUiState()
+    data object NoSearchResult: HomeUiState()
 }

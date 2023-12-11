@@ -73,7 +73,9 @@ fun DetailScreen(
 ) {
     val uiState by viewModel.pokemonDetailInfo.collectAsStateWithLifecycle()
 
-    Container {
+    Container(
+        modifier = Modifier.fillMaxSize()
+    ) {
 
         when (val state = uiState) {
             is DetailUiState.Loading -> {
@@ -159,9 +161,12 @@ private fun DetailSuccessScreen(
 }
 
 @Composable
-private fun Container(content: @Composable BoxScope.() -> Unit) {
+private fun Container(
+    modifier: Modifier,
+    content: @Composable BoxScope.() -> Unit
+) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         propagateMinConstraints = true,
     ) {
         content()

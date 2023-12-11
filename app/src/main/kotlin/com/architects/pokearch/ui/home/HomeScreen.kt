@@ -1,6 +1,10 @@
 package com.architects.pokearch.ui.home
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -16,8 +20,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -43,7 +51,7 @@ fun HomeScreen(
         viewModel.getPokemonList(pokemonName)
     }
 
-    Box(
+    Container(
         modifier = modifier
             .fillMaxSize()
             .padding(8.dp)
@@ -55,43 +63,55 @@ fun HomeScreen(
             }
 
             is HomeUiState.Success -> {
-                HomeSuccessScreen(
+                SuccessScreen(
                     state = state,
                     onItemClick = { pokemonId ->
                         onNavigationClick(pokemonId)
                     },
                     onLoadMore = {
                         scope.launch {
-                            viewModel.onLoadMore(pokemonName)
+                            viewModel.onLoadMore()
                         }
                     }
                 )
             }
 
+            is HomeUiState.NoSearchResult -> {
+                NoSearchResultScreen(
+                    modifier = Modifier.align(Alignment.TopCenter)
+                )
+            }
+
             is HomeUiState.Error -> {
-                Text(text = "Something went wrong")
+                Text(
+                    text = "Something went wrong"
+                )
             }
         }
     }
 }
 
+@Composable
+private fun Container(
+    modifier: Modifier = Modifier,
+    content: @Composable BoxScope.() -> Unit
+) {
+    Box(
+        modifier = modifier,
+        propagateMinConstraints = true,
+    ) {
+        content()
+    }
+}
+
 
 @Composable
-private fun HomeSuccessScreen(
+private fun SuccessScreen(
     state: HomeUiState.Success,
     onItemClick: (Int) -> Unit,
     onLoadMore: () -> Unit,
 ) {
     val lazyGridState = rememberLazyGridState()
-
-    val shouldLoadMore = remember {
-        derivedStateOf {
-            val lastVisibleItem = lazyGridState.layoutInfo.visibleItemsInfo.lastOrNull()
-                ?: return@derivedStateOf false
-
-            lastVisibleItem.index == lazyGridState.layoutInfo.totalItemsCount - 1
-        }
-    }
 
     LazyVerticalGrid(
         state = lazyGridState,
@@ -112,6 +132,7 @@ private fun HomeSuccessScreen(
     }
 }
 
+
 @Composable
 fun LazyGridState.OnBottomReached(
     onLoadMore: () -> Unit,
@@ -130,5 +151,23 @@ fun LazyGridState.OnBottomReached(
             .distinctUntilChanged()
             .filter { it }
             .collect { onLoadMore() }
+    }
+}
+
+@Composable
+private fun NoSearchResultScreen(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier.padding(8.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.not_found_placeholder),
+            contentScale = ContentScale.Crop,
+            contentDescription = null
+        )
+        Text(
+            text = stringResource(id = R.string.no_search_results_text)
+        )
     }
 }

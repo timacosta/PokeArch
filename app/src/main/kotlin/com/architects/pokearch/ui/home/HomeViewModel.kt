@@ -23,7 +23,11 @@ class HomeViewModel @Inject constructor(
     private val _uiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState.Loading)
     val uiState: StateFlow<HomeUiState> = _uiState
 
-    private var cumulativePokemonList: MutableList<Pokemon> = mutableListOf()
+    private var allPokemons: MutableList<Pokemon> = mutableListOf()
+    private var filteredPokemons: MutableList<Pokemon> = mutableListOf()
+
+    private var currentFilter: String = ""
+
     private var currentPage = 0
 
     suspend fun getPokemonList(pokemonName: String, page: Int = currentPage) =
@@ -37,17 +41,31 @@ class HomeViewModel @Inject constructor(
                         _uiState.value = HomeUiState.Error
                     },
                     ifRight = { pokemonList ->
-                        cumulativePokemonList.addAll(pokemonList)
-                        _uiState.value = HomeUiState.Success(cumulativePokemonList)
+                        if(pokemonName != currentFilter) {
+                            currentFilter = pokemonName
+                            filteredPokemons.clear()
+                            currentPage = 0
+                        }
+
+                        if (pokemonName.isNotBlank()) {
+                            filteredPokemons.addAll(pokemonList)
+                            _uiState.value = HomeUiState.Success(filteredPokemons.toList())
+                            if(filteredPokemons.isEmpty()) {
+                                _uiState.value = HomeUiState.NoSearchResult
+                            }
+                        } else {
+                            allPokemons.addAll(pokemonList)
+                            _uiState.value = HomeUiState.Success(allPokemons.toList())
+                        }
                     }
                 )
             }
         }
 
-    suspend fun onLoadMore(pokemonName: String) {
+    suspend fun onLoadMore() {
         currentPage++
         viewModelScope.launch(dispatcher) {
-            getPokemonList(pokemonName, currentPage)
+            getPokemonList(currentFilter, currentPage)
         }
     }
 }

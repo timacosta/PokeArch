@@ -8,12 +8,10 @@ import com.architects.pokearch.core.data.mappers.PokemonEntityMapper
 import com.architects.pokearch.core.data.mappers.PokemonInfoEntityMapper
 import com.architects.pokearch.core.data.network.service.CryService
 import com.architects.pokearch.core.data.network.service.PokedexService
-import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
 import com.architects.pokearch.core.domain.model.Failure
-import com.architects.pokearch.core.data.model.NetworkPokemon
-import com.architects.pokearch.core.data.model.NetworkPokemonInfo
 import com.architects.pokearch.core.domain.model.Pokemon
 import com.architects.pokearch.core.domain.model.PokemonInfo
+import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
