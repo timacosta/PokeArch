@@ -8,8 +8,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.architects.pokearch.ui.navigation.PokeArchNavHost
-import com.architects.pokearch.ui.theme.MyPokeArchTheme
+import com.architects.pokearch.ui.PokeArchApp
+import com.architects.pokearch.ui.theme.PokeArchScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,8 +24,8 @@ class PokeArchActivity : ComponentActivity() {
         exitAnimationSplashScreen()
         super.onCreate(savedInstanceState)
         setContent {
-            MyPokeArchTheme {
-                PokeArchNavHost()
+            PokeArchScreen {
+                PokeArchApp()
             }
         }
     }

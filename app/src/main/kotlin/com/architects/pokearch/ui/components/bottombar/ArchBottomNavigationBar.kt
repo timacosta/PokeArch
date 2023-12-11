@@ -36,7 +36,7 @@ fun ArchBottomNavigationBar(
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
 
-            NavItem.values().forEach { item ->
+            NavItem.entries.forEach { item ->
                 val title = stringResource(id = item.title)
                 val isCurrentRoute = currentRoute?.contains(item.navCommand.route)
 
@@ -51,7 +51,7 @@ fun ArchBottomNavigationBar(
                     selected = isCurrentRoute == true,
                     onClick = {
                         navController.navigate(item.navCommand.route) {
-                            navigateToTopLevelDestination(navController)
+                            // TODO: navigateToTopLevelDestination(navController)
                         }
                     },
                     colors = NavigationBarItemDefaults.colors(
