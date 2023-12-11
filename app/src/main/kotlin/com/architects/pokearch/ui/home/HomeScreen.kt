@@ -15,6 +15,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
@@ -23,6 +24,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.architects.pokearch.R
 import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
 import com.architects.pokearch.ui.home.state.HomeUiState
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 
 @Composable
@@ -83,10 +86,10 @@ private fun HomeSuccessScreen(
 
     val shouldLoadMore = remember {
         derivedStateOf {
-            val layoutInfo = lazyGridState.layoutInfo
-            val totalItemCount = layoutInfo.totalItemsCount
-            val lastVisibleItem = layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
-            totalItemCount - lastVisibleItem <= 5
+            val lastVisibleItem = lazyGridState.layoutInfo.visibleItemsInfo.lastOrNull()
+                ?: return@derivedStateOf false
+
+            lastVisibleItem.index == lazyGridState.layoutInfo.totalItemsCount - 1
         }
     }
 
@@ -102,9 +105,30 @@ private fun HomeSuccessScreen(
                 }
             )
         }
+    }
 
-        if (shouldLoadMore.value) {
-            onLoadMore()
+    lazyGridState.OnBottomReached {
+        onLoadMore()
+    }
+}
+
+@Composable
+fun LazyGridState.OnBottomReached(
+    onLoadMore: () -> Unit,
+) {
+    val shouldLoadMore = remember {
+        derivedStateOf {
+            val lastVisibleItem = layoutInfo.visibleItemsInfo.lastOrNull()
+                ?: return@derivedStateOf false
+
+            lastVisibleItem.index == layoutInfo.totalItemsCount - 1
         }
+    }
+
+    LaunchedEffect(shouldLoadMore) {
+        snapshotFlow { shouldLoadMore.value }
+            .distinctUntilChanged()
+            .filter { it }
+            .collect { onLoadMore() }
     }
 }
