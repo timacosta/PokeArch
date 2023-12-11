@@ -46,12 +46,12 @@ class PokeArchRepository(
             )
         )
 
-        if (thereArePokemonsRemote()) {
+        if (areMorePokemonAvailableRemote()) {
             emit(getRemotePokemonList(filter, limit, offset))
         }
     }
 
-    private suspend fun thereArePokemonsRemote() =
+    private suspend fun areMorePokemonAvailableRemote() =
         pokedexService.fetchPokemonList(1, pokemonDao.countPokemonList()).let { responseCount ->
             when {
                 responseCount.isSuccessful -> {

@@ -41,26 +41,39 @@ class HomeViewModel @Inject constructor(
                         _uiState.value = HomeUiState.Error
                     },
                     ifRight = { pokemonList ->
-                        if(pokemonName != currentFilter) {
-                            currentFilter = pokemonName
-                            filteredPokemons.clear()
-                            currentPage = 0
-                        }
+
+                        handleFilterChange(pokemonName)
 
                         if (pokemonName.isNotBlank()) {
-                            filteredPokemons.addAll(pokemonList)
-                            _uiState.value = HomeUiState.Success(filteredPokemons.toList())
-                            if(filteredPokemons.isEmpty()) {
-                                _uiState.value = HomeUiState.NoSearchResult
-                            }
+                            emitUiStateWithFilter(pokemonList)
                         } else {
-                            allPokemons.addAll(pokemonList)
-                            _uiState.value = HomeUiState.Success(allPokemons.toList())
+                            emitUiStateWithoutFilter(pokemonList)
                         }
                     }
                 )
             }
         }
+
+    private fun emitUiStateWithoutFilter(pokemonList: List<Pokemon>) {
+        allPokemons.addAll(pokemonList)
+        _uiState.value = HomeUiState.Success(allPokemons.toList())
+    }
+
+    private fun emitUiStateWithFilter(pokemonList: List<Pokemon>) {
+        filteredPokemons.addAll(pokemonList)
+        _uiState.value = HomeUiState.Success(filteredPokemons.toList())
+        if (filteredPokemons.isEmpty()) {
+            _uiState.value = HomeUiState.NoSearchResult
+        }
+    }
+
+    private fun handleFilterChange(pokemonName: String) {
+        if (pokemonName != currentFilter) {
+            currentFilter = pokemonName
+            filteredPokemons.clear()
+            currentPage = 0
+        }
+    }
 
     suspend fun onLoadMore() {
         currentPage++
