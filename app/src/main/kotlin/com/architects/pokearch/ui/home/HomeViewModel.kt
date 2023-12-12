@@ -55,12 +55,12 @@ class HomeViewModel @Inject constructor(
         }
 
     private fun emitUiStateWithoutFilter(pokemonList: List<Pokemon>) {
-        allPokemons.addAll(pokemonList)
+        allPokemons.addAll(pokemonList.filterNot { it in allPokemons })
         _uiState.value = HomeUiState.Success(allPokemons.toList())
     }
 
     private fun emitUiStateWithFilter(pokemonList: List<Pokemon>) {
-        filteredPokemons.addAll(pokemonList)
+        filteredPokemons.addAll(pokemonList.filterNot { it in filteredPokemons })
         _uiState.value = HomeUiState.Success(filteredPokemons.toList())
         if (filteredPokemons.isEmpty()) {
             _uiState.value = HomeUiState.NoSearchResult
