@@ -1,6 +1,6 @@
 package com.architects.pokearch.ui.components.topAppBar
 
-enum class ArchTopAppBarrType {
+enum class ArchTopAppBarType {
     NONE,
     NORMAL,
     SEARCH

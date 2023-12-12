@@ -26,13 +26,14 @@ import com.architects.pokearch.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArchTopAppBar(
-    text: String,
-    scrollBehavior: TopAppBarScrollBehavior,
-    isTopBarVisible: ArchTopAppBarrType,// TODO
-    onBackButtonClicked: () -> Unit,
     modifier: Modifier = Modifier,
-    onTextChange: (String) -> Unit,
+    text: String = "",
+    scrollBehavior: TopAppBarScrollBehavior? = null,
+    archTopAppBarType: ArchTopAppBarType,
+    onBackButtonClicked: () -> Unit,
+    onTextChange: ((String) -> Unit),
 ) {
+
     var isExpanded by remember { mutableStateOf(false) }
 
     TopAppBar(
@@ -44,17 +45,19 @@ fun ArchTopAppBar(
             }
         },
         actions = {
-            if (isExpanded) {
-                ArchTextField(
-                    text = text,
-                    onTextChange = onTextChange
-                ) {
-                    onBackButtonClicked()
-                    isExpanded = !isExpanded
-                }
-            } else {
-                SearchIconButton {
-                    isExpanded = !isExpanded
+            if (archTopAppBarType == ArchTopAppBarType.SEARCH) {
+                if (isExpanded) {
+                    ArchTextField(
+                        text = text,
+                        onTextChange = onTextChange
+                    ) {
+                        onBackButtonClicked()
+                        isExpanded = !isExpanded
+                    }
+                } else {
+                    SearchIconButton {
+                        isExpanded = !isExpanded
+                    }
                 }
             }
         },
