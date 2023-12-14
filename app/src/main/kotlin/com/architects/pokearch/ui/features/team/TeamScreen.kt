@@ -1,4 +1,4 @@
-package com.architects.pokearch.ui.team
+package com.architects.pokearch.ui.features.team
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

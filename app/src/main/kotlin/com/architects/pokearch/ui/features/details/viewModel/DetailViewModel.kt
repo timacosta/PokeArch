@@ -1,4 +1,4 @@
-package com.architects.pokearch.ui.details
+package com.architects.pokearch.ui.features.details.viewModel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.architects.pokearch.core.data.repository.MediaPlayerRepository
 import com.architects.pokearch.core.di.IO
 import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
-import com.architects.pokearch.ui.details.state.DetailUiState
+import com.architects.pokearch.ui.features.details.state.DetailUiState
 import com.architects.pokearch.ui.navigation.NavArg
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher

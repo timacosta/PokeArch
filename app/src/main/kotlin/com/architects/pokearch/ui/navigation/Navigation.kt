@@ -7,10 +7,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.architects.pokearch.ui.details.DetailScreen
-import com.architects.pokearch.ui.feature.RandomCatchScreen
-import com.architects.pokearch.ui.home.HomeScreen
-import com.architects.pokearch.ui.team.TeamScreen
+import com.architects.pokearch.ui.features.details.ui.DetailScreen
+import com.architects.pokearch.ui.features.shakeNCatch.ui.ShakeNCatchScreen
+import com.architects.pokearch.ui.features.home.ui.HomeScreen
+import com.architects.pokearch.ui.features.team.TeamScreen
 
 @Composable
 fun Navigation(
@@ -72,7 +72,7 @@ fun NavGraphBuilder.randomCatchNav(
         startDestination = NavCommand.ContentType(Feature.RANDOM).route
     ){
         composable(NavCommand.ContentType(Feature.RANDOM)){
-            RandomCatchScreen(
+            ShakeNCatchScreen(
                 onNavigationClick = { pokemonId ->
                     onNavigationDetailClick(
                         NavCommand.ContentDetail(Feature.RANDOM).createRoute(pokemonId)

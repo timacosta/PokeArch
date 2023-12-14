@@ -1,4 +1,4 @@
-package com.architects.pokearch.ui.details
+package com.architects.pokearch.ui.features.details.ui
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
@@ -64,7 +64,8 @@ import com.architects.pokearch.ui.components.extensions.buildImageRequest
 import com.architects.pokearch.ui.components.extensions.statColor
 import com.architects.pokearch.ui.components.image.ArchAsyncImage
 import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
-import com.architects.pokearch.ui.details.state.DetailUiState
+import com.architects.pokearch.ui.features.details.viewModel.DetailViewModel
+import com.architects.pokearch.ui.features.details.state.DetailUiState
 
 @Composable
 fun DetailScreen(
@@ -103,18 +104,7 @@ private fun DetailSuccessScreen(
     state: DetailUiState.Success,
 ) {
 
-    val image = rememberAsyncImagePainter(
-        model = state.pokemonInfo.getImageUrl().buildImageRequest(LocalContext.current)
-    )
-
-    val colorDefault = MaterialTheme.colorScheme.surfaceVariant
-    val colorsDefault = listOf(colorDefault, colorDefault)
-
-    var colors by remember { mutableStateOf(colorsDefault) }
-
-    image.GetColorsBackground {
-        colors = it.ifEmpty { colorsDefault }
-    }
+    val (image, colors) = getGradientImageAndColors(pokemonInfo = state.pokemonInfo)
 
     Column(
         modifier = modifier.verticalScroll(rememberScrollState()),
@@ -158,6 +148,27 @@ private fun DetailSuccessScreen(
             pokemonInfo = state.pokemonInfo
         )
     }
+}
+
+@Composable
+private fun getGradientImageAndColors(
+    pokemonInfo: PokemonInfo,
+): Pair<AsyncImagePainter, List<Color>> {
+
+    val image = rememberAsyncImagePainter(
+        model = pokemonInfo.getImageUrl().buildImageRequest(LocalContext.current)
+    )
+
+    val colorDefault = MaterialTheme.colorScheme.surfaceVariant
+    val colorsDefault = listOf(colorDefault, colorDefault)
+
+    var colors by remember { mutableStateOf(colorsDefault) }
+
+    image.GetColorsBackground {
+        colors = it.ifEmpty { colorsDefault }
+    }
+
+    return(Pair(image, colors))
 }
 
 @Composable

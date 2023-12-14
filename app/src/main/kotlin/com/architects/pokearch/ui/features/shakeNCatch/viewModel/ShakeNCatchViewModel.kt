@@ -1,9 +1,10 @@
-package com.architects.pokearch.ui.feature
+package com.architects.pokearch.ui.features.shakeNCatch.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
 import com.architects.pokearch.core.domain.repository.SensorRepositoryContract
+import com.architects.pokearch.ui.features.shakeNCatch.state.ShakeNCatchUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,12 +15,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FeatureViewModel @Inject constructor(
+class ShakeNCatchViewModel @Inject constructor(
     sensorRepository: SensorRepositoryContract,
     pokeArchRepository: PokeArchRepositoryContract,
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<FeatureUiState> = MutableStateFlow(FeatureUiState())
+    private val _uiState: MutableStateFlow<ShakeNCatchUiState> = MutableStateFlow(ShakeNCatchUiState())
     val uiState = _uiState.asStateFlow()
 
     companion object {

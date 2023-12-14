@@ -1,4 +1,4 @@
-package com.architects.pokearch.ui.details.state
+package com.architects.pokearch.ui.features.details.state
 
 import com.architects.pokearch.core.domain.model.PokemonInfo
 

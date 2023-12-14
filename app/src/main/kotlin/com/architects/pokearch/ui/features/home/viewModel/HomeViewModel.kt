@@ -1,11 +1,11 @@
-package com.architects.pokearch.ui.home
+package com.architects.pokearch.ui.features.home.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.architects.pokearch.core.di.IO
 import com.architects.pokearch.core.domain.model.Pokemon
 import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
-import com.architects.pokearch.ui.home.state.HomeUiState
+import com.architects.pokearch.ui.features.home.state.HomeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow

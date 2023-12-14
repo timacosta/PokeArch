@@ -1,4 +1,4 @@
-package com.architects.pokearch.ui.home
+package com.architects.pokearch.ui.features.home.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,6 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.capitalize
@@ -30,6 +31,7 @@ import com.architects.pokearch.ui.components.extensions.buildImageRequest
 import com.architects.pokearch.ui.components.extensions.modifyIf
 import com.architects.pokearch.ui.components.image.ArchAsyncImage
 
+
 @Composable
 fun HomeItem(
     modifier: Modifier = Modifier,
@@ -37,18 +39,7 @@ fun HomeItem(
     onItemClick: (Int) -> Unit,
 ) {
 
-    val image = rememberAsyncImagePainter(
-        model = pokemon.getImageUrl().buildImageRequest(LocalContext.current)
-    )
-
-    val colorDefault = MaterialTheme.colorScheme.surfaceVariant
-    val colorsDefault = listOf(colorDefault, colorDefault)
-
-    var colors by remember { mutableStateOf(colorsDefault) }
-
-    image.GetColorsBackground {
-        colors = it.ifEmpty { colorsDefault }
-    }
+    val (image, colors) = getGradientImageAndColors(pokemon = pokemon)
 
     Card(
         modifier
@@ -70,5 +61,26 @@ fun HomeItem(
             Text(text = pokemon.name.capitalize(Locale.current))
         }
     }
+}
+
+@Composable
+fun getGradientImageAndColors(
+    pokemon: Pokemon,
+): Pair<AsyncImagePainter, List<Color>> {
+
+    val image = rememberAsyncImagePainter(
+        model = pokemon.getImageUrl().buildImageRequest(LocalContext.current)
+    )
+
+    val colorDefault = MaterialTheme.colorScheme.surfaceVariant
+    val colorsDefault = listOf(colorDefault, colorDefault)
+
+    var colors by remember { mutableStateOf(colorsDefault) }
+
+    image.GetColorsBackground {
+        colors = it.ifEmpty { colorsDefault }
+    }
+
+    return(Pair(image, colors))
 }
 
