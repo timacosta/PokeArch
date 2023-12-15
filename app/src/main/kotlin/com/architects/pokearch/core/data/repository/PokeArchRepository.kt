@@ -14,8 +14,9 @@ import com.architects.pokearch.core.model.Pokemon
 import com.architects.pokearch.core.model.PokemonInfo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class PokeArchRepository(
+class PokeArchRepository @Inject constructor(
     private val pokedexService: PokedexService,
     private val cryService: CryService,
     private val pokemonDao: PokemonDao,
