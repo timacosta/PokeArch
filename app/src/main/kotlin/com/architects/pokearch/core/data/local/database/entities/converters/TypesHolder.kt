@@ -1,4 +1,4 @@
-package com.architects.pokearch.core.data.database.entities.converters
+package com.architects.pokearch.core.data.local.database.entities.converters
 
 data class TypesHolder (
     val types: List<TypesEntity>

@@ -1,4 +1,4 @@
-package com.architects.pokearch.core.data.model
+package com.architects.pokearch.core.data.network.model
 
 import com.google.gson.annotations.SerializedName
 

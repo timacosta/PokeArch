@@ -1,6 +1,6 @@
 package com.architects.pokearch.core.domain.model
 
-import com.architects.pokearch.core.data.model.NetworkPokemonInfo
+import com.architects.pokearch.core.data.network.model.NetworkPokemonInfo
 import com.architects.pokearch.core.domain.model.Stat.Companion.ATK
 import com.architects.pokearch.core.domain.model.Stat.Companion.DEF
 import com.architects.pokearch.core.domain.model.Stat.Companion.HP

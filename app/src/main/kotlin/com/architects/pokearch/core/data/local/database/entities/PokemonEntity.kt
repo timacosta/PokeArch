@@ -1,4 +1,4 @@
-package com.architects.pokearch.core.data.database.entities
+package com.architects.pokearch.core.data.local.database.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

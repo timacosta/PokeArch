@@ -1,10 +1,10 @@
 package com.architects.pokearch.core.data.mappers
 
-import com.architects.pokearch.core.data.database.entities.converters.TypeEntity
-import com.architects.pokearch.core.data.database.entities.converters.TypesEntity
-import com.architects.pokearch.core.data.database.entities.converters.TypesHolder
-import com.architects.pokearch.core.data.model.NetworkType
-import com.architects.pokearch.core.data.model.NetworkTypes
+import com.architects.pokearch.core.data.local.database.entities.converters.TypeEntity
+import com.architects.pokearch.core.data.local.database.entities.converters.TypesEntity
+import com.architects.pokearch.core.data.local.database.entities.converters.TypesHolder
+import com.architects.pokearch.core.data.network.model.NetworkType
+import com.architects.pokearch.core.data.network.model.NetworkTypes
 import com.architects.pokearch.core.domain.model.Type
 import com.architects.pokearch.core.domain.model.Types
 

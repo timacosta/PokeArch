@@ -1,10 +1,10 @@
-package com.architects.pokearch.core.data.database.dao
+package com.architects.pokearch.core.data.local.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.architects.pokearch.core.data.database.entities.PokemonEntity
+import com.architects.pokearch.core.data.local.database.entities.PokemonEntity
 
 @Dao
 interface PokemonDao {

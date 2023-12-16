@@ -1,11 +1,5 @@
-package com.architects.pokearch.core.data.model
+package com.architects.pokearch.core.data.network.model
 
-import com.architects.pokearch.core.data.model.NetworkPokemonInfo.Companion.maxAttack
-import com.architects.pokearch.core.data.model.NetworkPokemonInfo.Companion.maxDefense
-import com.architects.pokearch.core.data.model.NetworkPokemonInfo.Companion.maxHp
-import com.architects.pokearch.core.data.model.NetworkPokemonInfo.Companion.maxSpAttack
-import com.architects.pokearch.core.data.model.NetworkPokemonInfo.Companion.maxSpDefense
-import com.architects.pokearch.core.data.model.NetworkPokemonInfo.Companion.maxSpeed
 import com.google.gson.annotations.SerializedName
 
 data class NetworkPokemonInfo(

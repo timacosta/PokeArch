@@ -1,7 +1,7 @@
 package com.architects.pokearch.core.data.mappers
 
-import com.architects.pokearch.core.data.database.entities.PokemonInfoEntity
-import com.architects.pokearch.core.data.model.NetworkPokemonInfo
+import com.architects.pokearch.core.data.local.database.entities.PokemonInfoEntity
+import com.architects.pokearch.core.data.network.model.NetworkPokemonInfo
 import com.architects.pokearch.core.domain.model.PokemonInfo
 
 object PokemonInfoEntityMapper : EntityMapper<NetworkPokemonInfo, PokemonInfo, PokemonInfoEntity> {

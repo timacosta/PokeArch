@@ -1,9 +1,9 @@
-package com.architects.pokearch.core.data.database.entities
+package com.architects.pokearch.core.data.local.database.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.architects.pokearch.core.data.database.entities.converters.StatsHolder
-import com.architects.pokearch.core.data.database.entities.converters.TypesHolder
+import com.architects.pokearch.core.data.local.database.entities.converters.StatsHolder
+import com.architects.pokearch.core.data.local.database.entities.converters.TypesHolder
 
 @Entity
 data class PokemonInfoEntity(

@@ -1,11 +1,7 @@
 package com.architects.pokearch.core.domain.repository
 
-import androidx.paging.PagingSource
 import arrow.core.Either
-import com.architects.pokearch.core.data.database.entities.PokemonEntity
 import com.architects.pokearch.core.domain.model.Failure
-import com.architects.pokearch.core.data.model.NetworkPokemon
-import com.architects.pokearch.core.data.model.NetworkPokemonInfo
 import com.architects.pokearch.core.domain.model.Pokemon
 import com.architects.pokearch.core.domain.model.PokemonInfo
 import kotlinx.coroutines.flow.Flow

@@ -1,10 +1,10 @@
 package com.architects.pokearch.core.data.mappers
 
-import com.architects.pokearch.core.data.database.entities.converters.StatEntity
-import com.architects.pokearch.core.data.database.entities.converters.StatsEntity
-import com.architects.pokearch.core.data.database.entities.converters.StatsHolder
-import com.architects.pokearch.core.data.model.NetworkStat
-import com.architects.pokearch.core.data.model.NetworkStats
+import com.architects.pokearch.core.data.local.database.entities.converters.StatEntity
+import com.architects.pokearch.core.data.local.database.entities.converters.StatsEntity
+import com.architects.pokearch.core.data.local.database.entities.converters.StatsHolder
+import com.architects.pokearch.core.data.network.model.NetworkStat
+import com.architects.pokearch.core.data.network.model.NetworkStats
 import com.architects.pokearch.core.domain.model.Stat
 import com.architects.pokearch.core.domain.model.Stat.Companion.ATK
 import com.architects.pokearch.core.domain.model.Stat.Companion.DEF
