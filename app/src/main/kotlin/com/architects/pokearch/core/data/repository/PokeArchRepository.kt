@@ -8,10 +8,10 @@ import com.architects.pokearch.core.data.mappers.PokemonEntityMapper
 import com.architects.pokearch.core.data.mappers.PokemonInfoEntityMapper
 import com.architects.pokearch.core.data.network.service.CryService
 import com.architects.pokearch.core.data.network.service.PokedexService
+import com.architects.pokearch.core.domain.model.Failure
+import com.architects.pokearch.core.domain.model.Pokemon
+import com.architects.pokearch.core.domain.model.PokemonInfo
 import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
-import com.architects.pokearch.core.model.Failure
-import com.architects.pokearch.core.model.Pokemon
-import com.architects.pokearch.core.model.PokemonInfo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -47,12 +47,12 @@ class PokeArchRepository @Inject constructor(
             )
         )
 
-        if (thereArePokemonsRemote()) {
+        if (areMorePokemonAvailableRemote()) {
             emit(getRemotePokemonList(filter, limit, offset))
         }
     }
 
-    private suspend fun thereArePokemonsRemote() =
+    private suspend fun areMorePokemonAvailableRemote() =
         pokedexService.fetchPokemonList(1, pokemonDao.countPokemonList()).let { responseCount ->
             when {
                 responseCount.isSuccessful -> {
@@ -109,7 +109,9 @@ class PokeArchRepository @Inject constructor(
             response.isSuccessful -> {
                 response.body()?.let {
                     pokemonInfoDao.insertPokemonInfo(PokemonInfoEntityMapper.asEntity(it))
-                    Either.Right(it)
+                    pokemonInfoDao.getPokemonInfo(id)?.let { entity ->
+                        Either.Right(PokemonInfoEntityMapper.asDomain(entity))
+                    }
                 } ?: Either.Left(Failure.UnknownError)
             }
 

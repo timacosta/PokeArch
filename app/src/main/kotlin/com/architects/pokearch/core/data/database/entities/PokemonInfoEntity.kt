@@ -2,8 +2,8 @@ package com.architects.pokearch.core.data.database.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.architects.pokearch.core.model.PokemonInfo
-import kotlin.random.Random
+import com.architects.pokearch.core.data.database.entities.converters.StatsHolder
+import com.architects.pokearch.core.data.database.entities.converters.TypesHolder
 
 @Entity
 data class PokemonInfoEntity(
@@ -14,11 +14,6 @@ data class PokemonInfoEntity(
     val weight: Int,
     val experience: Int,
     val types: TypesHolder,
+    val stats: StatsHolder,
     val team: Boolean,
-
-    val hp: Int = Random.nextInt(PokemonInfo.maxHp),
-    val attack: Int = Random.nextInt(PokemonInfo.maxAttack),
-    val defense: Int = Random.nextInt(PokemonInfo.maxDefense),
-    val speed: Int = Random.nextInt(PokemonInfo.maxSpeed),
-    val exp: Int = Random.nextInt(PokemonInfo.maxExp),
 )

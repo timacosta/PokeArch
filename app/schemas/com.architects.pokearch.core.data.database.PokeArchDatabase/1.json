@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "67d933d708714454a0a85234e0d8ff84",
+    "identityHash": "f7d9022d7923bedfefc1af6ce17e4d16",
     "entities": [
       {
         "tableName": "PokemonEntity",
@@ -38,7 +38,7 @@
       },
       {
         "tableName": "PokemonInfoEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `height` INTEGER NOT NULL, `weight` INTEGER NOT NULL, `experience` INTEGER NOT NULL, `types` TEXT NOT NULL, `team` INTEGER NOT NULL, `hp` INTEGER NOT NULL, `attack` INTEGER NOT NULL, `defense` INTEGER NOT NULL, `speed` INTEGER NOT NULL, `exp` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `height` INTEGER NOT NULL, `weight` INTEGER NOT NULL, `experience` INTEGER NOT NULL, `types` TEXT NOT NULL, `stats` TEXT NOT NULL, `team` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -77,38 +77,14 @@
             "notNull": true
           },
           {
+            "fieldPath": "stats",
+            "columnName": "stats",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "team",
             "columnName": "team",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "hp",
-            "columnName": "hp",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "attack",
-            "columnName": "attack",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "defense",
-            "columnName": "defense",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "speed",
-            "columnName": "speed",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "exp",
-            "columnName": "exp",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -126,7 +102,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '67d933d708714454a0a85234e0d8ff84')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f7d9022d7923bedfefc1af6ce17e4d16')"
     ]
   }
 }

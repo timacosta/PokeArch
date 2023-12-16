@@ -3,7 +3,7 @@ package com.architects.pokearch.core.data.database.di
 import android.content.Context
 import androidx.room.Room
 import com.architects.pokearch.core.data.database.PokeArchDatabase
-import com.architects.pokearch.core.data.database.TypesHolderConverter
+import com.architects.pokearch.core.data.database.entities.converters.TypesHolderConverter
 import com.architects.pokearch.core.data.database.dao.PokemonDao
 import com.architects.pokearch.core.data.database.dao.PokemonInfoDao
 import dagger.Module

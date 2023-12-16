@@ -11,7 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.architects.pokearch.ui.components.topAppBar.ArchTopAppBarrType
+import com.architects.pokearch.ui.components.topAppBar.ArchTopAppBarType
 import com.architects.pokearch.ui.navigation.Feature
 import com.architects.pokearch.ui.navigation.SubRoute
 
@@ -40,7 +40,7 @@ class PokeArchAppState(
         @Composable get() = navHostController.currentBackStackEntryAsState().value?.destination?.route
             ?: ""
 
-    val showTopBar: ArchTopAppBarrType
+    val showTopBar: ArchTopAppBarType
         @Composable get() = getShowTopBar(currentRoute)
 
     val showBottomBar: Boolean
@@ -53,11 +53,11 @@ fun getShowTopBar(current: String) =
     when{
         current.contains(Feature.MAIN.route) &&
                 current.contains(SubRoute.HOME.route) ->
-                    ArchTopAppBarrType.SEARCH
+                    ArchTopAppBarType.SEARCH
         current.contains(Feature.MAIN.route) &&
                 current.contains(SubRoute.DETAIL.route) ->
-                    ArchTopAppBarrType.NONE
-        else -> ArchTopAppBarrType.NORMAL
+                    ArchTopAppBarType.NONE
+        else -> ArchTopAppBarType.NORMAL
     }
 
 fun getShowBottomBar(current: String) =

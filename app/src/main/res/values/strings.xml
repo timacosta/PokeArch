@@ -2,7 +2,9 @@
     <string name="app_name">PokeArch</string>
     <string name="home_title">Home</string>
     <string name="team_title">Team</string>
-    <string name="feature_title">Feature</string>
+    <string name="feature_title">Shake\'n\'Catch</string>
     <string name="error_async_image_painter">Error</string>
-    <string name="search_label_place_holder">Search...</string>
+    <string name="base_stats">Base stats</string>
+    <string name="search_label_place_holder">Search…</string>
+    <string name="no_search_results_text">Your Pokemon search was super effective… at finding nothing. Maybe try a different name?</string>
 </resources>

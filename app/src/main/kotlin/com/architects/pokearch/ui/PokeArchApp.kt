@@ -12,6 +12,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import com.architects.pokearch.ui.components.bottombar.ArchBottomNavigationBar
 import com.architects.pokearch.ui.components.topAppBar.ArchTopAppBar
+import com.architects.pokearch.ui.components.topAppBar.ArchTopAppBarType
 import com.architects.pokearch.ui.navigation.Navigation
 import com.architects.pokearch.ui.theme.PokeArchScreen
 
@@ -19,7 +20,7 @@ import com.architects.pokearch.ui.theme.PokeArchScreen
 @Composable
 fun PokeArchApp(
     modifier: Modifier = Modifier,
-    stateApp: PokeArchAppState = rememberPokeArchAppState()
+    stateApp: PokeArchAppState = rememberPokeArchAppState(),
 ) {
     PokeArchScreen {
         Scaffold(
@@ -28,13 +29,23 @@ fun PokeArchApp(
                 .fillMaxWidth()
                 .height(56.dp),
             topBar = {
-                ArchTopAppBar(
-                    text = stateApp.searchText.value,
-                    scrollBehavior = stateApp.scrollBehavior,
-                    isTopBarVisible = stateApp.showTopBar,
-                    onBackButtonClicked = {stateApp.searchText.value = ""},
-                    onTextChange = {stateApp.searchText.value = it}
-                )
+                when (stateApp.showTopBar) {
+                    ArchTopAppBarType.NORMAL -> ArchTopAppBar(
+                        archTopAppBarType = stateApp.showTopBar,
+                        onBackButtonClicked = {},
+                        onTextChange = {}
+                    )
+
+                    ArchTopAppBarType.SEARCH -> ArchTopAppBar(
+                        text = stateApp.searchText.value,
+                        scrollBehavior = stateApp.scrollBehavior,
+                        archTopAppBarType = stateApp.showTopBar,
+                        onBackButtonClicked = { stateApp.searchText.value = "" },
+                        onTextChange = { stateApp.searchText.value = it }
+                    )
+
+                    ArchTopAppBarType.NONE -> {}
+                }
             },
             bottomBar = {
                 ArchBottomNavigationBar(
