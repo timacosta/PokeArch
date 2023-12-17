@@ -8,7 +8,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -18,7 +17,6 @@ import com.architects.pokearch.ui.components.placeHolders.NoSearchResultPlaceHol
 import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
 import com.architects.pokearch.ui.features.home.state.HomeUiState
 import com.architects.pokearch.ui.features.home.viewModel.HomeViewModel
-import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
@@ -29,7 +27,6 @@ fun HomeScreen(
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val scope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = pokemonName) {
         viewModel.getPokemonList(pokemonName)
@@ -52,11 +49,6 @@ fun HomeScreen(
                     onItemClick = { pokemonId ->
                         onNavigationClick(pokemonId)
                     },
-                    onLoadMore = {
-                        scope.launch {
-                            viewModel.onLoadMore()
-                        }
-                    }
                 )
             }
 
