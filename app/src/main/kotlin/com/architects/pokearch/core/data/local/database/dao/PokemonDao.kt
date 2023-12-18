@@ -16,10 +16,14 @@ interface PokemonDao {
                 "WHERE name LIKE '%' || :filter || '%' " +
                 "ORDER BY id ASC LIMIT :limit OFFSET :offset"
     )
-    suspend fun getPokemonList(filter: String = "", limit: Int = 20, offset: Int = 0): List<PokemonEntity>
+    suspend fun getPokemonList(
+        filter: String = "",
+        limit: Int = 20,
+        offset: Int = 0
+    ): List<PokemonEntity>
 
     @Query("SELECT COUNT(*) FROM PokemonEntity")
-    suspend fun countPokemonList(): Int
+    suspend fun numPokemonInDatabase(): Int
 
     @Query("SELECT id FROM PokemonEntity ORDER BY RANDOM() LIMIT 1")
     suspend fun randomId(): Int

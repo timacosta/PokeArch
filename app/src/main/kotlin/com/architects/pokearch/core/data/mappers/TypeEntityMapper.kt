@@ -8,9 +8,9 @@ import com.architects.pokearch.core.data.network.model.NetworkTypes
 import com.architects.pokearch.core.domain.model.Type
 import com.architects.pokearch.core.domain.model.Types
 
-object TypeEntityMapper : EntityMapper<List<NetworkTypes>, List<Types>, TypesHolder>{
-    override fun asEntity(domain: List<NetworkTypes>): TypesHolder =
-        TypesHolder(domain.map(::mapToTypesEntity))
+object TypeEntityMapper : EntityMapper<List<NetworkTypes>, List<Types>, TypesHolder> {
+    override fun asEntityFrom(network: List<NetworkTypes>): TypesHolder =
+        TypesHolder(network.map(::mapToTypesEntity))
 
     private fun mapToTypesEntity(typeResponse: NetworkTypes) =
         TypesEntity(
@@ -21,7 +21,7 @@ object TypeEntityMapper : EntityMapper<List<NetworkTypes>, List<Types>, TypesHol
     private fun mapToTypeEntity(networkType: NetworkType) =
         TypeEntity(name = networkType.name)
 
-    override fun asDomain(entity: TypesHolder): List<Types> =
+    override fun asDomainFrom(entity: TypesHolder): List<Types> =
         entity.types.map(this::mapToTypes)
 
     private fun mapToTypes(typesEntity: TypesEntity) =
@@ -32,4 +32,5 @@ object TypeEntityMapper : EntityMapper<List<NetworkTypes>, List<Types>, TypesHol
 
     private fun mapToType(typeEntity: TypeEntity) =
         Type(name = typeEntity.name.replaceFirstChar { it.uppercaseChar() })
+
 }

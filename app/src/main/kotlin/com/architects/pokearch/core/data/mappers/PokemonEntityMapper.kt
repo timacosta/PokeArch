@@ -4,8 +4,9 @@ import com.architects.pokearch.core.data.local.database.entities.PokemonEntity
 import com.architects.pokearch.core.data.network.model.NetworkPokemon
 import com.architects.pokearch.core.domain.model.Pokemon
 
-object PokemonEntityMapper : EntityMapper<List<NetworkPokemon>, List<Pokemon>, List<PokemonEntity>> {
-    override fun asEntity(network: List<NetworkPokemon>): List<PokemonEntity> =
+object PokemonEntityMapper :
+    EntityMapper<List<NetworkPokemon>, List<Pokemon>, List<PokemonEntity>> {
+    override fun asEntityFrom(network: List<NetworkPokemon>): List<PokemonEntity> =
         network.map(::mapToPokemonEntity)
 
     private fun mapToPokemonEntity(networkPokemon: NetworkPokemon) =
@@ -15,7 +16,7 @@ object PokemonEntityMapper : EntityMapper<List<NetworkPokemon>, List<Pokemon>, L
             url = networkPokemon.url
         )
 
-    override fun asDomain(entity: List<PokemonEntity>): List<Pokemon> =
+    override fun asDomainFrom(entity: List<PokemonEntity>): List<Pokemon> =
         entity.map(::mapToPokemon)
 
     private fun mapToPokemon(pokemonEntity: PokemonEntity) =

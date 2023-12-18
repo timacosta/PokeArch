@@ -15,28 +15,28 @@ import com.architects.pokearch.core.domain.model.Stat.Companion.SP_DEF
 import com.architects.pokearch.core.domain.model.Stats
 
 object StatEntityMapper : EntityMapper<List<NetworkStats>, List<Stats>, StatsHolder> {
-    override fun asEntity(network: List<NetworkStats>): StatsHolder =
-        StatsHolder(network.map(::mapToStatsEntity))
+    override fun asEntityFrom(network: List<NetworkStats>): StatsHolder =
+        StatsHolder(network.map(::mapToStatsEntityFrom))
 
-    private fun mapToStatsEntity(networkStats: NetworkStats) =
+    private fun mapToStatsEntityFrom(networkStats: NetworkStats) =
         StatsEntity(
             value = networkStats.value,
-            stat = mapToStatEntity(networkStats.stat)
+            stat = mapToStatEntityFrom(networkStats.stat)
         )
 
-    private fun mapToStatEntity(networkStat: NetworkStat) =
+    private fun mapToStatEntityFrom(networkStat: NetworkStat) =
         StatEntity(name = networkStat.name)
 
-    override fun asDomain(entity: StatsHolder): List<Stats> =
-        entity.stats.map(::mapToStats)
+    override fun asDomainFrom(entity: StatsHolder): List<Stats> =
+        entity.stats.map(::mapToStatsFrom)
 
-    private fun mapToStats(statsEntity: StatsEntity) =
+    private fun mapToStatsFrom(statsEntity: StatsEntity) =
         Stats(
             value = statsEntity.value,
-            stat = mapToStat(statsEntity.stat)
+            stat = mapToStatFrom(statsEntity.stat)
         )
 
-    private fun mapToStat(statEntity: StatEntity) =
+    private fun mapToStatFrom(statEntity: StatEntity) =
         Stat(
             name = when (statEntity.name) {
                 "hp" -> HP
@@ -49,3 +49,4 @@ object StatEntityMapper : EntityMapper<List<NetworkStats>, List<Stats>, StatsHol
             }
         )
 }
+
