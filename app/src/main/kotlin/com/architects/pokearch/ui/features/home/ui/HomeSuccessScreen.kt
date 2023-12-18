@@ -7,9 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.dimensionResource
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 import com.architects.pokearch.R
 import com.architects.pokearch.core.domain.model.Pokemon
-import com.architects.pokearch.ui.components.extensions.itemsPaging
 import com.architects.pokearch.ui.features.home.state.HomeUiState
 
 @Composable
@@ -25,7 +26,11 @@ fun HomeSuccessScreen(
         state = lazyGridState,
         columns = GridCells.Adaptive(dimensionResource(id = R.dimen.grid_cell_min_size))
     ) {
-        itemsPaging(items = pokemons) { pokemon ->
+        items(count = pokemons.itemCount,
+              key = pokemons.itemKey { it.getIndex() },
+              contentType = pokemons.itemContentType { "contentType" }
+        ) { index ->
+            val pokemon = pokemons[index]
             pokemon?.let {
                 HomeItem(
                     pokemon = it,
