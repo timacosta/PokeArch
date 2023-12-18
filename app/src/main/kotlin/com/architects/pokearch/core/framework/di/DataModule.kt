@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package com.architects.pokearch.core.data.di
+package com.architects.pokearch.core.framework.di
 
 import com.architects.pokearch.core.framework.datasource.MediaPlayerDataSource
 import com.architects.pokearch.core.framework.mediaplayer.AndroidMediaPlayerSource

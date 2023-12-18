@@ -5,8 +5,8 @@ import arrow.core.Either
 import com.architects.pokearch.core.data.network.mappers.toDomain
 import com.architects.pokearch.core.data.network.service.CryService
 import com.architects.pokearch.core.data.network.service.PokedexService
-import com.architects.pokearch.core.domain.model.Failure
 import com.architects.pokearch.core.domain.model.PokemonInfo
+import com.architects.pokearch.core.domain.model.error.Failure
 import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(
@@ -18,13 +18,13 @@ class RemoteDataSource @Inject constructor(
         private const val LIMIT_ALL = 10000
     }
 
-    suspend fun getPokemonListFromRemote(limit: Int = LIMIT_ALL, offset: Int = 0) =
+    suspend fun getPokemonList(limit: Int = LIMIT_ALL, offset: Int = 0) =
         pokedexService.fetchPokemonList(limit, offset)
 
-    suspend fun areMorePokemonAvailableFromRemote(numPokemonInDatabase: Int) =
-        getPokemonListFromRemote(
+    suspend fun areMorePokemonAvailableFrom(count: Int) =
+        getPokemonList(
             limit = 1,
-            offset = numPokemonInDatabase
+            offset = count
         ).let { responseFromRemote ->
             when {
                 responseFromRemote.isSuccessful -> responseFromRemote.body()?.next != null
@@ -33,7 +33,7 @@ class RemoteDataSource @Inject constructor(
             }
         }
 
-    suspend fun getOnePokemonFromRemote(id: Int): Either<Failure, PokemonInfo> {
+    suspend fun getPokemon(id: Int): Either<Failure, PokemonInfo> {
 
         val response = pokedexService.fetchPokemonInfo(id)
 

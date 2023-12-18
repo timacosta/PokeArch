@@ -4,9 +4,9 @@ import arrow.core.Either
 import com.architects.pokearch.core.data.local.LocalDataSource
 import com.architects.pokearch.core.data.network.RemoteDataSource
 import com.architects.pokearch.core.data.network.mappers.toDomain
-import com.architects.pokearch.core.domain.model.Failure
 import com.architects.pokearch.core.domain.model.Pokemon
 import com.architects.pokearch.core.domain.model.PokemonInfo
+import com.architects.pokearch.core.domain.model.error.Failure
 import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -29,8 +29,6 @@ class PokeArchRepository @Inject constructor(
     ): Flow<Either<Failure, List<Pokemon>>> = flow {
 
         val offset = page * limit
-        val isMorePokemonAvailable =
-            remoteDataSource.areMorePokemonAvailableFromRemote(localDataSource.numPokemonInDatabase())
 
         val pokemonListDb = localDataSource.getPokemonListFromDatabase(
             filter,
@@ -38,27 +36,36 @@ class PokeArchRepository @Inject constructor(
             offset
         )
 
-        val remotePokemonList = remoteDataSource.getPokemonListFromRemote(limit, offset)
-
         emit(Either.Right(pokemonListDb))
 
-        if (isMorePokemonAvailable) {
-            emit(remotePokemonList
-                .let { responseFromService ->
-                    when {
-                        responseFromService.isSuccessful -> {
-                            responseFromService.body()?.let { pokemonResponse ->
-                                localDataSource.save(
-                                    pokemonResponse.results.toDomain()
-                                )
-                                Either.Right(pokemonListDb)
-                            } ?: Either.Left(Failure.UnknownError)
-                        }
+        val isMorePokemonAvailable =
+            remoteDataSource.areMorePokemonAvailableFrom(localDataSource.numPokemonInDatabase())
 
-                        else -> Either.Left(Failure.UnknownError)
+        if (isMorePokemonAvailable) {
+
+            val remotePokemonList = remoteDataSource.getPokemonList(limit, offset)
+
+            val response = remotePokemonList.let { responseFromService ->
+                when {
+                    responseFromService.isSuccessful -> {
+
+                        responseFromService.body()?.let { remotePokemonList ->
+
+                            localDataSource.savePokemonList(
+                                remotePokemonList.results.toDomain()
+                            )
+                            val updatedPokemonList = localDataSource.getPokemonListFromDatabase(
+                                filter, limit, offset
+                            )
+                            Either.Right(updatedPokemonList)
+
+                        } ?: Either.Left(Failure.UnknownError)
                     }
+
+                    else -> Either.Left(Failure.UnknownError)
                 }
-            )
+            }
+            emit(response)
         }
     }
 
@@ -68,7 +75,19 @@ class PokeArchRepository @Inject constructor(
         }
 
         if (pokemon == null) {
-            emit(remoteDataSource.getOnePokemonFromRemote(id))
+
+            when (val remotePokemonInfo = remoteDataSource.getPokemon(id)) {
+                is Either.Right ->
+                    localDataSource.savePokemonInfo(remotePokemonInfo.value)
+
+                else -> Failure.UnknownError
+            }
+
+            val updatedPokemonInfo = localDataSource.getPokemonInfo(id)
+
+            updatedPokemonInfo?.let { updatedPokemon ->
+                emit(Either.Right(updatedPokemon))
+            }
         }
     }
 
@@ -86,4 +105,3 @@ class PokeArchRepository @Inject constructor(
         return fetchPokemonInfo(localDataSource.randomId())
     }
 }
-

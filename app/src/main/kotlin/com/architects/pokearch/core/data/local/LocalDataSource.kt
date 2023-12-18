@@ -23,19 +23,25 @@ class LocalDataSource @Inject constructor(
         return pokemonList.toDomain()
     }
 
-    suspend fun save(pokemonList: List<Pokemon>) {
+    suspend fun savePokemonList(pokemonList: List<Pokemon>) {
         pokemonDao.insertPokemonList(
             pokemonList.toEntity()
         )
     }
 
-    suspend fun numPokemonInDatabase(): Int = pokemonDao.numPokemonInDatabase()
-
-    suspend fun randomId(): Int = pokemonDao.randomId()
+    suspend fun savePokemonInfo(pokemonInfo: PokemonInfo) {
+        pokemonInfoDao.insertPokemonInfo(
+            pokemonInfo.toEntity()
+        )
+    }
 
     suspend fun getPokemonInfo(id: Int): PokemonInfo? {
         val pokemonInfoEntity = pokemonInfoDao.getPokemonInfo(id)
 
         return pokemonInfoEntity?.toDomain()
     }
+
+    suspend fun numPokemonInDatabase(): Int = pokemonDao.numPokemonInDatabase()
+
+    suspend fun randomId(): Int = pokemonDao.randomId()
 }

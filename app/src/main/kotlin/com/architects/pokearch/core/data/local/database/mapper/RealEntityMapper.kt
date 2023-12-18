@@ -60,9 +60,6 @@ fun StatEntity.toDomain(): Stat =
         }
     )
 
-fun List<TypesHolder>.toDomainTypes(): List<Types> =
-    flatMap { it.toDomain() }
-
 fun TypesHolder.toDomain(): List<Types> =
     types.map {
         Types(
