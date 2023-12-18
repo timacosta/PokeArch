@@ -2,8 +2,8 @@
 
 package com.architects.pokearch.core.data.di
 
-import com.architects.pokearch.core.data.datasource.MediaPlayerDataSource
-import com.architects.pokearch.core.data.mediaplayer.AndroidMediaPlayerSource
+import com.architects.pokearch.core.framework.datasource.MediaPlayerDataSource
+import com.architects.pokearch.core.framework.mediaplayer.AndroidMediaPlayerSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

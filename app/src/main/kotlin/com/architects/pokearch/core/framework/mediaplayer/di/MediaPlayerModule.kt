@@ -1,4 +1,4 @@
-package com.architects.pokearch.core.data.mediaplayer.di
+package com.architects.pokearch.core.framework.mediaplayer.di
 
 import android.media.MediaPlayer
 import dagger.Module
