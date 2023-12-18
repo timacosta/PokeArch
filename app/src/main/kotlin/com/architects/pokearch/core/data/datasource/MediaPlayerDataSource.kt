@@ -1,4 +1,4 @@
-package com.architects.pokearch.core.framework.datasource
+package com.architects.pokearch.core.data.datasource
 
 interface MediaPlayerDataSource {
     suspend fun playCry(url: String)
