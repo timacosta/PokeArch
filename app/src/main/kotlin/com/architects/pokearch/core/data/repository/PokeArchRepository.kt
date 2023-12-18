@@ -2,6 +2,7 @@ package com.architects.pokearch.core.data.repository
 
 import arrow.core.Either
 import com.architects.pokearch.core.data.local.LocalDataSource
+import com.architects.pokearch.core.data.local.database.mapper.toDomain
 import com.architects.pokearch.core.data.network.RemoteDataSource
 import com.architects.pokearch.core.data.network.mappers.toDomain
 import com.architects.pokearch.core.domain.model.Pokemon
@@ -31,10 +32,8 @@ class PokeArchRepository @Inject constructor(
         val offset = page * limit
 
         val pokemonListDb = localDataSource.getPokemonListFromDatabase(
-            filter,
-            limit,
-            offset
-        )
+            filter, limit, offset
+        ).toDomain()
 
         emit(Either.Right(pokemonListDb))
 
@@ -65,20 +64,20 @@ class PokeArchRepository @Inject constructor(
                     else -> Either.Left(Failure.UnknownError)
                 }
             }
-            emit(response)
+            emit(response.map { it.toDomain() })
         }
     }
 
     override suspend fun fetchPokemonInfo(id: Int): Flow<Either<Failure, PokemonInfo>> = flow {
         val pokemon = localDataSource.getPokemonInfo(id)?.let { pokemon ->
-            emit(Either.Right(pokemon))
+            emit(Either.Right(pokemon).map { it.toDomain() })
         }
 
         if (pokemon == null) {
 
             when (val remotePokemonInfo = remoteDataSource.getPokemon(id)) {
                 is Either.Right ->
-                    localDataSource.savePokemonInfo(remotePokemonInfo.value)
+                    localDataSource.savePokemonInfo(remotePokemonInfo.value.toDomain())
 
                 else -> Failure.UnknownError
             }
@@ -86,7 +85,7 @@ class PokeArchRepository @Inject constructor(
             val updatedPokemonInfo = localDataSource.getPokemonInfo(id)
 
             updatedPokemonInfo?.let { updatedPokemon ->
-                emit(Either.Right(updatedPokemon))
+                emit(Either.Right(updatedPokemon).map { it.toDomain() })
             }
         }
     }

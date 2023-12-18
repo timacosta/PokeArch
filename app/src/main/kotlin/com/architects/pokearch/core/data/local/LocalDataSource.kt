@@ -2,7 +2,8 @@ package com.architects.pokearch.core.data.local
 
 import com.architects.pokearch.core.data.local.database.dao.PokemonDao
 import com.architects.pokearch.core.data.local.database.dao.PokemonInfoDao
-import com.architects.pokearch.core.data.local.database.mapper.toDomain
+import com.architects.pokearch.core.data.local.database.entities.PokemonEntity
+import com.architects.pokearch.core.data.local.database.entities.PokemonInfoEntity
 import com.architects.pokearch.core.domain.mappers.toEntity
 import com.architects.pokearch.core.domain.model.Pokemon
 import com.architects.pokearch.core.domain.model.PokemonInfo
@@ -16,11 +17,9 @@ class LocalDataSource @Inject constructor(
         filter: String,
         limit: Int,
         offset: Int
-    ): List<Pokemon> {
+    ): List<PokemonEntity> {
 
-        val pokemonList = pokemonDao.getPokemonList(filter, limit, offset)
-
-        return pokemonList.toDomain()
+        return pokemonDao.getPokemonList(filter, limit, offset)
     }
 
     suspend fun savePokemonList(pokemonList: List<Pokemon>) {
@@ -35,10 +34,9 @@ class LocalDataSource @Inject constructor(
         )
     }
 
-    suspend fun getPokemonInfo(id: Int): PokemonInfo? {
-        val pokemonInfoEntity = pokemonInfoDao.getPokemonInfo(id)
+    suspend fun getPokemonInfo(id: Int): PokemonInfoEntity? {
 
-        return pokemonInfoEntity?.toDomain()
+        return pokemonInfoDao.getPokemonInfo(id)
     }
 
     suspend fun numPokemonInDatabase(): Int = pokemonDao.numPokemonInDatabase()
