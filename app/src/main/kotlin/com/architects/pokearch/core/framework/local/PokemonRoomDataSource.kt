@@ -13,7 +13,7 @@ class PokemonRoomDataSource @Inject constructor(
     private val pokemonDao: PokemonDao,
     private val pokemonInfoDao: PokemonInfoDao
 ) : PokemonLocalDataSource {
-    override suspend fun getPokemonListFromDatabase(
+    override suspend fun getPokemonList(
         filter: String,
         limit: Int,
         offset: Int
@@ -35,7 +35,7 @@ class PokemonRoomDataSource @Inject constructor(
         return pokemonInfoDao.getPokemonInfo(id)?.toDomain()
     }
 
-    override suspend fun numPokemonInDatabase(): Int = pokemonDao.numPokemonInDatabase()
+    override suspend fun numCount(): Int = pokemonDao.numPokemonInDatabase()
 
     override suspend fun randomId(): Int = pokemonDao.randomId()
 }

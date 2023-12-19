@@ -4,7 +4,7 @@ import com.architects.pokearch.core.domain.model.Pokemon
 import com.architects.pokearch.core.domain.model.PokemonInfo
 
 interface PokemonLocalDataSource {
-    suspend fun getPokemonListFromDatabase(
+    suspend fun getPokemonList(
         filter: String,
         limit: Int,
         offset: Int
@@ -16,7 +16,7 @@ interface PokemonLocalDataSource {
 
     suspend fun getPokemonInfo(id: Int): PokemonInfo?
 
-    suspend fun numPokemonInDatabase(): Int
+    suspend fun numCount(): Int
 
     suspend fun randomId(): Int
 }

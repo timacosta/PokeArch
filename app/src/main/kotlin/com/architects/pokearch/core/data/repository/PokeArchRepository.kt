@@ -17,7 +17,6 @@ class PokeArchRepository @Inject constructor(
 ) : PokeArchRepositoryContract {
 
     companion object {
-        private const val LIMIT_ALL = 10000
         private const val PREFIX_URL = "https://play.pokemonshowdown.com/audio/cries/"
         private const val SUBFIX_URL = ".mp3"
     }
@@ -25,41 +24,28 @@ class PokeArchRepository @Inject constructor(
     override suspend fun getPokemonList(filter: String, page: Int, limit: Int): List<Pokemon> {
         val offset = page * limit
 
-        val pokemonListDatabase = localDataSource.getPokemonListFromDatabase(filter, limit, offset)
-
-        return pokemonListDatabase
+        return localDataSource.getPokemonList(filter, limit, offset)
 
     }
 
-    override suspend fun fetchPokemonList(): Failure? =
-        if (areMorePokemonAvailableRemote()) {
-            getRemotePokemonList()
-        } else null
+    override suspend fun fetchPokemonList(): Failure? {
+        if (remoteDataSource.areMorePokemonAvailableFrom(localDataSource.numCount())) {
+            val remotePokemonList = getRemotePokemonList()
 
-    private suspend fun areMorePokemonAvailableRemote() =
-        remoteDataSource.getPokemonList(1, localDataSource.numPokemonInDatabase()).let { responseCount ->
-            when {
-                responseCount.isSuccessful -> {
-                    responseCount.body()?.next != null
-                }
-
-                else -> false
-            }
+            return remotePokemonList.fold(
+                ifRight = { pokemonList ->
+                    localDataSource.savePokemonList(pokemonList)
+                    null
+                },
+                ifLeft = { Failure.UnknownError }
+            )
         }
+        return null
+    }
 
     private suspend fun getRemotePokemonList() =
-        remoteDataSource.getPokemonList(LIMIT_ALL, 0).let { response ->
-            when {
-                response.isSuccessful -> {
-                    response.body()?.let { pokemonResponse ->
-                        pokemonDao.insertPokemonList(PokemonEntityMapper.asEntity(pokemonResponse.results))
-                        null
-                    }
-                }
-
-                else -> Failure.UnknownError
-            }
-        }
+        remoteDataSource.getPokemonList()
+            .fold(ifRight = { Either.Right(it) }, ifLeft = { Either.Left(it) })
 
 
     override suspend fun fetchPokemonInfo(id: Int): Flow<Either<Failure, PokemonInfo>> = flow {
@@ -74,22 +60,16 @@ class PokeArchRepository @Inject constructor(
 
     private suspend fun getRemotePokemon(
         id: Int,
-    ): Either<Failure, PokemonInfo> {
-        val response = remoteDataSource.getPokemon(id)
-
-        return when {
-            response.isSuccessful -> {
-                response.body()?.let {
-                    localDataSource.savePokemonInfo(it)
-                    localDataSource.getPokemonInfo(id)?.let { entity ->
-                        Either.Right(PokemonInfoEntityMapper.asDomain(entity))
-                    }
-                } ?: Either.Left(Failure.UnknownError)
+    ): Either<Failure, PokemonInfo> = remoteDataSource.getPokemon(id)
+        .fold(
+            ifRight = { response ->
+                localDataSource.savePokemonInfo(response)
+                Either.Right(response)
+            },
+            ifLeft = { failure ->
+                Either.Left(failure)
             }
-
-            else -> Either.Left(Failure.UnknownError)
-        }
-    }
+        )
 
     override suspend fun fetchCry(name: String): String {
         var result = ""
