@@ -7,11 +7,14 @@ import com.architects.pokearch.core.domain.model.PokemonInfo
 import kotlinx.coroutines.flow.Flow
 
 interface PokeArchRepositoryContract {
-    suspend fun fetchPokemonList(
+
+    suspend fun getPokemonList(
         filter: String = "",
         page: Int = 0,
         limit: Int = 20
-    ): Flow<Either<Failure, List<Pokemon>>>
+    ): List<Pokemon>
+
+    suspend fun fetchPokemonList(): Failure?
 
     suspend fun fetchPokemonInfo(id: Int): Flow<Either<Failure, PokemonInfo>>
 
