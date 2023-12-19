@@ -1,13 +1,13 @@
 package com.architects.pokearch.core.domain.mappers
 
-import com.architects.pokearch.core.data.local.database.entities.PokemonEntity
-import com.architects.pokearch.core.data.local.database.entities.PokemonInfoEntity
-import com.architects.pokearch.core.data.local.database.entities.converters.StatEntity
-import com.architects.pokearch.core.data.local.database.entities.converters.StatsEntity
-import com.architects.pokearch.core.data.local.database.entities.converters.StatsHolder
-import com.architects.pokearch.core.data.local.database.entities.converters.TypeEntity
-import com.architects.pokearch.core.data.local.database.entities.converters.TypesEntity
-import com.architects.pokearch.core.data.local.database.entities.converters.TypesHolder
+import com.architects.pokearch.core.framework.local.entities.PokemonEntity
+import com.architects.pokearch.core.framework.local.entities.PokemonInfoEntity
+import com.architects.pokearch.core.framework.local.entities.converters.StatEntity
+import com.architects.pokearch.core.framework.local.entities.converters.StatsEntity
+import com.architects.pokearch.core.framework.local.entities.converters.StatsHolder
+import com.architects.pokearch.core.framework.local.entities.converters.TypeEntity
+import com.architects.pokearch.core.framework.local.entities.converters.TypesEntity
+import com.architects.pokearch.core.framework.local.entities.converters.TypesHolder
 import com.architects.pokearch.core.domain.model.Pokemon
 import com.architects.pokearch.core.domain.model.PokemonInfo
 import com.architects.pokearch.core.domain.model.Stats

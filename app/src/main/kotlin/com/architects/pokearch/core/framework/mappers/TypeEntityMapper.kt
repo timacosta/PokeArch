@@ -1,0 +1,36 @@
+package com.architects.pokearch.core.framework.mappers
+
+import com.architects.pokearch.core.framework.local.entities.converters.TypeEntity
+import com.architects.pokearch.core.framework.local.entities.converters.TypesEntity
+import com.architects.pokearch.core.framework.local.entities.converters.TypesHolder
+import com.architects.pokearch.core.framework.network.model.NetworkType
+import com.architects.pokearch.core.framework.network.model.NetworkTypes
+import com.architects.pokearch.core.domain.model.Type
+import com.architects.pokearch.core.domain.model.Types
+
+object TypeEntityMapper : EntityMapper<List<NetworkTypes>, List<Types>, TypesHolder> {
+    override fun asEntityFrom(network: List<NetworkTypes>): TypesHolder =
+        TypesHolder(network.map(::mapToTypesEntity))
+
+    private fun mapToTypesEntity(typeResponse: NetworkTypes) =
+        TypesEntity(
+            slot = typeResponse.slot,
+            type = mapToTypeEntity(typeResponse.networkType)
+        )
+
+    private fun mapToTypeEntity(networkType: NetworkType) =
+        TypeEntity(name = networkType.name)
+
+    override fun asDomainFrom(entity: TypesHolder): List<Types> =
+        entity.types.map(this::mapToTypes)
+
+    private fun mapToTypes(typesEntity: TypesEntity) =
+        Types(
+            slot = typesEntity.slot,
+            type = mapToType(typesEntity.type)
+        )
+
+    private fun mapToType(typeEntity: TypeEntity) =
+        Type(name = typeEntity.name.replaceFirstChar { it.uppercaseChar() })
+
+}
