@@ -29,8 +29,8 @@ class PokeArchRepository @Inject constructor(
     }
 
     override suspend fun fetchPokemonList(): Failure? {
-        if (remoteDataSource.areMorePokemonAvailableFrom(localDataSource.numCount())) {
-            val remotePokemonList = getRemotePokemonList()
+        if (remoteDataSource.areMorePokemonAvailableFrom(localDataSource.countPokemon())) {
+            val remotePokemonList = remoteDataSource.getPokemonList()
 
             return remotePokemonList.fold(
                 ifRight = { pokemonList ->
@@ -42,11 +42,6 @@ class PokeArchRepository @Inject constructor(
         }
         return null
     }
-
-    private suspend fun getRemotePokemonList() =
-        remoteDataSource.getPokemonList()
-            .fold(ifRight = { Either.Right(it) }, ifLeft = { Either.Left(it) })
-
 
     override suspend fun fetchPokemonInfo(id: Int): Flow<Either<Failure, PokemonInfo>> = flow {
         val pokemon = localDataSource.getPokemonInfo(id)?.let { pokemon ->
@@ -71,9 +66,11 @@ class PokeArchRepository @Inject constructor(
             }
         )
 
+    //TODO: RESPONSIBILITY HERE OR SERVER DATASOURCE
     override suspend fun fetchCry(name: String): String {
         var result = ""
         remoteDataSource.tryCatchCry(name) { result = it }
+
         if (name.contains("-") && result.isEmpty()) {
             remoteDataSource.tryCatchCry(name.replace("-", "")) { result = it }
             remoteDataSource.tryCatchCry(name.split("-")[0]) { result = it }

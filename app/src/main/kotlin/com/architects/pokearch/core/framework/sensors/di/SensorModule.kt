@@ -1,8 +1,8 @@
 package com.architects.pokearch.core.framework.sensors.di
 
 import android.app.Application
+import com.architects.pokearch.core.data.datasource.SensorSource
 import com.architects.pokearch.core.framework.sensors.AccelerometerSensor
-import com.architects.pokearch.core.framework.sensors.SensorSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

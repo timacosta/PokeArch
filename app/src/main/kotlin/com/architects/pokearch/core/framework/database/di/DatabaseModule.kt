@@ -1,11 +1,11 @@
-package com.architects.pokearch.core.framework.local.di
+package com.architects.pokearch.core.framework.database.di
 
 import android.content.Context
 import androidx.room.Room
-import com.architects.pokearch.core.framework.local.PokeArchDatabase
-import com.architects.pokearch.core.framework.local.entities.converters.TypesHolderConverter
-import com.architects.pokearch.core.framework.local.dao.PokemonDao
-import com.architects.pokearch.core.framework.local.dao.PokemonInfoDao
+import com.architects.pokearch.core.framework.database.PokeArchDatabase
+import com.architects.pokearch.core.framework.database.dao.PokemonDao
+import com.architects.pokearch.core.framework.database.dao.PokemonInfoDao
+import com.architects.pokearch.core.framework.database.entities.converters.TypesHolderConverter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

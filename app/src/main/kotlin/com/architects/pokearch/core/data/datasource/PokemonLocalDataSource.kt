@@ -16,7 +16,7 @@ interface PokemonLocalDataSource {
 
     suspend fun getPokemonInfo(id: Int): PokemonInfo?
 
-    suspend fun numCount(): Int
+    suspend fun countPokemon(): Int
 
     suspend fun randomId(): Int
 }

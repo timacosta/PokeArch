@@ -5,8 +5,8 @@ package com.architects.pokearch.core.framework.di
 import com.architects.pokearch.core.data.datasource.MediaPlayerDataSource
 import com.architects.pokearch.core.data.datasource.PokemonLocalDataSource
 import com.architects.pokearch.core.data.datasource.PokemonRemoteDataSource
-import com.architects.pokearch.core.framework.datasource.AndroidMediaPlayerSource
-import com.architects.pokearch.core.framework.local.PokemonRoomDataSource
+import com.architects.pokearch.core.framework.database.PokemonRoomDataSource
+import com.architects.pokearch.core.framework.mediaplayer.AndroidMediaPlayerSource
 import com.architects.pokearch.core.framework.network.PokemonServerDataSource
 import dagger.Binds
 import dagger.Module

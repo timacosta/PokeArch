@@ -15,16 +15,17 @@ class PokemonServerDataSource @Inject constructor(
     private val pokedexService: PokedexService,
     private val cryService: CryService
 ) : PokemonRemoteDataSource {
-    companion object {
-        private const val LIMIT_ALL = 10000
-    }
 
     override suspend fun getPokemonList(limit: Int, offset: Int):Either<Failure, List<Pokemon>> {
-        val response = pokedexService.fetchPokemonList(LIMIT_ALL, 0).let { response ->
+
+        val response = pokedexService.fetchPokemonList(limit, offset).let { response ->
+
             when {
                 response.isSuccessful -> {
                     response.body()?.let { pokemonResponse ->
+
                         Either.Right(pokemonResponse.results.toDomain())
+
                     } ?: Either.Left(Failure.UnknownError)
                 }
 
@@ -34,6 +35,7 @@ class PokemonServerDataSource @Inject constructor(
         return response
     }
 
+    //TODO: IMPLEMENT CONTROL NETWORK ERRORS
     override suspend fun areMorePokemonAvailableFrom(count: Int): Boolean {
 
         val remotePokemonList = pokedexService.fetchPokemonList(limit = 1, offset = count)

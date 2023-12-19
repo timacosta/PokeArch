@@ -1,4 +1,4 @@
-package com.architects.pokearch.core.framework.datasource
+package com.architects.pokearch.core.framework.mediaplayer
 
 import android.content.Context
 import android.media.AudioAttributes

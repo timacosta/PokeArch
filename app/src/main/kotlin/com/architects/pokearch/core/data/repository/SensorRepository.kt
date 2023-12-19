@@ -1,6 +1,6 @@
 package com.architects.pokearch.core.data.repository
 
-import com.architects.pokearch.core.framework.sensors.SensorSource
+import com.architects.pokearch.core.data.datasource.SensorSource
 import com.architects.pokearch.core.domain.repository.SensorRepositoryContract
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow

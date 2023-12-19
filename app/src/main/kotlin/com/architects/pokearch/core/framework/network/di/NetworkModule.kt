@@ -1,5 +1,7 @@
 package com.architects.pokearch.core.framework.network.di
 
+import com.architects.pokearch.core.framework.network.di.annotations.CryRetrofit
+import com.architects.pokearch.core.framework.network.di.annotations.PokeRetrofit
 import com.architects.pokearch.core.framework.network.service.CryService
 import com.architects.pokearch.core.framework.network.service.PokedexService
 import dagger.Module
@@ -11,7 +13,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Qualifier
 import javax.inject.Singleton
 
 private const val BASE_POKE_API_URL = "https://pokeapi.co/api/v2/"
@@ -66,10 +67,6 @@ object NetworkModule {
     }
 }
 
-@Retention(AnnotationRetention.RUNTIME)
-@Qualifier
-annotation class PokeRetrofit
 
-@Retention(AnnotationRetention.RUNTIME)
-@Qualifier
-annotation class CryRetrofit
+
+

@@ -1,4 +1,4 @@
-package com.architects.pokearch.core.framework.local.entities.converters
+package com.architects.pokearch.core.framework.database.entities.converters
 
 data class StatsHolder (val stats: List<StatsEntity>)
 

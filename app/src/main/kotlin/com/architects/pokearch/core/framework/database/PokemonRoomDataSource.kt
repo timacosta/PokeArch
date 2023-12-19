@@ -1,12 +1,12 @@
-package com.architects.pokearch.core.framework.local
+package com.architects.pokearch.core.framework.database
 
 import com.architects.pokearch.core.data.datasource.PokemonLocalDataSource
 import com.architects.pokearch.core.domain.mappers.toEntity
 import com.architects.pokearch.core.domain.model.Pokemon
 import com.architects.pokearch.core.domain.model.PokemonInfo
-import com.architects.pokearch.core.framework.local.dao.PokemonDao
-import com.architects.pokearch.core.framework.local.dao.PokemonInfoDao
-import com.architects.pokearch.core.framework.local.mapper.toDomain
+import com.architects.pokearch.core.framework.database.dao.PokemonDao
+import com.architects.pokearch.core.framework.database.dao.PokemonInfoDao
+import com.architects.pokearch.core.framework.database.mapper.toDomain
 import javax.inject.Inject
 
 class PokemonRoomDataSource @Inject constructor(
@@ -35,7 +35,7 @@ class PokemonRoomDataSource @Inject constructor(
         return pokemonInfoDao.getPokemonInfo(id)?.toDomain()
     }
 
-    override suspend fun numCount(): Int = pokemonDao.numPokemonInDatabase()
+    override suspend fun countPokemon(): Int = pokemonDao.numPokemonInDatabase()
 
     override suspend fun randomId(): Int = pokemonDao.randomId()
 }
