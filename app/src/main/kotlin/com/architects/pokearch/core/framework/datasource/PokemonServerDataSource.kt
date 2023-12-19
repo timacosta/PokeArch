@@ -11,7 +11,7 @@ import com.architects.pokearch.core.domain.model.PokemonInfo
 import com.architects.pokearch.core.domain.model.error.Failure
 import javax.inject.Inject
 
-class PokemonServiceDataSource @Inject constructor(
+class PokemonServerDataSource @Inject constructor(
     private val pokedexService: PokedexService,
     private val cryService: CryService
 ) : PokemonRemoteDataSource {

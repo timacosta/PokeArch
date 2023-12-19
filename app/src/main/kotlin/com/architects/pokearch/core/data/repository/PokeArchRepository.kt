@@ -1,19 +1,19 @@
 package com.architects.pokearch.core.data.repository
 
 import arrow.core.Either
+import com.architects.pokearch.core.data.datasource.PokemonLocalDataSource
+import com.architects.pokearch.core.data.datasource.PokemonRemoteDataSource
 import com.architects.pokearch.core.domain.model.Pokemon
 import com.architects.pokearch.core.domain.model.PokemonInfo
 import com.architects.pokearch.core.domain.model.error.Failure
 import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
-import com.architects.pokearch.core.framework.datasource.PokemonRoomDataSource
-import com.architects.pokearch.core.framework.datasource.PokemonServiceDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class PokeArchRepository @Inject constructor(
-    private val remoteDataSource: PokemonServiceDataSource,
-    private val localDataSource: PokemonRoomDataSource
+    private val remoteDataSource: PokemonRemoteDataSource,
+    private val localDataSource: PokemonLocalDataSource
 ) : PokeArchRepositoryContract {
 
     companion object {

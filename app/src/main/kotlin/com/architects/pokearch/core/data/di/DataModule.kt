@@ -7,7 +7,7 @@ import com.architects.pokearch.core.data.datasource.PokemonLocalDataSource
 import com.architects.pokearch.core.data.datasource.PokemonRemoteDataSource
 import com.architects.pokearch.core.framework.datasource.AndroidMediaPlayerSource
 import com.architects.pokearch.core.framework.datasource.PokemonRoomDataSource
-import com.architects.pokearch.core.framework.datasource.PokemonServiceDataSource
+import com.architects.pokearch.core.framework.datasource.PokemonServerDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -28,7 +28,7 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindsPokemonRemoteDataSource(
-        pokemonServiceDataSource: PokemonServiceDataSource
+        pokemonServiceDataSource: PokemonServerDataSource
     ): PokemonRemoteDataSource
 
 }
