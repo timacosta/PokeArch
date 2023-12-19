@@ -29,28 +29,22 @@ class PokeArchRepository @Inject constructor(
         private const val SUBFIX_URL = ".mp3"
     }
 
-    override suspend fun fetchPokemonList(
-        filter: String,
-        page: Int,
-        limit: Int,
-    ): Flow<Either<Failure, List<Pokemon>>> = flow {
+    override suspend fun getPokemonList(filter: String, page: Int, limit: Int): List<Pokemon> {
         val offset = page * limit
-        emit(
-            Either.Right(
-                PokemonEntityMapper.asDomain(
-                    pokemonDao.getPokemonList(
-                        filter,
-                        limit,
-                        offset
-                    )
-                )
+
+        return PokemonEntityMapper.asDomain(
+            pokemonDao.getPokemonList(
+                filter,
+                limit,
+                offset
             )
         )
-
-        if (areMorePokemonAvailableRemote()) {
-            emit(getRemotePokemonList(filter, limit, offset))
-        }
     }
+
+    override suspend fun fetchPokemonList(): Failure? =
+        if (areMorePokemonAvailableRemote()) {
+            getRemotePokemonList()
+        } else null
 
     private suspend fun areMorePokemonAvailableRemote() =
         pokedexService.fetchPokemonList(1, pokemonDao.countPokemonList()).let { responseCount ->
@@ -63,29 +57,17 @@ class PokeArchRepository @Inject constructor(
             }
         }
 
-    private suspend fun getRemotePokemonList(
-        filter: String,
-        limit: Int,
-        offset: Int,
-    ) =
+    private suspend fun getRemotePokemonList() =
         pokedexService.fetchPokemonList(LIMIT_ALL, 0).let { response ->
             when {
                 response.isSuccessful -> {
                     response.body()?.let { pokemonResponse ->
                         pokemonDao.insertPokemonList(PokemonEntityMapper.asEntity(pokemonResponse.results))
-                        Either.Right(
-                            PokemonEntityMapper.asDomain(
-                                pokemonDao.getPokemonList(
-                                    filter,
-                                    limit,
-                                    offset
-                                )
-                            )
-                        )
-                    } ?: Either.Left(Failure.UnknownError)
+                        null
+                    }
                 }
 
-                else -> Either.Left(Failure.UnknownError)
+                else -> Failure.UnknownError
             }
         }
 
