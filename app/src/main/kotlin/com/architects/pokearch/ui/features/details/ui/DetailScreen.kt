@@ -64,8 +64,8 @@ import com.architects.pokearch.ui.components.extensions.buildImageRequest
 import com.architects.pokearch.ui.components.extensions.statColor
 import com.architects.pokearch.ui.components.image.ArchAsyncImage
 import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
-import com.architects.pokearch.ui.features.details.viewModel.DetailViewModel
 import com.architects.pokearch.ui.features.details.state.DetailUiState
+import com.architects.pokearch.ui.features.details.viewModel.DetailViewModel
 
 @Composable
 fun DetailScreen(

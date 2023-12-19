@@ -1,7 +1,7 @@
 package com.architects.pokearch.core.domain.repository
 
 import arrow.core.Either
-import com.architects.pokearch.core.domain.model.Failure
+import com.architects.pokearch.core.domain.model.error.Failure
 import com.architects.pokearch.core.domain.model.Pokemon
 import com.architects.pokearch.core.domain.model.PokemonInfo
 import kotlinx.coroutines.flow.Flow
