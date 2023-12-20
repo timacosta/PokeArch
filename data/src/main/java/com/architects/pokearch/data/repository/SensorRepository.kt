@@ -1,7 +1,7 @@
-package com.architects.pokearch.core.data.repository
+package com.architects.pokearch.data.repository
 
-import com.architects.pokearch.core.data.datasource.SensorSource
-import com.architects.pokearch.core.domain.repository.SensorRepositoryContract
+import com.architects.pokearch.data.datasource.SensorSource
+import com.architects.pokearch.domain.repository.SensorRepositoryContract
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Inject

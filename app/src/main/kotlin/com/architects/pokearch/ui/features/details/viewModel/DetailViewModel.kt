@@ -3,8 +3,8 @@ package com.architects.pokearch.ui.features.details.viewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.architects.pokearch.core.data.repository.MediaPlayerRepository
-import com.architects.pokearch.core.di.IO
+import com.architects.pokearch.core.di.annotations.IO
+import com.architects.pokearch.core.domain.repository.MediaPlayerRepositoryContract
 import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
 import com.architects.pokearch.ui.features.details.state.DetailUiState
 import com.architects.pokearch.ui.navigation.NavArg
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val repositoryContract: PokeArchRepositoryContract,
-    private val mediaPlayerRepository: MediaPlayerRepository,
+    private val mediaPlayerRepository: MediaPlayerRepositoryContract,
     @IO val dispatcher: CoroutineDispatcher,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {

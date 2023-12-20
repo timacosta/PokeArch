@@ -1,4 +1,4 @@
-package com.architects.pokearch.core.domain.repository
+package com.architects.pokearch.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 

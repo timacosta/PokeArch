@@ -2,13 +2,13 @@ package com.architects.pokearch.core.framework.network
 
 import android.util.Log
 import arrow.core.Either
-import com.architects.pokearch.core.data.datasource.PokemonRemoteDataSource
 import com.architects.pokearch.core.domain.model.Pokemon
-import com.architects.pokearch.core.domain.model.PokemonInfo
 import com.architects.pokearch.core.domain.model.error.Failure
 import com.architects.pokearch.core.framework.network.mappers.toDomain
 import com.architects.pokearch.core.framework.network.service.CryService
 import com.architects.pokearch.core.framework.network.service.PokedexService
+import com.architects.pokearch.data.datasource.PokemonRemoteDataSource
+import com.architects.pokearch.domain.model.PokemonInfo
 import javax.inject.Inject
 
 class PokemonServerDataSource @Inject constructor(

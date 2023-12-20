@@ -1,4 +1,4 @@
-package com.architects.pokearch.core.data.datasource
+package com.architects.pokearch.data.datasource
 
 abstract class SensorSource(
     protected val sensorType: Int

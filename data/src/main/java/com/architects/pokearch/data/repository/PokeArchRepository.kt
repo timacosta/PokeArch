@@ -1,10 +1,10 @@
-package com.architects.pokearch.core.data.repository
+package com.architects.pokearch.data.repository
 
 import arrow.core.Either
-import com.architects.pokearch.core.data.datasource.PokemonLocalDataSource
-import com.architects.pokearch.core.data.datasource.PokemonRemoteDataSource
+import com.architects.pokearch.data.datasource.PokemonLocalDataSource
+import com.architects.pokearch.data.datasource.PokemonRemoteDataSource
 import com.architects.pokearch.core.domain.model.Pokemon
-import com.architects.pokearch.core.domain.model.PokemonInfo
+import com.architects.pokearch.domain.model.PokemonInfo
 import com.architects.pokearch.core.domain.model.error.Failure
 import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
 import kotlinx.coroutines.flow.Flow

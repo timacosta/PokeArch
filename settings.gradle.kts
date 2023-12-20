@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "PokeArch"
 include(":app")
- 
+include(":domain")
+include(":data")

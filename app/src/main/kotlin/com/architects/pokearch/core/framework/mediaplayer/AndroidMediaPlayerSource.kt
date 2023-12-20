@@ -5,7 +5,7 @@ import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.util.Log
 import androidx.core.net.toUri
-import com.architects.pokearch.core.data.datasource.MediaPlayerDataSource
+import com.architects.pokearch.data.datasource.MediaPlayerDataSource
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 

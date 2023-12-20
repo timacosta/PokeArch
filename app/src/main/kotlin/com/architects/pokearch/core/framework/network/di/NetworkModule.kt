@@ -18,7 +18,6 @@ import javax.inject.Singleton
 private const val BASE_POKE_API_URL = "https://pokeapi.co/api/v2/"
 private const val BASE_CRY_API_URL = "https://play.pokemonshowdown.com/audio/cries/"
 private const val RESPONSE_TIME_OUT_SECONDS: Long = 100
-
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
@@ -66,7 +65,3 @@ object NetworkModule {
         return retrofit.create(CryService::class.java)
     }
 }
-
-
-
-

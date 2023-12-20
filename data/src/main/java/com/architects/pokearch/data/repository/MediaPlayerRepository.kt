@@ -1,6 +1,6 @@
-package com.architects.pokearch.core.data.repository
+package com.architects.pokearch.data.repository
 
-import com.architects.pokearch.core.data.datasource.MediaPlayerDataSource
+import com.architects.pokearch.data.datasource.MediaPlayerDataSource
 import com.architects.pokearch.core.domain.repository.MediaPlayerRepositoryContract
 import javax.inject.Inject
 

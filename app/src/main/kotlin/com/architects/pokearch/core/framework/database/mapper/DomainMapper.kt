@@ -1,4 +1,4 @@
-package com.architects.pokearch.core.domain.mappers
+package com.architects.pokearch.core.framework.database.mapper
 
 import com.architects.pokearch.core.framework.database.entities.PokemonEntity
 import com.architects.pokearch.core.framework.database.entities.PokemonInfoEntity
@@ -9,9 +9,9 @@ import com.architects.pokearch.core.framework.database.entities.converters.TypeE
 import com.architects.pokearch.core.framework.database.entities.converters.TypesEntity
 import com.architects.pokearch.core.framework.database.entities.converters.TypesHolder
 import com.architects.pokearch.core.domain.model.Pokemon
-import com.architects.pokearch.core.domain.model.PokemonInfo
-import com.architects.pokearch.core.domain.model.Stats
-import com.architects.pokearch.core.domain.model.Types
+import com.architects.pokearch.domain.model.PokemonInfo
+import com.architects.pokearch.domain.model.Stats
+import com.architects.pokearch.domain.model.Types
 
 fun List<Pokemon>.toEntity(): List<PokemonEntity> = map {
     PokemonEntity(

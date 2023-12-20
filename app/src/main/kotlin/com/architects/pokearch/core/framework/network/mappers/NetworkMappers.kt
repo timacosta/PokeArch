@@ -6,17 +6,17 @@ import com.architects.pokearch.core.framework.network.model.NetworkStat
 import com.architects.pokearch.core.framework.network.model.NetworkStats
 import com.architects.pokearch.core.framework.network.model.NetworkTypes
 import com.architects.pokearch.core.domain.model.Pokemon
-import com.architects.pokearch.core.domain.model.PokemonInfo
-import com.architects.pokearch.core.domain.model.Stat
-import com.architects.pokearch.core.domain.model.Stat.Companion.ATK
-import com.architects.pokearch.core.domain.model.Stat.Companion.DEF
-import com.architects.pokearch.core.domain.model.Stat.Companion.HP
-import com.architects.pokearch.core.domain.model.Stat.Companion.SPEED
-import com.architects.pokearch.core.domain.model.Stat.Companion.SP_ATK
-import com.architects.pokearch.core.domain.model.Stat.Companion.SP_DEF
-import com.architects.pokearch.core.domain.model.Stats
-import com.architects.pokearch.core.domain.model.Type
-import com.architects.pokearch.core.domain.model.Types
+import com.architects.pokearch.domain.model.PokemonInfo
+import com.architects.pokearch.domain.model.Stat
+import com.architects.pokearch.domain.model.Stat.Companion.ATK
+import com.architects.pokearch.domain.model.Stat.Companion.DEF
+import com.architects.pokearch.domain.model.Stat.Companion.HP
+import com.architects.pokearch.domain.model.Stat.Companion.SPEED
+import com.architects.pokearch.domain.model.Stat.Companion.SP_ATK
+import com.architects.pokearch.domain.model.Stat.Companion.SP_DEF
+import com.architects.pokearch.domain.model.Stats
+import com.architects.pokearch.domain.model.Type
+import com.architects.pokearch.domain.model.Types
 
 
 fun List<NetworkPokemon>.toDomain(): List<Pokemon> = map {
