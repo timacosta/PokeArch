@@ -1,9 +1,9 @@
-package com.architects.pokearch.core.data.datasource
+package com.architects.pokearch.data.datasource
 
 import arrow.core.Either
 import com.architects.pokearch.core.domain.model.Pokemon
-import com.architects.pokearch.core.domain.model.PokemonInfo
 import com.architects.pokearch.core.domain.model.error.Failure
+import com.architects.pokearch.domain.model.PokemonInfo
 
 interface PokemonRemoteDataSource {
     companion object {

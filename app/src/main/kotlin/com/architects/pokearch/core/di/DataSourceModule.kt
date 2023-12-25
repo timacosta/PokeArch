@@ -1,13 +1,13 @@
 @file:Suppress("unused")
 
-package com.architects.pokearch.core.framework.di
+package com.architects.pokearch.core.di
 
-import com.architects.pokearch.core.data.datasource.MediaPlayerDataSource
-import com.architects.pokearch.core.data.datasource.PokemonLocalDataSource
-import com.architects.pokearch.core.data.datasource.PokemonRemoteDataSource
 import com.architects.pokearch.core.framework.database.PokemonRoomDataSource
 import com.architects.pokearch.core.framework.mediaplayer.AndroidMediaPlayerSource
 import com.architects.pokearch.core.framework.network.PokemonServerDataSource
+import com.architects.pokearch.data.datasource.MediaPlayerDataSource
+import com.architects.pokearch.data.datasource.PokemonLocalDataSource
+import com.architects.pokearch.data.datasource.PokemonRemoteDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,7 +15,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class DataModule {
+abstract class DataSourceModule {
     @Binds
     abstract fun bindsMediaPlayerDataSource(
         androidMediaPlayerSource: AndroidMediaPlayerSource

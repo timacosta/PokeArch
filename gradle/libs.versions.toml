@@ -72,6 +72,7 @@ palette = "1.0.0"
 
 #Room
 room = "2.6.1"
+org-jetbrains-kotlin-jvm = "1.9.10"
 
 [libraries]
 
@@ -162,9 +163,6 @@ kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbra
 #Dagger-Hilt Module Project
 hiltAndroid= { id = "com.google.dagger.hilt.android", version.ref = "dagger-hilt" }
 
-#("dagger.hilt.android.plugin")
-hilt-android-plugin = { id = "dagger.hilt.android.plugin", version.ref = "dagger-hilt" }
-
 #KSP
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
@@ -173,6 +171,8 @@ io-gitlab-arturbosch-detekt = {  id = "io.gitlab.arturbosch.detekt", version.ref
 
 #KTLint
 org-jlleitschuh-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
 
 [bundles]
 

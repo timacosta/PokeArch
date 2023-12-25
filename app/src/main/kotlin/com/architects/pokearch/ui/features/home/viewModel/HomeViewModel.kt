@@ -2,7 +2,7 @@ package com.architects.pokearch.ui.features.home.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.architects.pokearch.core.di.IO
+import com.architects.pokearch.core.di.annotations.IO
 import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
 import com.architects.pokearch.ui.components.pagingsource.PokemonPagingSource
 import com.architects.pokearch.ui.features.home.state.HomeUiState

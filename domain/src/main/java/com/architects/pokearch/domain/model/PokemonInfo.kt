@@ -1,12 +1,11 @@
-package com.architects.pokearch.core.domain.model
+package com.architects.pokearch.domain.model
 
-import com.architects.pokearch.core.framework.network.model.NetworkPokemonInfo
-import com.architects.pokearch.core.domain.model.Stat.Companion.ATK
-import com.architects.pokearch.core.domain.model.Stat.Companion.DEF
-import com.architects.pokearch.core.domain.model.Stat.Companion.HP
-import com.architects.pokearch.core.domain.model.Stat.Companion.SPEED
-import com.architects.pokearch.core.domain.model.Stat.Companion.SP_ATK
-import com.architects.pokearch.core.domain.model.Stat.Companion.SP_DEF
+import com.architects.pokearch.domain.model.Stat.Companion.ATK
+import com.architects.pokearch.domain.model.Stat.Companion.DEF
+import com.architects.pokearch.domain.model.Stat.Companion.HP
+import com.architects.pokearch.domain.model.Stat.Companion.SPEED
+import com.architects.pokearch.domain.model.Stat.Companion.SP_ATK
+import com.architects.pokearch.domain.model.Stat.Companion.SP_DEF
 
 data class PokemonInfo(
     val id: Int,
@@ -37,15 +36,23 @@ data class Stats(
     val value: Int,
     val stat: Stat,
 ) {
+    companion object {
+        const val maxHp = 300
+        const val maxAttack = 300
+        const val maxSpAttack = 300
+        const val maxDefense = 300
+        const val maxSpDefense = 300
+        const val maxSpeed = 300
+    }
     val maxValue: Int
         get() {
             return when (stat.name) {
-                HP -> NetworkPokemonInfo.maxHp
-                ATK -> NetworkPokemonInfo.maxAttack
-                DEF -> NetworkPokemonInfo.maxDefense
-                SP_ATK -> NetworkPokemonInfo.maxSpAttack
-                SP_DEF -> NetworkPokemonInfo.maxSpDefense
-                SPEED -> NetworkPokemonInfo.maxSpeed
+                HP -> maxHp
+                ATK -> maxAttack
+                DEF -> maxDefense
+                SP_ATK -> maxSpAttack
+                SP_DEF -> maxSpDefense
+                SPEED -> maxSpeed
                 else -> value
             }
         }

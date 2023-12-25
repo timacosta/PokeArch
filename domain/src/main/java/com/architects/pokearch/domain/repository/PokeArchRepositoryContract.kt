@@ -3,7 +3,7 @@ package com.architects.pokearch.core.domain.repository
 import arrow.core.Either
 import com.architects.pokearch.core.domain.model.error.Failure
 import com.architects.pokearch.core.domain.model.Pokemon
-import com.architects.pokearch.core.domain.model.PokemonInfo
+import com.architects.pokearch.domain.model.PokemonInfo
 import kotlinx.coroutines.flow.Flow
 
 interface PokeArchRepositoryContract {

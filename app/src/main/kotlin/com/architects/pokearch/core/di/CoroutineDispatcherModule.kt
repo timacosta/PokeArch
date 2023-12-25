@@ -1,5 +1,7 @@
 package com.architects.pokearch.core.di
 
+import com.architects.pokearch.core.di.annotations.IO
+import com.architects.pokearch.core.di.annotations.Main
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,11 +22,3 @@ object CoroutinesDispatchersModule {
     @Provides
     fun providesIODispatcher(): CoroutineDispatcher = Dispatchers.IO
 }
-
-@Retention(AnnotationRetention.RUNTIME)
-@Qualifier
-annotation class Main
-
-@Retention(AnnotationRetention.RUNTIME)
-@Qualifier
-annotation class IO

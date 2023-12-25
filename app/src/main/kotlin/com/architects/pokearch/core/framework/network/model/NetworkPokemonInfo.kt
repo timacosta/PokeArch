@@ -18,16 +18,7 @@ data class NetworkPokemonInfo(
     @SerializedName("stats")
     val stats: List<NetworkStats>,
     val team: Boolean = false,
-) {
-    companion object {
-        const val maxHp = 300
-        const val maxAttack = 300
-        const val maxSpAttack = 300
-        const val maxDefense = 300
-        const val maxSpDefense = 300
-        const val maxSpeed = 300
-    }
-}
+)
 
 data class NetworkTypes(
     @SerializedName("slot")

@@ -1,7 +1,7 @@
-package com.architects.pokearch.core.data.datasource
+package com.architects.pokearch.data.datasource
 
 import com.architects.pokearch.core.domain.model.Pokemon
-import com.architects.pokearch.core.domain.model.PokemonInfo
+import com.architects.pokearch.domain.model.PokemonInfo
 
 interface PokemonLocalDataSource {
     suspend fun getPokemonList(

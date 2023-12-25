@@ -7,17 +7,17 @@ import com.architects.pokearch.core.framework.database.entities.converters.Stats
 import com.architects.pokearch.core.framework.database.entities.converters.StatsHolder
 import com.architects.pokearch.core.framework.database.entities.converters.TypesHolder
 import com.architects.pokearch.core.domain.model.Pokemon
-import com.architects.pokearch.core.domain.model.PokemonInfo
-import com.architects.pokearch.core.domain.model.Stat
-import com.architects.pokearch.core.domain.model.Stat.Companion.ATK
-import com.architects.pokearch.core.domain.model.Stat.Companion.DEF
-import com.architects.pokearch.core.domain.model.Stat.Companion.HP
-import com.architects.pokearch.core.domain.model.Stat.Companion.SPEED
-import com.architects.pokearch.core.domain.model.Stat.Companion.SP_ATK
-import com.architects.pokearch.core.domain.model.Stat.Companion.SP_DEF
-import com.architects.pokearch.core.domain.model.Stats
-import com.architects.pokearch.core.domain.model.Type
-import com.architects.pokearch.core.domain.model.Types
+import com.architects.pokearch.domain.model.PokemonInfo
+import com.architects.pokearch.domain.model.Stat
+import com.architects.pokearch.domain.model.Stat.Companion.ATK
+import com.architects.pokearch.domain.model.Stat.Companion.DEF
+import com.architects.pokearch.domain.model.Stat.Companion.HP
+import com.architects.pokearch.domain.model.Stat.Companion.SPEED
+import com.architects.pokearch.domain.model.Stat.Companion.SP_ATK
+import com.architects.pokearch.domain.model.Stat.Companion.SP_DEF
+import com.architects.pokearch.domain.model.Stats
+import com.architects.pokearch.domain.model.Type
+import com.architects.pokearch.domain.model.Types
 
 //TODO: CHANGE NAME INTO ENTITYMAPPER AFTER SHOW CODE
 fun List<PokemonEntity>.toDomain(): List<Pokemon> =

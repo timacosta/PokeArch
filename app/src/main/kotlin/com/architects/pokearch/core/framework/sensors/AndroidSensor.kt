@@ -5,7 +5,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import com.architects.pokearch.core.data.datasource.SensorSource
+import com.architects.pokearch.data.datasource.SensorSource
 
 abstract class AndroidSensor(
     private val context: Context,

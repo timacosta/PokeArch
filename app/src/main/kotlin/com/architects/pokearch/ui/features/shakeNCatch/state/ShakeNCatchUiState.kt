@@ -1,6 +1,6 @@
 package com.architects.pokearch.ui.features.shakeNCatch.state
 
-import com.architects.pokearch.core.domain.model.PokemonInfo
+import com.architects.pokearch.domain.model.PokemonInfo
 
 data class ShakeNCatchUiState(
     val openedPokeball: Boolean = false,

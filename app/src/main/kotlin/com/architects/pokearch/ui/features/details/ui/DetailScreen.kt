@@ -55,9 +55,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import com.architects.pokearch.R
-import com.architects.pokearch.core.domain.model.PokemonInfo
-import com.architects.pokearch.core.domain.model.Stat
-import com.architects.pokearch.core.domain.model.Stats
+import com.architects.pokearch.domain.model.PokemonInfo
+import com.architects.pokearch.domain.model.Stat
+import com.architects.pokearch.domain.model.Stats
 import com.architects.pokearch.ui.components.extensions.GetColorsBackground
 import com.architects.pokearch.ui.components.extensions.abilityColor
 import com.architects.pokearch.ui.components.extensions.buildImageRequest
