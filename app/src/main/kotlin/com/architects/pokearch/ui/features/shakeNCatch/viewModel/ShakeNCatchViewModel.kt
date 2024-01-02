@@ -2,9 +2,9 @@ package com.architects.pokearch.ui.features.shakeNCatch.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
-import com.architects.pokearch.domain.repository.SensorRepositoryContract
 import com.architects.pokearch.ui.features.shakeNCatch.state.ShakeNCatchUiState
+import com.architects.pokearch.usecases.GetAccelerometerValue
+import com.architects.pokearch.usecases.GetRandomPokemon
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,8 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ShakeNCatchViewModel @Inject constructor(
-    sensorRepository: SensorRepositoryContract,
-    pokeArchRepository: PokeArchRepositoryContract,
+    private val getAccelerometerValue: GetAccelerometerValue,
+    private val getRandomPokemon: GetRandomPokemon,
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<ShakeNCatchUiState> = MutableStateFlow(ShakeNCatchUiState())
@@ -31,13 +31,13 @@ class ShakeNCatchViewModel @Inject constructor(
     private var accelerationMax = 0f
 
     init {
-        getAccelerometerValue(sensorRepository)
-        randomPokemon(pokeArchRepository)
+        collectAccelerometerValue()
+        randomPokemon()
     }
 
-    private fun getAccelerometerValue(sensorRepository: SensorRepositoryContract) {
+    private fun collectAccelerometerValue() {
         viewModelScope.launch {
-            sensorRepository.getAccelerometerValue().collectLatest {
+            getAccelerometerValue().collectLatest {
                 calculateOpenPokeball(it)
             }
         }
@@ -53,11 +53,11 @@ class ShakeNCatchViewModel @Inject constructor(
             )
     }
 
-    private fun randomPokemon(pokeArchRepository: PokeArchRepositoryContract) {
+    private fun randomPokemon() {
         viewModelScope.launch {
             uiState.map { it.openedPokeball }.distinctUntilChanged().collect { openPokeball ->
                 if (openPokeball) {
-                    pokeArchRepository.randomPokemon().collectLatest { result ->
+                    getRandomPokemon().collectLatest { result ->
                         result.fold(
                             ifLeft = {
                                 _uiState.value =

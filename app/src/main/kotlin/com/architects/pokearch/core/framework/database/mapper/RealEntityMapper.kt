@@ -6,7 +6,7 @@ import com.architects.pokearch.core.framework.database.entities.converters.StatE
 import com.architects.pokearch.core.framework.database.entities.converters.StatsEntity
 import com.architects.pokearch.core.framework.database.entities.converters.StatsHolder
 import com.architects.pokearch.core.framework.database.entities.converters.TypesHolder
-import com.architects.pokearch.core.domain.model.Pokemon
+import com.architects.pokearch.domain.model.Pokemon
 import com.architects.pokearch.domain.model.PokemonInfo
 import com.architects.pokearch.domain.model.Stat
 import com.architects.pokearch.domain.model.Stat.Companion.ATK

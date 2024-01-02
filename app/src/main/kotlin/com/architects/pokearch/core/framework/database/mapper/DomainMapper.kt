@@ -8,7 +8,7 @@ import com.architects.pokearch.core.framework.database.entities.converters.Stats
 import com.architects.pokearch.core.framework.database.entities.converters.TypeEntity
 import com.architects.pokearch.core.framework.database.entities.converters.TypesEntity
 import com.architects.pokearch.core.framework.database.entities.converters.TypesHolder
-import com.architects.pokearch.core.domain.model.Pokemon
+import com.architects.pokearch.domain.model.Pokemon
 import com.architects.pokearch.domain.model.PokemonInfo
 import com.architects.pokearch.domain.model.Stats
 import com.architects.pokearch.domain.model.Types

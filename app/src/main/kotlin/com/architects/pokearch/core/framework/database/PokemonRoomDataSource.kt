@@ -1,6 +1,6 @@
 package com.architects.pokearch.core.framework.database
 
-import com.architects.pokearch.core.domain.model.Pokemon
+import com.architects.pokearch.domain.model.Pokemon
 import com.architects.pokearch.core.framework.database.dao.PokemonDao
 import com.architects.pokearch.core.framework.database.dao.PokemonInfoDao
 import com.architects.pokearch.core.framework.database.mapper.toDomain

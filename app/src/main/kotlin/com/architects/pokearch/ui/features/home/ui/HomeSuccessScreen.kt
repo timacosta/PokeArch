@@ -10,7 +10,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import com.architects.pokearch.R
-import com.architects.pokearch.core.domain.model.Pokemon
+import com.architects.pokearch.domain.model.Pokemon
 import com.architects.pokearch.ui.features.home.state.HomeUiState
 
 @Composable

@@ -3,9 +3,11 @@ package com.architects.pokearch.ui.features.home.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.architects.pokearch.core.di.annotations.IO
-import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
+import com.architects.pokearch.domain.repository.PokeArchRepositoryContract
 import com.architects.pokearch.ui.components.pagingsource.PokemonPagingSource
 import com.architects.pokearch.ui.features.home.state.HomeUiState
+import com.architects.pokearch.usecases.FetchPokemonList
+import com.architects.pokearch.usecases.GetPokemonList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repositoryContract: PokeArchRepositoryContract,
+    private val getPokemonList: GetPokemonList,
+    private val fetchPokemonList: FetchPokemonList,
     @IO private val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
@@ -25,7 +28,7 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            when (val failure = withContext(dispatcher) { repositoryContract.fetchPokemonList() }) {
+            when (val failure = withContext(dispatcher) { fetchPokemonList() }) {
                 null -> getPokemonList()
                 else -> _uiState.value = HomeUiState.Error(failure)
             }
@@ -35,7 +38,7 @@ class HomeViewModel @Inject constructor(
     fun getPokemonList(pokemonName: String = "") {
         _uiState.value =
             HomeUiState.Success(
-                PokemonPagingSource.getPager(pokemonName, repositoryContract, viewModelScope)
+                PokemonPagingSource.getPager(pokemonName, getPokemonList, viewModelScope)
             )
     }
 }

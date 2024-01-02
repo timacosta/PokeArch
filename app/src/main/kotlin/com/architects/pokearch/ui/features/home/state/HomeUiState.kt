@@ -1,8 +1,8 @@
 package com.architects.pokearch.ui.features.home.state
 
 import androidx.paging.PagingData
-import com.architects.pokearch.core.domain.model.Pokemon
-import com.architects.pokearch.core.domain.model.error.Failure
+import com.architects.pokearch.domain.model.Pokemon
+import com.architects.pokearch.domain.model.error.Failure
 import kotlinx.coroutines.flow.Flow
 
 sealed class HomeUiState {
