@@ -5,7 +5,7 @@ import com.architects.pokearch.core.framework.network.model.NetworkPokemonInfo
 import com.architects.pokearch.core.framework.network.model.NetworkStat
 import com.architects.pokearch.core.framework.network.model.NetworkStats
 import com.architects.pokearch.core.framework.network.model.NetworkTypes
-import com.architects.pokearch.core.domain.model.Pokemon
+import com.architects.pokearch.domain.model.Pokemon
 import com.architects.pokearch.domain.model.PokemonInfo
 import com.architects.pokearch.domain.model.Stat
 import com.architects.pokearch.domain.model.Stat.Companion.ATK

@@ -4,10 +4,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.architects.pokearch.core.di.annotations.IO
-import com.architects.pokearch.core.domain.repository.MediaPlayerRepositoryContract
-import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
+import com.architects.pokearch.domain.repository.MediaPlayerRepositoryContract
+import com.architects.pokearch.domain.repository.PokeArchRepositoryContract
 import com.architects.pokearch.ui.features.details.state.DetailUiState
 import com.architects.pokearch.ui.navigation.NavArg
+import com.architects.pokearch.usecases.FetchCry
+import com.architects.pokearch.usecases.FetchPokemonDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val repositoryContract: PokeArchRepositoryContract,
+    private val fetchPokemonDetails: FetchPokemonDetails,
+    private val fetchCry: FetchCry,
     private val mediaPlayerRepository: MediaPlayerRepositoryContract,
     @IO val dispatcher: CoroutineDispatcher,
     savedStateHandle: SavedStateHandle
@@ -39,7 +42,7 @@ class DetailViewModel @Inject constructor(
     }
 
     private suspend fun getPokemonDetails(pokemonId: Int) {
-        repositoryContract.fetchPokemonInfo(pokemonId).collectLatest { result ->
+        fetchPokemonDetails(pokemonId).collectLatest { result ->
             result.fold(
                 ifLeft = {
                     _pokemonDetailInfo.value = DetailUiState.Error
@@ -64,6 +67,6 @@ class DetailViewModel @Inject constructor(
 
     private suspend fun getCryUrl(pokemonName: String): String =
         withContext(dispatcher) {
-            repositoryContract.fetchCry(pokemonName)
+            fetchCry(pokemonName)
         }
 }

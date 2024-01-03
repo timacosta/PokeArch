@@ -6,27 +6,28 @@ import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import androidx.paging.cachedIn
-import com.architects.pokearch.core.domain.model.Pokemon
-import com.architects.pokearch.core.domain.repository.PokeArchRepositoryContract
+import com.architects.pokearch.domain.model.Pokemon
+import com.architects.pokearch.domain.repository.PokeArchRepositoryContract
+import com.architects.pokearch.usecases.GetPokemonList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 
 class PokemonPagingSource(
-    private val pokeArchRepository: PokeArchRepositoryContract,
+    private val getPokemonList: GetPokemonList,
     private val filter: () -> String,
 ) : PagingSource<Int, Pokemon>() {
 
     companion object {
         fun getPager(
             pokemonName: String = "",
-            repositoryContract: PokeArchRepositoryContract,
+            getPokemonList: GetPokemonList,
             viewModelScope: CoroutineScope,
         ): Flow<PagingData<Pokemon>> {
             return Pager(
                 config = PagingConfig(pageSize = 20),
                 initialKey = 0,
                 pagingSourceFactory = {
-                    PokemonPagingSource(repositoryContract) { pokemonName }
+                    PokemonPagingSource(getPokemonList) { pokemonName }
                 }
             ).flow.cachedIn(viewModelScope)
         }
@@ -41,8 +42,8 @@ class PokemonPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Pokemon> {
         val currentPageNumber = params.key ?: 0
 
-        val pokemons = pokeArchRepository.getPokemonList(filter(), currentPageNumber)
-        val nextPokemons = pokeArchRepository.getPokemonList(filter(), currentPageNumber + 1)
+        val pokemons = getPokemonList(filter(), currentPageNumber)
+        val nextPokemons = getPokemonList(filter(), currentPageNumber + 1)
 
         val prevkey = prevKey(currentPageNumber)
 
