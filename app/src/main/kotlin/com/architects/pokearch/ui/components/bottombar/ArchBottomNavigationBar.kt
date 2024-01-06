@@ -57,8 +57,7 @@ fun ArchBottomNavigationBar(
                     colors = NavigationBarItemDefaults.colors(
                         unselectedIconColor = MaterialTheme.colorScheme.inversePrimary,
                         unselectedTextColor = MaterialTheme.colorScheme.inversePrimary,
-                        selectedTextColor = MaterialTheme.colorScheme.onPrimary
-
+                        selectedTextColor = MaterialTheme.colorScheme.onSecondary
                     )
                 )
             }

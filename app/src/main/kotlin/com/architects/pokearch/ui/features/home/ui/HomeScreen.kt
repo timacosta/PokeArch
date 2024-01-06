@@ -35,7 +35,7 @@ fun HomeScreen(
     Container(
         modifier = modifier
             .fillMaxSize()
-            .padding(8.dp)
+            .padding(horizontal = 4.dp)
     ) {
 
         when (val state = uiState) {

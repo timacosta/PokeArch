@@ -2,6 +2,18 @@ package com.architects.pokearch.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+val primaryColor = Color(0xFFFF8A80)
+val backgroundColor = Color(0xFFF5F5F5)
+val secondaryColor = Color(0xFFFFB74D)
+val inversePrimaryColor = Color(0xFFF5F5F5)
+val tertiaryColor = Color(0xFF757575)
+
+val primaryDarkColor = Color(0xFFD32F2F)
+val backgroundDarkColor = Color(0xFF121212)
+val secondaryDarkColor = Color(0xFFFFB74D)
+val inversePrimaryDarkColor = Color(0xFFF5F5F5)
+val tertiaryDarkColor = Color(0xFF212121)
+
 val LightBlue = Color(0xFFBAC7FF)
 val lightGrey = Color(0xFFAAAAAA)
 
