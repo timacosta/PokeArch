@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,7 +21,8 @@ class ShakeNCatchViewModel @Inject constructor(
     private val getRandomPokemon: GetRandomPokemon,
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<ShakeNCatchUiState> = MutableStateFlow(ShakeNCatchUiState())
+    private val _uiState: MutableStateFlow<ShakeNCatchUiState> =
+        MutableStateFlow(ShakeNCatchUiState())
     val uiState = _uiState.asStateFlow()
 
     companion object {
@@ -73,4 +75,11 @@ class ShakeNCatchViewModel @Inject constructor(
             }
         }
     }
+
+    fun afterNavigation() {
+        _uiState.value = ShakeNCatchUiState()
+        accelerationMax = 0f
+        accelerationMin = 0f
+    }
+
 }
