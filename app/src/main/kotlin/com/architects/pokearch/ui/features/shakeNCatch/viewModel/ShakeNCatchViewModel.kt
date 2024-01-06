@@ -48,11 +48,12 @@ class ShakeNCatchViewModel @Inject constructor(
     private fun calculateOpenPokeball(value: Float) {
         if (value < accelerationMin) accelerationMin = value
         if (value > accelerationMax) accelerationMax = value
-        _uiState.value =
-            _uiState.value.copy(
+        _uiState.update {
+            it.copy(
                 openedPokeball = accelerationMin < -accelerationThreshold &&
                         accelerationMax > accelerationThreshold
             )
+        }
     }
 
     private fun randomPokemon() {
