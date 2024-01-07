@@ -28,10 +28,10 @@ fun ArchBottomNavigationBar(
     navController: NavController,
     modifier: Modifier = Modifier,
     contentColor: Color = MaterialTheme.colorScheme.onPrimary,
-    containerColor: Color = MaterialTheme.colorScheme.primary
+    containerColor: Color = MaterialTheme.colorScheme.primary,
 ) {
 
-    AnimatedVisibility (
+    AnimatedVisibility(
         visible = isBottomBarVisible,
         enter = fadeIn() + expandVertically(),
         exit = shrinkVertically() + fadeOut(),
@@ -66,7 +66,8 @@ fun ArchBottomNavigationBar(
                     colors = NavigationBarItemDefaults.colors(
                         unselectedIconColor = MaterialTheme.colorScheme.inversePrimary,
                         unselectedTextColor = MaterialTheme.colorScheme.inversePrimary,
-                        selectedTextColor = MaterialTheme.colorScheme.onSecondary
+                        selectedIconColor = MaterialTheme.colorScheme.tertiary,
+                        selectedTextColor = MaterialTheme.colorScheme.tertiary
                     )
                 )
             }
