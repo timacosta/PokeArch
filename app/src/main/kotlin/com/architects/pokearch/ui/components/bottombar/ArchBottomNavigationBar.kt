@@ -1,5 +1,10 @@
 package com.architects.pokearch.ui.components.bottombar
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -23,10 +28,14 @@ fun ArchBottomNavigationBar(
     navController: NavController,
     modifier: Modifier = Modifier,
     contentColor: Color = MaterialTheme.colorScheme.onPrimary,
-    containerColor: Color = MaterialTheme.colorScheme.primary
+    containerColor: Color = MaterialTheme.colorScheme.primary,
 ) {
 
-    if (isBottomBarVisible) {
+    AnimatedVisibility(
+        visible = isBottomBarVisible,
+        enter = fadeIn() + expandVertically(),
+        exit = shrinkVertically() + fadeOut(),
+    ) {
         NavigationBar(
             modifier = modifier.fillMaxWidth(),
             contentColor = contentColor,
@@ -57,8 +66,8 @@ fun ArchBottomNavigationBar(
                     colors = NavigationBarItemDefaults.colors(
                         unselectedIconColor = MaterialTheme.colorScheme.inversePrimary,
                         unselectedTextColor = MaterialTheme.colorScheme.inversePrimary,
-                        selectedTextColor = MaterialTheme.colorScheme.onPrimary
-
+                        selectedIconColor = MaterialTheme.colorScheme.tertiary,
+                        selectedTextColor = MaterialTheme.colorScheme.tertiary
                     )
                 )
             }

@@ -2,10 +2,12 @@ package com.architects.pokearch.ui.features.home.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -42,23 +45,39 @@ fun HomeItem(
     val (image, colors) = getGradientImageAndColors(pokemon = pokemon)
 
     Card(
-        modifier
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.tertiary,
+            contentColor = MaterialTheme.colorScheme.onTertiary
+        ),
+        modifier = modifier
             .fillMaxSize()
             .padding(dimensionResource(id = R.dimen.card_external_padding))
             .clickable { onItemClick(pokemon.getIndex()) }
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .background(Brush.linearGradient(colors))
-                .fillMaxSize()
-                .modifyIf(image.state is AsyncImagePainter.State.Loading) {
-                    it.shimmerEffect()
-                }
-                .padding(dimensionResource(id = R.dimen.card_internal_padding))
-        ) {
-            ArchAsyncImage(asyncImagePainter = image, contentDescription = pokemon.name)
-            Text(text = pokemon.name.capitalize(Locale.current))
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .clip(MaterialTheme.shapes.medium)
+                    .background(MaterialTheme.colorScheme.background)
+                    .background(
+                        brush = Brush.linearGradient(colors),
+                        alpha = 0.35f
+                    )
+                    .fillMaxSize()
+                    .modifyIf(image.state is AsyncImagePainter.State.Loading) {
+                        it.shimmerEffect()
+                    }
+                    .padding(dimensionResource(id = R.dimen.card_internal_padding))
+
+            ) {
+                ArchAsyncImage(asyncImagePainter = image, contentDescription = pokemon.name)
+            }
+            Text(
+                text = pokemon.name.capitalize(Locale.current),
+                modifier = modifier
+                    .padding(vertical = dimensionResource(id = R.dimen.card_internal_padding))
+            )
         }
     }
 }
@@ -81,6 +100,6 @@ fun getGradientImageAndColors(
         colors = it.ifEmpty { colorsDefault }
     }
 
-    return(Pair(image, colors))
+    return (Pair(image, colors))
 }
 

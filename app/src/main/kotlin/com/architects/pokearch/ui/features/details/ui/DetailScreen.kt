@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -47,7 +48,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -66,6 +70,7 @@ import com.architects.pokearch.ui.components.image.ArchAsyncImage
 import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
 import com.architects.pokearch.ui.features.details.state.DetailUiState
 import com.architects.pokearch.ui.features.details.viewModel.DetailViewModel
+import com.architects.pokearch.ui.theme.SetStatusBarColor
 
 @Composable
 fun DetailScreen(
@@ -106,6 +111,8 @@ private fun DetailSuccessScreen(
 
     val (image, colors) = getGradientImageAndColors(pokemonInfo = state.pokemonInfo)
 
+    colors.firstOrNull()?.let { SetStatusBarColor(it) }
+
     Column(
         modifier = modifier.verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -120,7 +127,7 @@ private fun DetailSuccessScreen(
 
         Title(
             modifier = Modifier.padding(bottom = 12.dp),
-            text = state.pokemonInfo.name
+            text = state.pokemonInfo.name.capitalize(Locale.current)
         )
 
         TypeRow(
@@ -237,9 +244,10 @@ private fun TypeRow(
         horizontalArrangement = Arrangement.spacedBy(6.dp)
     ) {
         pokemonInfo.types.forEach {
+            val typeName = it.type.name.capitalize(Locale.current)
             TypeItem(
-                name = it.type.name,
-                containerColor = it.type.name.abilityColor()
+                name = typeName,
+                containerColor = typeName.abilityColor()
             )
         }
     }
@@ -254,6 +262,7 @@ private fun TypeItem(
     Text(
         text = name,
         color = containerColor,
+        textAlign = TextAlign.Center,
         style = MaterialTheme.typography.bodyLarge,
         modifier = modifier
             .border(
@@ -265,6 +274,7 @@ private fun TypeItem(
                 horizontal = 10.dp,
                 vertical = 4.dp
             )
+            .sizeIn(minWidth = 84.dp)
     )
 }
 
@@ -277,13 +287,14 @@ private fun PokemonInfos(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
-            .clip(MaterialTheme.shapes.large)
-            .background(MaterialTheme.colorScheme.outline.copy(.2f))
-            .padding(horizontal = 12.dp, vertical = 16.dp)
+            .padding(horizontal = 20.dp)
+            .clip(CircleShape)
+            .background(MaterialTheme.colorScheme.outline.copy(.15f))
+            .padding(horizontal = 12.dp)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f).padding(vertical = 16.dp)
         ) {
             Row {
                 Icon(
@@ -312,16 +323,16 @@ private fun PokemonInfos(
             )
         }
 
-        Box(
+        Spacer(
             modifier = Modifier
-                .width(1.dp)
-                .height(30.dp)
-                .background(color = MaterialTheme.colorScheme.outline)
+                .width(4.dp)
+                .size(88.dp)
+                .background(color = MaterialTheme.colorScheme.background)
         )
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f).padding(vertical = 16.dp)
         ) {
             Row {
                 Icon(
@@ -386,7 +397,7 @@ private fun PokemonStats(
 @Composable
 private fun StatItem(
     modifier: Modifier = Modifier,
-    height: Dp = 20.dp,
+    height: Dp = 22.dp,
     stats: Stats,
 ) {
 
@@ -417,9 +428,10 @@ private fun StatItem(
         val animatedProgress = progress * animationProgress.value
 
         //val progressColor = if (progress >= .5f) Color.Blue else Color.Red
-        val progressTrackColor = MaterialTheme.colorScheme.outline.copy(.2f)
+        val progressTrackColor = MaterialTheme.colorScheme.outline.copy(0.1f)
 
         Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
                 .weight(.5f)
                 .height(height)
@@ -440,7 +452,6 @@ private fun StatItem(
                 }
         ) {
             Text(
-                modifier = Modifier.align(Alignment.Center),
                 text = "${stats.value}/${stats.maxValue}",
             )
         }
