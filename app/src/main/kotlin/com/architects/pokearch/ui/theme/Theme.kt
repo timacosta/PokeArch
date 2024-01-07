@@ -92,3 +92,14 @@ fun PokeArchScreen(modifier: Modifier = Modifier, content: @Composable () -> Uni
         }
     }
 }
+
+@Composable
+fun SetStatusBarColor(color: Color = MaterialTheme.colorScheme.background) {
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as Activity).window
+            window.statusBarColor = color.toArgb()
+        }
+    }
+}

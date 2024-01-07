@@ -17,6 +17,7 @@ import com.architects.pokearch.ui.components.placeHolders.NoSearchResultPlaceHol
 import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
 import com.architects.pokearch.ui.features.home.state.HomeUiState
 import com.architects.pokearch.ui.features.home.viewModel.HomeViewModel
+import com.architects.pokearch.ui.theme.SetStatusBarColor
 
 @Composable
 fun HomeScreen(
@@ -27,6 +28,8 @@ fun HomeScreen(
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    SetStatusBarColor()
 
     LaunchedEffect(key1 = pokemonName) {
         viewModel.getPokemonList(pokemonName)
