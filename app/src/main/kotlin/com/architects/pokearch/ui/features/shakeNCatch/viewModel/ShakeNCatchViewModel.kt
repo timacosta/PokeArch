@@ -39,8 +39,9 @@ class ShakeNCatchViewModel @Inject constructor(
 
     private fun collectAccelerometerValue() {
         viewModelScope.launch {
-            getAccelerometerValue().collectLatest {
-                calculateOpenPokeball(it)
+            getAccelerometerValue().collectLatest { acceleration ->
+                _uiState.update { it.copy(acceleration = acceleration) }
+                calculateOpenPokeball(acceleration)
             }
         }
     }
