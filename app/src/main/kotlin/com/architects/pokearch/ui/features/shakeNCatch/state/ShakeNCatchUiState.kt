@@ -8,4 +8,5 @@ data class ShakeNCatchUiState(
     val isLoading: Boolean = true,
     val error: Boolean = false,
     val pokemonInfo: PokemonInfo? = null,
+    val onDetail: Boolean = false
 )

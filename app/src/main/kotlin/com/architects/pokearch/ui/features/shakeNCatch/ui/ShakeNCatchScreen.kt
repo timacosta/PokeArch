@@ -29,6 +29,10 @@ fun ShakeNCatchScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+    LaunchedEffect(key1 = true){
+        viewModel.backFromDetail()
+    }
+
     SetStatusBarColor()
 
     Box(

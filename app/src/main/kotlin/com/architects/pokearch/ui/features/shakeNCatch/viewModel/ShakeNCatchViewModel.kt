@@ -32,7 +32,6 @@ class ShakeNCatchViewModel @Inject constructor(
 
     companion object {
         private const val accelerationThreshold = 8
-        private const val delayAfterNavigation = 2000L
     }
 
     private var accelerationMin = 0f
@@ -46,6 +45,7 @@ class ShakeNCatchViewModel @Inject constructor(
     private fun collectAccelerometerValue() {
         viewModelScope.launch(dispatcher) {
             getAccelerometerValue().collectLatest { acceleration ->
+                if (uiState.value.onDetail) return@collectLatest
                 _uiState.update { it.copy(acceleration = acceleration) }
                 calculateOpenPokeball(acceleration)
             }
@@ -87,11 +87,13 @@ class ShakeNCatchViewModel @Inject constructor(
 
     fun afterNavigation() {
         viewModelScope.launch(dispatcher) {
-            Thread.sleep(delayAfterNavigation)
-            _uiState.value = ShakeNCatchUiState()
+            _uiState.value = ShakeNCatchUiState(onDetail = true)
             accelerationMax = 0f
             accelerationMin = 0f
         }
     }
 
+    fun backFromDetail() {
+        _uiState.value = _uiState.value.copy(onDetail = false)
+    }
 }
