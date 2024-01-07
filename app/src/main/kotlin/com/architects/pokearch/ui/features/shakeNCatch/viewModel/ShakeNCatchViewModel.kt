@@ -2,10 +2,13 @@ package com.architects.pokearch.ui.features.shakeNCatch.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.architects.pokearch.core.di.annotations.IO
 import com.architects.pokearch.ui.features.shakeNCatch.state.ShakeNCatchUiState
 import com.architects.pokearch.usecases.GetAccelerometerValue
 import com.architects.pokearch.usecases.GetRandomPokemon
+import com.architects.pokearch.usecases.Vibrate
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -19,6 +22,8 @@ import javax.inject.Inject
 class ShakeNCatchViewModel @Inject constructor(
     private val getAccelerometerValue: GetAccelerometerValue,
     private val getRandomPokemon: GetRandomPokemon,
+    private val vibrate: Vibrate,
+    @IO private val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<ShakeNCatchUiState> =
@@ -27,6 +32,7 @@ class ShakeNCatchViewModel @Inject constructor(
 
     companion object {
         private const val accelerationThreshold = 8
+        private const val delayAfterNavigation = 2000L
     }
 
     private var accelerationMin = 0f
@@ -38,7 +44,7 @@ class ShakeNCatchViewModel @Inject constructor(
     }
 
     private fun collectAccelerometerValue() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             getAccelerometerValue().collectLatest { acceleration ->
                 _uiState.update { it.copy(acceleration = acceleration) }
                 calculateOpenPokeball(acceleration)
@@ -58,9 +64,10 @@ class ShakeNCatchViewModel @Inject constructor(
     }
 
     private fun randomPokemon() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             uiState.map { it.openedPokeball }.distinctUntilChanged().collect { openPokeball ->
                 if (openPokeball) {
+                    vibrate()
                     getRandomPokemon().collectLatest { result ->
                         result.fold(
                             ifLeft = {
@@ -79,9 +86,12 @@ class ShakeNCatchViewModel @Inject constructor(
     }
 
     fun afterNavigation() {
-        _uiState.value = ShakeNCatchUiState()
-        accelerationMax = 0f
-        accelerationMin = 0f
+        viewModelScope.launch(dispatcher) {
+            Thread.sleep(delayAfterNavigation)
+            _uiState.value = ShakeNCatchUiState()
+            accelerationMax = 0f
+            accelerationMin = 0f
+        }
     }
 
 }
