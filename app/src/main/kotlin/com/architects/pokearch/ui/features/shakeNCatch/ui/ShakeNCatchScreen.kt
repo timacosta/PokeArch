@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,7 +17,7 @@ import com.architects.pokearch.ui.features.shakeNCatch.viewModel.ShakeNCatchView
 fun ShakeNCatchScreen(
     modifier: Modifier = Modifier,
     viewModel: ShakeNCatchViewModel = hiltViewModel(),
-    onNavigationClick: (Int) -> Unit = {}
+    onNavigationClick: (Int) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -28,7 +29,10 @@ fun ShakeNCatchScreen(
             !uiState.openedPokeball -> { Text(text = "Shake phone") }
             uiState.isLoading -> { ArchLoadingIndicator() }
             uiState.pokemonInfo != null -> {
-                onNavigationClick(uiState.pokemonInfo?.id ?: 0)
+                LaunchedEffect(key1 = uiState.pokemonInfo) {
+                    onNavigationClick(uiState.pokemonInfo?.id ?: 0)
+                    viewModel.afterNavigation()
+                }
             }
             else -> { Text(text = "Error") }
         }
