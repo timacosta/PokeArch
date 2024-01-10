@@ -71,12 +71,14 @@ class ShakeNCatchViewModel @Inject constructor(
                     getRandomPokemon().collectLatest { result ->
                         result.fold(
                             ifLeft = {
-                                _uiState.value =
-                                    _uiState.value.copy(isLoading = false, error = true)
+                                _uiState.update {
+                                    it.copy(isLoading = false, error = true)
+                                }
                             },
-                            ifRight = {
-                                _uiState.value =
-                                    _uiState.value.copy(isLoading = false, pokemonInfo = it)
+                            ifRight = { pokemonInfo ->
+                                _uiState.update {
+                                    it.copy(isLoading = false, pokemonInfo = pokemonInfo)
+                                }
                             }
                         )
                     }
@@ -94,6 +96,6 @@ class ShakeNCatchViewModel @Inject constructor(
     }
 
     fun backFromDetail() {
-        _uiState.value = _uiState.value.copy(onDetail = false)
+        _uiState.update { it.copy(onDetail = false) }
     }
 }
