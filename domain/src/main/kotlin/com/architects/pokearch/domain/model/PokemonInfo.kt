@@ -7,6 +7,10 @@ import com.architects.pokearch.domain.model.Stat.Companion.SPEED
 import com.architects.pokearch.domain.model.Stat.Companion.SP_ATK
 import com.architects.pokearch.domain.model.Stat.Companion.SP_DEF
 
+private val BASE_IMAGE_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/"
+private val OFFICIAL_ARTWORK_URL = "pokemon/other/official-artwork/"
+private val SMALL_SPRITE_ARTWORK_URL = "pokemon/"
+
 data class PokemonInfo(
     val id: Int,
     val name: String,
@@ -17,10 +21,16 @@ data class PokemonInfo(
     val stats: List<Stats>,
     val team: Boolean = false,
 ) {
-    fun getImageUrl(): String {
-        return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/" +
-                "pokemon/other/official-artwork/$id.png"
+    fun getOfficialArtworkImageUrl(): String {
+        return BASE_IMAGE_URL +
+                OFFICIAL_ARTWORK_URL + "${id}.png"
     }
+
+    fun getSmallSpriteArtworkImageUrl(): String {
+        return BASE_IMAGE_URL +
+                SMALL_SPRITE_ARTWORK_URL + "${id}.png"
+    }
+
 }
 
 data class Types(
