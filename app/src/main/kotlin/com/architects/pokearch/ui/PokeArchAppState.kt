@@ -31,7 +31,7 @@ fun rememberPokeArchAppState(
 class PokeArchAppState(
     val navHostController: NavHostController,
     private val topAppBarState: TopAppBarState,
-    val searchText: MutableState<String>
+    val searchText: MutableState<String>,
 ) {
     val scrollBehavior
         @Composable get() = TopAppBarDefaults.enterAlwaysScrollBehavior(topAppBarState)
@@ -50,19 +50,21 @@ class PokeArchAppState(
 }
 
 fun getShowTopBar(current: String) =
-    when{
+    when {
         current.contains(Feature.MAIN.route) &&
                 current.contains(SubRoute.HOME.route) ->
-                    ArchTopAppBarType.SEARCH
-        current.contains(Feature.MAIN.route) &&
-                current.contains(SubRoute.DETAIL.route) ->
-                    ArchTopAppBarType.NONE
+            ArchTopAppBarType.SEARCH
+
+        current.contains(SubRoute.DETAIL.route) ->
+            ArchTopAppBarType.NONE
+
         else -> ArchTopAppBarType.NORMAL
     }
 
 fun getShowBottomBar(current: String) =
-    when{
+    when {
         current.contains(SubRoute.DETAIL.route) ->
             false
+
         else -> true
     }
