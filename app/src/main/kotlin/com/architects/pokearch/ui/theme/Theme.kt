@@ -20,26 +20,38 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorPalette = darkColorScheme(
-    primary = Color.Yellow,
-    background = Color(0xFF101010),
+    primary = primaryDarkColor,
+    onPrimary = Color.White,
+    background = backgroundDarkColor,
     onBackground = Color.White,
-    surface = Color(0xFF303030),
-    onSurface = Color.White
+    secondary = secondaryDarkColor,
+    onSecondary = Color.Black,
+    tertiary = tertiaryDarkColor,
+    onTertiary = Color.White,
+    inversePrimary = inversePrimaryDarkColor,
+    secondaryContainer = inversePrimaryColor,
+    onSecondaryContainer = Color.Black
 )
 
 private val LightColorPalette = lightColorScheme(
-    primary = Color.Blue,
-    background = LightBlue,
+    primary = primaryColor,
+    onPrimary = Color.White,
+    background = backgroundColor,
     onBackground = Color.Black,
-    surface = Color.White,
-    onSurface = Color.Black
+    secondary = secondaryColor,
+    onSecondary = Color.Black,
+    tertiary = tertiaryColor,
+    onTertiary = Color.White,
+    inversePrimary = inversePrimaryColor,
+    secondaryContainer = inversePrimaryColor,
+    onSecondaryContainer = Color.Black
 )
 
 @Composable
 fun PokeArchTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -55,8 +67,8 @@ fun PokeArchTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+            window.statusBarColor = colorScheme.background.toArgb()
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
     }
 
@@ -77,6 +89,17 @@ fun PokeArchScreen(modifier: Modifier = Modifier, content: @Composable () -> Uni
             color = MaterialTheme.colorScheme.background
         ) {
             content()
+        }
+    }
+}
+
+@Composable
+fun SetStatusBarColor(color: Color = MaterialTheme.colorScheme.background) {
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as Activity).window
+            window.statusBarColor = color.toArgb()
         }
     }
 }
