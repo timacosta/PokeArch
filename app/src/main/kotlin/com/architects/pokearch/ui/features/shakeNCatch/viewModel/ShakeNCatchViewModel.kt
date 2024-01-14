@@ -2,10 +2,13 @@ package com.architects.pokearch.ui.features.shakeNCatch.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.architects.pokearch.core.di.annotations.IO
 import com.architects.pokearch.ui.features.shakeNCatch.state.ShakeNCatchUiState
 import com.architects.pokearch.usecases.GetAccelerometerValue
 import com.architects.pokearch.usecases.GetRandomPokemon
+import com.architects.pokearch.usecases.Vibrate
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -19,6 +22,8 @@ import javax.inject.Inject
 class ShakeNCatchViewModel @Inject constructor(
     private val getAccelerometerValue: GetAccelerometerValue,
     private val getRandomPokemon: GetRandomPokemon,
+    private val vibrate: Vibrate,
+    @IO private val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<ShakeNCatchUiState> =
@@ -38,9 +43,11 @@ class ShakeNCatchViewModel @Inject constructor(
     }
 
     private fun collectAccelerometerValue() {
-        viewModelScope.launch {
-            getAccelerometerValue().collectLatest {
-                calculateOpenPokeball(it)
+        viewModelScope.launch(dispatcher) {
+            getAccelerometerValue().collectLatest { acceleration ->
+                if (uiState.value.onDetail) return@collectLatest
+                _uiState.update { it.copy(acceleration = acceleration) }
+                calculateOpenPokeball(acceleration)
             }
         }
     }
@@ -57,18 +64,21 @@ class ShakeNCatchViewModel @Inject constructor(
     }
 
     private fun randomPokemon() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             uiState.map { it.openedPokeball }.distinctUntilChanged().collect { openPokeball ->
                 if (openPokeball) {
+                    vibrate()
                     getRandomPokemon().collectLatest { result ->
                         result.fold(
                             ifLeft = {
-                                _uiState.value =
-                                    _uiState.value.copy(isLoading = false, error = true)
+                                _uiState.update {
+                                    it.copy(isLoading = false, error = true)
+                                }
                             },
-                            ifRight = {
-                                _uiState.value =
-                                    _uiState.value.copy(isLoading = false, pokemonInfo = it)
+                            ifRight = { pokemonInfo ->
+                                _uiState.update {
+                                    it.copy(isLoading = false, pokemonInfo = pokemonInfo)
+                                }
                             }
                         )
                     }
@@ -78,9 +88,14 @@ class ShakeNCatchViewModel @Inject constructor(
     }
 
     fun afterNavigation() {
-        _uiState.value = ShakeNCatchUiState()
-        accelerationMax = 0f
-        accelerationMin = 0f
+        viewModelScope.launch(dispatcher) {
+            _uiState.value = ShakeNCatchUiState(onDetail = true)
+            accelerationMax = 0f
+            accelerationMin = 0f
+        }
     }
 
+    fun backFromDetail() {
+        _uiState.update { it.copy(onDetail = false) }
+    }
 }

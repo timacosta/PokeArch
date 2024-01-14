@@ -61,11 +61,11 @@ fun ArchTopAppBar(
                 }
             }
         },
-        modifier = modifier,
-        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onPrimary,
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.background,
+            titleContentColor = MaterialTheme.colorScheme.onBackground
         ),
+        modifier = modifier,
         scrollBehavior = scrollBehavior
     )
 }
@@ -95,7 +95,6 @@ private fun RowScope.SearchIconButton(onClick: () -> Unit) {
         Icon(
             imageVector = Icons.Filled.Search,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.onPrimary
         )
     }
 }

@@ -13,10 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.architects.pokearch.ui.components.animations.LoadingPokeball
 import com.architects.pokearch.ui.components.placeHolders.NoSearchResultPlaceHolder
-import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
 import com.architects.pokearch.ui.features.home.state.HomeUiState
 import com.architects.pokearch.ui.features.home.viewModel.HomeViewModel
+import com.architects.pokearch.ui.theme.SetStatusBarColor
 
 @Composable
 fun HomeScreen(
@@ -28,6 +29,8 @@ fun HomeScreen(
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+    SetStatusBarColor()
+
     LaunchedEffect(key1 = pokemonName) {
         viewModel.getPokemonList(pokemonName)
     }
@@ -35,12 +38,12 @@ fun HomeScreen(
     Container(
         modifier = modifier
             .fillMaxSize()
-            .padding(8.dp)
+            .padding(horizontal = 4.dp)
     ) {
 
         when (val state = uiState) {
             is HomeUiState.Loading -> {
-                ArchLoadingIndicator()
+                LoadingPokeball()
             }
 
             is HomeUiState.Success -> {
