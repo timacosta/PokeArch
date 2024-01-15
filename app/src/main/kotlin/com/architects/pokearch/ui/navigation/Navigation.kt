@@ -10,7 +10,7 @@ import androidx.navigation.navigation
 import com.architects.pokearch.ui.features.details.ui.DetailScreen
 import com.architects.pokearch.ui.features.home.ui.HomeScreen
 import com.architects.pokearch.ui.features.shakeNCatch.ui.ShakeNCatchScreen
-import com.architects.pokearch.ui.features.team.ui.TeamsScreen
+import com.architects.pokearch.ui.features.team.ui.TeamScreen
 
 @Composable
 fun Navigation(
@@ -62,7 +62,7 @@ fun NavGraphBuilder.teamNav(
         startDestination = NavCommand.ContentType(Feature.TEAM).route
     ){
         composable(NavCommand.ContentType(Feature.TEAM)){
-            TeamsScreen(
+            TeamScreen(
                 //TODO: Remove when teamItem is ready
                 pokemonName = pokemonName,
                 onNavigationClick = { pokemonId ->

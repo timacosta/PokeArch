@@ -13,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -25,20 +24,9 @@ import androidx.paging.compose.itemKey
 import com.architects.pokearch.domain.model.Pokemon
 import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
 
-
-@Composable
-fun TeamScreen(modifier: Modifier = Modifier) {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier.fillMaxSize()
-    ) {
-        Text(text = "TeamScreen")
-    }
-}
-
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
-fun TeamsScreen(
+fun TeamScreen(
     pokemonName: String,
     onNavigationClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -105,7 +93,7 @@ fun TeamSuccessView(
 
     LazyVerticalGrid(
         state = lazyGridState,
-        columns = GridCells.Fixed(3),
+        columns = GridCells.Fixed(4),
     ) {
         items(count = pokemons.itemCount,
             key = pokemons.itemKey { it.getIndex() },
