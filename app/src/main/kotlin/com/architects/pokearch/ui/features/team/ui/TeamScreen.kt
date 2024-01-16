@@ -11,33 +11,22 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.itemContentType
-import androidx.paging.compose.itemKey
-import com.architects.pokearch.domain.model.Pokemon
 import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
 
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun TeamScreen(
-    pokemonName: String,
     onNavigationClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: TeamViewModel = hiltViewModel(),
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
-    LaunchedEffect(key1 = pokemonName) {
-        viewModel.getPokemonList(pokemonName)
-    }
 
     Container(
         modifier = modifier
@@ -46,7 +35,7 @@ fun TeamScreen(
     ) {
 
         when (val state = uiState) {
-            is TeamUiState.Loading -> {
+            TeamUiState.Loading -> {
                 ArchLoadingIndicator()
             }
 
@@ -87,7 +76,7 @@ fun TeamSuccessView(
     state: TeamUiState.Success,
     onItemClick: (Int) -> Unit,
 ) {
-    val pokemons: LazyPagingItems<Pokemon> = state.pokemonList.collectAsLazyPagingItems()
+    val pokemons = state.pokemonTeam
 
     val lazyGridState = rememberLazyGridState()
 
@@ -95,19 +84,14 @@ fun TeamSuccessView(
         state = lazyGridState,
         columns = GridCells.Fixed(4),
     ) {
-        items(count = pokemons.itemCount,
-            key = pokemons.itemKey { it.getIndex() },
-            contentType = pokemons.itemContentType { "contentType" }
-        ) { index ->
+        items(count = pokemons.size) { index ->
             val pokemon = pokemons[index]
-            pokemon?.let {
-                TeamItem(
-                    pokemon = it,
-                    onItemClick = { pokemonId ->
-                        onItemClick(pokemonId)
-                    }
-                )
-            }
+            TeamItem(
+                pokemon = pokemon,
+                onItemClick = { pokemonId ->
+                    onItemClick(pokemonId)
+                }
+            )
         }
     }
 }

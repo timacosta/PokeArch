@@ -7,9 +7,9 @@ import com.architects.pokearch.domain.model.Stat.Companion.SPEED
 import com.architects.pokearch.domain.model.Stat.Companion.SP_ATK
 import com.architects.pokearch.domain.model.Stat.Companion.SP_DEF
 
-private val BASE_IMAGE_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/"
-private val OFFICIAL_ARTWORK_URL = "pokemon/other/official-artwork/"
-private val SMALL_SPRITE_ARTWORK_URL = "pokemon/"
+private const val BASE_IMAGE_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/"
+private const val OFFICIAL_ARTWORK_URL = "pokemon/other/official-artwork/"
+private const val SMALL_SPRITE_ARTWORK_URL = "pokemon/"
 
 data class PokemonInfo(
     val id: Int,

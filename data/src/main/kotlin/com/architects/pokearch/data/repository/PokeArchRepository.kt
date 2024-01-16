@@ -21,6 +21,9 @@ class PokeArchRepository @Inject constructor(
         private const val SUBFIX_URL = ".mp3"
     }
 
+    override fun getPokemonTeam() = flow { emit(localDataSource.getPokemonTeam()) }
+
+
     override suspend fun getPokemonList(filter: String, page: Int, limit: Int): List<Pokemon> {
         val offset = page * limit
 

@@ -1,9 +1,9 @@
 package com.architects.pokearch.domain.repository
 
 import arrow.core.Either
-import com.architects.pokearch.domain.model.error.Failure
 import com.architects.pokearch.domain.model.Pokemon
 import com.architects.pokearch.domain.model.PokemonInfo
+import com.architects.pokearch.domain.model.error.Failure
 import kotlinx.coroutines.flow.Flow
 
 interface PokeArchRepositoryContract {
@@ -13,6 +13,8 @@ interface PokeArchRepositoryContract {
         page: Int = 0,
         limit: Int = 20
     ): List<Pokemon>
+
+    fun getPokemonTeam(): Flow<List<PokemonInfo>>
 
     suspend fun fetchPokemonList(): Failure?
 

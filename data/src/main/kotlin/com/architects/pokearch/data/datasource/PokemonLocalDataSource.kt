@@ -10,6 +10,8 @@ interface PokemonLocalDataSource {
         offset: Int
     ): List<Pokemon>
 
+    suspend fun getPokemonTeam(): List<PokemonInfo>
+
     suspend fun savePokemonList(pokemonList: List<Pokemon>)
 
     suspend fun savePokemonInfo(pokemonInfo: PokemonInfo)

@@ -8,6 +8,10 @@ import com.architects.pokearch.core.framework.database.entities.PokemonInfoEntit
 
 @Dao
 interface PokemonInfoDao {
+
+    //TODO: Change team = 1 when favorite is implemented
+    @Query("SELECT * FROM PokemonInfoEntity WHERE team = 0 ORDER BY id ASC")
+    suspend fun getPokemonTeam(): List<PokemonInfoEntity>
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPokemonInfo(pokemonInfo: PokemonInfoEntity)
 
