@@ -74,15 +74,26 @@ fun HomeScreen(
             }
 
             is HomeUiState.NoSearchResult -> {
-                NoSearchResultPlaceHolder(
-                    modifier = Modifier.align(Alignment.TopCenter)
-                )
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = modifier.fillMaxSize()
+                ) {
+                    NoSearchResultPlaceHolder(
+                        modifier = Modifier.align(Alignment.TopCenter)
+                    )
+                }
             }
 
             is HomeUiState.Error -> {
-                Text(
-                    text = "Something went wrong"
-                )
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = modifier.fillMaxSize()
+                ) {
+                    Text(
+                        modifier = Modifier.align(Alignment.Center),
+                        text = "Something went wrong"
+                    )
+                }
             }
         }
     }

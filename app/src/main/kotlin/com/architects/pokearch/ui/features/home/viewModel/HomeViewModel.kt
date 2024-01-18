@@ -3,6 +3,7 @@ package com.architects.pokearch.ui.features.home.viewModel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.filter
 import com.architects.pokearch.core.di.annotations.IO
 import com.architects.pokearch.domain.model.error.Failure
 import com.architects.pokearch.domain.repository.PokeArchRepositoryContract
@@ -16,6 +17,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -52,6 +55,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getPokemonList(pokemonName: String = "") {
+        //TODO: HomeUiState.NoSearchResults not emitted anywhere
         _uiState.value =
             HomeUiState.Success(
                 PokemonPagingSource.getPager(pokemonName, getPokemonList, viewModelScope)
