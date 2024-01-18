@@ -18,7 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
 
-@RequiresApi(Build.VERSION_CODES.P)
+
 @Composable
 fun TeamScreen(
     onNavigationClick: (Int) -> Unit,
@@ -70,7 +70,7 @@ private fun Container(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.P)
+
 @Composable
 fun TeamSuccessView(
     state: TeamUiState.Success,

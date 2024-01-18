@@ -1,7 +1,5 @@
 package com.architects.pokearch.ui.features.team.ui
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -29,7 +27,7 @@ import com.architects.pokearch.ui.components.extensions.buildImageRequest
 import com.architects.pokearch.ui.components.extensions.modifyIf
 import com.architects.pokearch.ui.components.image.ArchAsyncImage
 
-@RequiresApi(Build.VERSION_CODES.P)
+
 @Composable
 fun TeamItem(
     pokemon: PokemonInfo,
@@ -73,7 +71,6 @@ fun TeamItem(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.P)
 @Preview
 @Composable
 private fun TeamItemPreview() {

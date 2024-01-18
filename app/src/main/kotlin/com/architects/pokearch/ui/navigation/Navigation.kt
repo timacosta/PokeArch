@@ -56,7 +56,7 @@ fun NavGraphBuilder.homeNav(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.P)
+
 fun NavGraphBuilder.teamNav(
     onNavigationDetailClick: (String) -> Unit,
 ){
