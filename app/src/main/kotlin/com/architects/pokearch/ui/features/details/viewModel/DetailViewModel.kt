@@ -58,6 +58,7 @@ class DetailViewModel @Inject constructor(
         viewModelScope.launch(dispatcher) {
             with(_pokemonDetailInfo.value) {
                 if (this is DetailUiState.Success && !once) {
+                    //TODO: Move to usecase to avoid calling the repository here
                     mediaPlayerRepository.playCry(getCryUrl(pokemonInfo.name.replaceFirstChar { it.lowercase() }))
                     once = true
                 }

@@ -1,12 +1,9 @@
 package com.architects.pokearch.ui.features.home.viewModel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.filter
 import com.architects.pokearch.core.di.annotations.IO
 import com.architects.pokearch.domain.model.error.Failure
-import com.architects.pokearch.domain.repository.PokeArchRepositoryContract
 import com.architects.pokearch.ui.components.pagingsource.PokemonPagingSource
 import com.architects.pokearch.ui.features.DialogData
 import com.architects.pokearch.ui.features.ErrorDialogMapper
@@ -17,8 +14,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -47,7 +42,7 @@ class HomeViewModel @Inject constructor(
                     if (failure is Failure.NetworkError) _dialogState.value =
                         errorDialogMapper.transform(
                             errorType = failure.errorType,
-                            onDissmiss = { _dialogState.update { null } }
+                            onDismiss = { _dialogState.update { null } }
                         )
                 }
             }

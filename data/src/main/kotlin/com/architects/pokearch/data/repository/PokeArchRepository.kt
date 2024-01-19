@@ -31,7 +31,6 @@ class PokeArchRepository @Inject constructor(
 
     }
 
-    //TODO: Refactor
     override suspend fun fetchPokemonList(): Failure? {
         val areMorePokemonAvailableFrom = remoteDataSource.areMorePokemonAvailableFrom(localDataSource.countPokemon())
         return if (areMorePokemonAvailableFrom.isRight()) {
