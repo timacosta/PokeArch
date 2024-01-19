@@ -55,7 +55,6 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getPokemonList(pokemonName: String = "") {
-        //TODO: HomeUiState.NoSearchResults not emitted anywhere
         _uiState.value =
             HomeUiState.Success(
                 PokemonPagingSource.getPager(pokemonName, getPokemonList, viewModelScope)

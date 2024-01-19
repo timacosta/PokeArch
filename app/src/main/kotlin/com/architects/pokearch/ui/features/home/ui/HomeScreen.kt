@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -18,12 +16,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.architects.pokearch.ui.components.animations.LoadingPokeball
 import com.architects.pokearch.ui.components.dialogs.ArchDialog
-import com.architects.pokearch.ui.components.placeHolders.NoSearchResultPlaceHolder
 import com.architects.pokearch.ui.features.home.state.HomeUiState
 import com.architects.pokearch.ui.features.home.viewModel.HomeViewModel
 import com.architects.pokearch.ui.theme.SetStatusBarColor
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     pokemonName: String,
@@ -71,17 +67,6 @@ fun HomeScreen(
                         onNavigationClick(pokemonId)
                     },
                 )
-            }
-
-            is HomeUiState.NoSearchResult -> {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = modifier.fillMaxSize()
-                ) {
-                    NoSearchResultPlaceHolder(
-                        modifier = Modifier.align(Alignment.TopCenter)
-                    )
-                }
             }
 
             is HomeUiState.Error -> {
