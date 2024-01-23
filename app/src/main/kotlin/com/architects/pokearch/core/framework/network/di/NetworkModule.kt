@@ -31,15 +31,18 @@ object NetworkModule {
         return OkHttpClient.Builder()
             .readTimeout(RESPONSE_TIME_OUT_SECONDS, TimeUnit.SECONDS)
             .connectTimeout(RESPONSE_TIME_OUT_SECONDS, TimeUnit.SECONDS)
-            .addInterceptor(ConnectivityInterceptor(provideConnectivityManager(context)))
+            .addInterceptor(provideConnectivityInterceptor(context))
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
     }
 
     @Provides
     @Singleton
-    fun provideConnectivityManager(@ApplicationContext context: Context): ConnectivityManager =
-        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    fun provideConnectivityInterceptor(@ApplicationContext context: Context): ConnectivityInterceptor {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return ConnectivityInterceptor(connectivityManager)
+    }
+
 
     @PokeRetrofit
     @Provides

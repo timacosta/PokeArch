@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.architects.pokearch.core.di.annotations.IO
 import com.architects.pokearch.domain.model.error.Failure
 import com.architects.pokearch.ui.components.pagingsource.PokemonPagingSource
-import com.architects.pokearch.ui.features.DialogData
-import com.architects.pokearch.ui.features.ErrorDialogMapper
+import com.architects.pokearch.ui.mapper.DialogData
+import com.architects.pokearch.ui.mapper.ErrorDialogMapper
 import com.architects.pokearch.ui.features.home.state.HomeUiState
 import com.architects.pokearch.usecases.FetchPokemonList
 import com.architects.pokearch.usecases.GetPokemonList

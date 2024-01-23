@@ -3,7 +3,8 @@ package com.architects.pokearch.ui.components.dialogs
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import com.architects.pokearch.ui.features.DialogData
+import androidx.compose.ui.res.stringResource
+import com.architects.pokearch.ui.mapper.DialogData
 
 @Composable
 fun ArchDialog(
@@ -14,10 +15,10 @@ fun ArchDialog(
             data.onDissmiss()
         },
         title = {
-            Text(text = data.title)
+            Text(text = stringResource(id = data.title))
         },
         text = {
-            Text(text = data.message)
+            Text(text = stringResource(id = data.message))
         },
         confirmButton = {},
         dismissButton = {}

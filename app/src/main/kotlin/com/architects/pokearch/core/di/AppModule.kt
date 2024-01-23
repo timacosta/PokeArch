@@ -1,6 +1,6 @@
 package com.architects.pokearch.core.di
 
-import com.architects.pokearch.ui.features.ErrorDialogMapper
+import com.architects.pokearch.ui.mapper.ErrorDialogMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
