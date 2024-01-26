@@ -62,6 +62,7 @@ import com.architects.pokearch.R
 import com.architects.pokearch.domain.model.PokemonInfo
 import com.architects.pokearch.domain.model.Stat
 import com.architects.pokearch.domain.model.Stats
+import com.architects.pokearch.ui.components.dialogs.ArchDialog
 import com.architects.pokearch.ui.components.extensions.GetColorsBackground
 import com.architects.pokearch.ui.components.extensions.abilityColor
 import com.architects.pokearch.ui.components.extensions.buildImageRequest
@@ -78,6 +79,7 @@ fun DetailScreen(
     viewModel: DetailViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.pokemonDetailInfo.collectAsStateWithLifecycle()
+    val dialogState by viewModel.dialogState.collectAsStateWithLifecycle()
 
     Container(
         modifier = Modifier.fillMaxSize()
@@ -101,6 +103,11 @@ fun DetailScreen(
             }
         }
     }
+
+    dialogState?.let {
+        ArchDialog(data = it)
+    }
+
 }
 
 @Composable
@@ -294,7 +301,9 @@ private fun PokemonInfos(
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.weight(1f).padding(vertical = 16.dp)
+            modifier = Modifier
+                .weight(1f)
+                .padding(vertical = 16.dp)
         ) {
             Row {
                 Icon(
@@ -332,7 +341,9 @@ private fun PokemonInfos(
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.weight(1f).padding(vertical = 16.dp)
+            modifier = Modifier
+                .weight(1f)
+                .padding(vertical = 16.dp)
         ) {
             Row {
                 Icon(

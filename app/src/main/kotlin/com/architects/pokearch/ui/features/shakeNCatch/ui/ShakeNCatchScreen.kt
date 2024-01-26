@@ -18,6 +18,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.architects.pokearch.R
 import com.architects.pokearch.ui.components.animations.AnimatedPokeball
 import com.architects.pokearch.ui.components.animations.LoadingPokeball
+import com.architects.pokearch.ui.components.dialogs.ArchDialog
 import com.architects.pokearch.ui.features.shakeNCatch.viewModel.ShakeNCatchViewModel
 import com.architects.pokearch.ui.theme.SetStatusBarColor
 
@@ -28,6 +29,7 @@ fun ShakeNCatchScreen(
     onNavigationClick: (Int) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val dialogState by viewModel.dialogState.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = true){
         viewModel.backFromDetail()
@@ -59,6 +61,10 @@ fun ShakeNCatchScreen(
                 Text(text = "Error")
             }
         }
+    }
+    
+    dialogState?.let {
+        ArchDialog(data = it)
     }
 }
 
