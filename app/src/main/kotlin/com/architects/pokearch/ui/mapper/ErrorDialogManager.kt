@@ -4,7 +4,7 @@ import androidx.annotation.StringRes
 import com.architects.pokearch.R
 import com.architects.pokearch.domain.model.error.ErrorType
 
-class ErrorDialogMapper {
+class ErrorDialogManager {
     fun transform(
         errorType: ErrorType,
         onDismiss: () -> Unit,
