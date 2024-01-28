@@ -7,7 +7,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -70,18 +69,20 @@ import com.architects.pokearch.ui.components.extensions.statColor
 import com.architects.pokearch.ui.components.image.ArchAsyncImage
 import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
 import com.architects.pokearch.ui.features.details.state.DetailUiState
+import com.architects.pokearch.ui.features.details.state.DetailUiState.Success
 import com.architects.pokearch.ui.features.details.viewModel.DetailViewModel
 import com.architects.pokearch.ui.theme.SetStatusBarColor
 
 @Composable
 fun DetailScreen(
+    onBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DetailViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.pokemonDetailInfo.collectAsStateWithLifecycle()
     val dialogState by viewModel.dialogState.collectAsStateWithLifecycle()
 
-    Container(
+    Box(
         modifier = Modifier.fillMaxSize()
     ) {
 
@@ -94,7 +95,7 @@ fun DetailScreen(
                 Text(text = "Error")
             }
 
-            is DetailUiState.Success -> {
+            is Success -> {
                 viewModel.playCry()
                 DetailSuccessScreen(
                     modifier = modifier,
@@ -102,6 +103,12 @@ fun DetailScreen(
                 )
             }
         }
+
+        DetailTopBar(
+            onBack = onBack,
+            uiState = uiState,
+            onFavorite = { viewModel.toggleFavorite() }
+        )
     }
 
     dialogState?.let {
@@ -113,7 +120,7 @@ fun DetailScreen(
 @Composable
 private fun DetailSuccessScreen(
     modifier: Modifier = Modifier,
-    state: DetailUiState.Success,
+    state: Success,
 ) {
 
     val (image, colors) = getGradientImageAndColors(pokemonInfo = state.pokemonInfo)
@@ -182,20 +189,7 @@ private fun getGradientImageAndColors(
         colors = it.ifEmpty { colorsDefault }
     }
 
-    return(Pair(image, colors))
-}
-
-@Composable
-private fun Container(
-    modifier: Modifier,
-    content: @Composable BoxScope.() -> Unit
-) {
-    Box(
-        modifier = modifier.fillMaxSize(),
-        propagateMinConstraints = true,
-    ) {
-        content()
-    }
+    return (Pair(image, colors))
 }
 
 @Composable

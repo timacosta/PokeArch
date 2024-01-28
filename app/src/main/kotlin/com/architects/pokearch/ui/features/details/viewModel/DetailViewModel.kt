@@ -4,21 +4,16 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.architects.pokearch.core.di.annotations.IO
-import com.architects.pokearch.domain.model.error.Failure
 import com.architects.pokearch.domain.repository.MediaPlayerRepositoryContract
 import com.architects.pokearch.domain.repository.PokeArchRepositoryContract
 import com.architects.pokearch.ui.features.details.state.DetailUiState
-import com.architects.pokearch.ui.mapper.DialogData
-import com.architects.pokearch.ui.mapper.ErrorDialogManager
 import com.architects.pokearch.ui.navigation.NavArg
 import com.architects.pokearch.usecases.FetchCry
 import com.architects.pokearch.usecases.FetchPokemonDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -28,15 +23,15 @@ class DetailViewModel @Inject constructor(
     private val fetchPokemonDetails: FetchPokemonDetails,
     private val fetchCry: FetchCry,
     private val mediaPlayerRepository: MediaPlayerRepositoryContract,
+    private val updatePokemonInfo: UpdatePokemonInfo,
     @IO val dispatcher: CoroutineDispatcher,
-    private val errorDialogManager: ErrorDialogManager,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val pokemonId = savedStateHandle.get<Int>(NavArg.PokemonId.key) ?: 0
 
     private val _pokemonDetailInfo: MutableStateFlow<DetailUiState> =
-        MutableStateFlow(DetailUiState.Loading)
+        MutableStateFlow(Loading)
     val pokemonDetailInfo: MutableStateFlow<DetailUiState> = _pokemonDetailInfo
 
     private val _dialogState: MutableStateFlow<DialogData?> = MutableStateFlow(null)
@@ -61,17 +56,18 @@ class DetailViewModel @Inject constructor(
                     )
                 },
                 ifRight = { pokemonInfo ->
-                    _pokemonDetailInfo.value = DetailUiState.Success(pokemonInfo)
+                    _pokemonDetailInfo.value = Success(pokemonInfo)
                 }
             )
         }
     }
 
-    fun playCry(){
+    fun playCry() {
         viewModelScope.launch(dispatcher) {
             with(_pokemonDetailInfo.value) {
-                if (this is DetailUiState.Success && !once) {
+
                     //TODO: Move to usecase to avoid calling the repository here
+                if (this is Success && !once) {
                     mediaPlayerRepository.playCry(getCryUrl(pokemonInfo.name.replaceFirstChar { it.lowercase() }))
                     once = true
                 }
@@ -83,4 +79,20 @@ class DetailViewModel @Inject constructor(
         withContext(dispatcher) {
             fetchCry(pokemonName)
         }
+
+    fun toggleFavorite() {
+        viewModelScope.launch {
+            if (_pokemonDetailInfo.value is Success) {
+                _pokemonDetailInfo.update {
+                    (it as Success).copy(
+                        pokemonInfo = it.pokemonInfo.copy(
+                            team = !(_pokemonDetailInfo.value as Success).pokemonInfo.team
+                        )
+                    )
+                }
+                updatePokemonInfo((_pokemonDetailInfo.value as Success).pokemonInfo)
+            }
+        }
+
+    }
 }

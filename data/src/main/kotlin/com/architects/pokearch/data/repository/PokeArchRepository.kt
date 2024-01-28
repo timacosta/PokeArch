@@ -59,6 +59,9 @@ class PokeArchRepository @Inject constructor(
         }
     }
 
+    override suspend fun updatePokemonInfo(pokemonInfo: PokemonInfo) =
+        localDataSource.savePokemonInfo(pokemonInfo)
+
     private suspend fun getRemotePokemon(
         id: Int,
     ): Either<Failure, PokemonInfo> = remoteDataSource.getPokemon(id)
