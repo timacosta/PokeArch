@@ -13,23 +13,24 @@ class AndroidMediaPlayerSource @Inject constructor(
     @ApplicationContext private val context: Context,
     private val mediaPlayer: MediaPlayer
 ): MediaPlayerDataSource {
+
     override suspend fun playCry(url: String) {
         mediaPlayCry(url)
     }
 
     private fun mediaPlayCry(url: String){
-        try {
-            mediaPlayer.apply {
-                setAudioAttributes(getAudioAtrributes())
-                setDataSource(context, url.toUri())
-                prepare()
-                start()
+            try {
+                mediaPlayer.apply {
+                    reset()
+                    setAudioAttributes(getAudioAtrributes())
+                    setDataSource(context, url.toUri())
+                    prepare()
+                    start()
+                }
+            } catch (e: Exception){
+                Log.e(this.javaClass.simpleName, e.stackTraceToString())
+                mediaPlayer.release()
             }
-        } catch (e: Exception){
-            Log.e(this.javaClass.simpleName, e.message.toString())
-            mediaPlayer.stop()
-            mediaPlayer.release()
-        }
     }
 
     private fun getAudioAtrributes() =
