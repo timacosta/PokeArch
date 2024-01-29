@@ -58,9 +58,4 @@ class HomeViewModel @Inject constructor(
                 PokemonPagingSource.getPager(pokemonName, getPokemonList, viewModelScope)
             )
     }
-
-    fun foo() {
-        viewModelScope.launch { }
-    }
 }
-
