@@ -2,6 +2,7 @@ package com.architects.pokearch.data.datasource
 
 import com.architects.pokearch.domain.model.Pokemon
 import com.architects.pokearch.domain.model.PokemonInfo
+import kotlinx.coroutines.flow.Flow
 
 interface PokemonLocalDataSource {
     suspend fun getPokemonList(
@@ -10,7 +11,7 @@ interface PokemonLocalDataSource {
         offset: Int
     ): List<Pokemon>
 
-    suspend fun getPokemonTeam(): List<PokemonInfo>
+    fun getPokemonTeam(): Flow<List<PokemonInfo>>
 
     suspend fun savePokemonList(pokemonList: List<Pokemon>)
 

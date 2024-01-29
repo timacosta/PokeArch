@@ -8,6 +8,8 @@ import com.architects.pokearch.core.framework.database.mapper.toTeamDomain
 import com.architects.pokearch.data.datasource.PokemonLocalDataSource
 import com.architects.pokearch.domain.model.Pokemon
 import com.architects.pokearch.domain.model.PokemonInfo
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class PokemonRoomDataSource @Inject constructor(
@@ -23,7 +25,10 @@ class PokemonRoomDataSource @Inject constructor(
         return pokemonDao.getPokemonList(filter, limit, offset).toDomain()
     }
 
-    override suspend fun getPokemonTeam() = pokemonInfoDao.getPokemonTeam().toTeamDomain()
+    override fun getPokemonTeam(): Flow<List<PokemonInfo>> =
+        pokemonInfoDao.getPokemonTeam().map {
+            it.toTeamDomain()
+        }
 
     override suspend fun savePokemonList(pokemonList: List<Pokemon>) {
         pokemonDao.insertPokemonList(pokemonList.toEntity())

@@ -11,7 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.architects.pokearch.R
@@ -61,15 +63,17 @@ fun TeamSuccessView(
 
     val lazyGridState = rememberLazyGridState()
 
+    val screenHeightPixels = LocalConfiguration.current.screenHeightDp.dp.value.toInt()
+
     LazyVerticalGrid(
         state = lazyGridState,
         columns = GridCells.Fixed(4),
         modifier = modifier
     ) {
-        //Fill available space
-        val totalItems = (pokemons.size + 3) / 4 * 4
 
-        items(count = totalItems) { index ->
+        val rows = (screenHeightPixels / 100)
+
+        items(count = rows * 4) { index ->
             val pokemon = pokemons.getOrNull(index)
 
             Box {
