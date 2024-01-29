@@ -1,9 +1,8 @@
-package com.architects.pokearch.ui.features.team.ui
+package com.architects.pokearch.ui.features.team.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.architects.pokearch.domain.model.PokemonInfo
-import com.architects.pokearch.domain.model.error.Failure
+import com.architects.pokearch.ui.features.team.state.TeamUiState
 import com.architects.pokearch.usecases.GetPokemonTeam
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,12 +12,6 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-sealed class TeamUiState {
-    data object Loading : TeamUiState()
-    data class Error(val failure: Failure) : TeamUiState()
-    data class Success(val pokemonTeam: List<PokemonInfo> = emptyList()) : TeamUiState()
-}
 
 @HiltViewModel
 class TeamViewModel @Inject constructor(

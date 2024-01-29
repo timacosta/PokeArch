@@ -18,6 +18,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.architects.pokearch.R
 import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
+import com.architects.pokearch.ui.features.team.state.TeamUiState
+import com.architects.pokearch.ui.features.team.viewmodel.TeamViewModel
 
 @Composable
 fun TeamScreen(
