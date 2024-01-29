@@ -5,22 +5,22 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
-import com.architects.pokearch.R
 import com.architects.pokearch.domain.model.PokemonInfo
 import com.architects.pokearch.ui.components.animations.shimmerEffect
 import com.architects.pokearch.ui.components.extensions.buildImageRequest
@@ -41,10 +41,9 @@ fun TeamItem(
 
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.background,
+            containerColor = Color.Transparent,
         ),
         modifier = modifier
-            .padding(dimensionResource(id = R.dimen.card_external_padding))
             .clickable { onItemClick(pokemon.id) }
     ) {
         Box(
@@ -53,21 +52,15 @@ fun TeamItem(
                 .modifyIf(image.state is AsyncImagePainter.State.Loading) {
                     it.shimmerEffect()
                 }
-                .padding(dimensionResource(id = R.dimen.card_internal_padding)),
         ) {
-            Text(
-                text = "#${pokemon.id}"
-            )
             ArchAsyncImage(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = dimensionResource(id = R.dimen.image_internal_padding)),
+                modifier = Modifier.height(100.dp),
                 asyncImagePainter = image,
-                contentDescription = pokemon.id.toString(),
+                placeHolderSize = 75.dp,
+                contentDescription = null,
                 contentScale = ContentScale.Crop
             )
         }
-
     }
 }
 
@@ -80,19 +73,25 @@ private fun TeamItemPreview() {
             .background(Color.White)
             .fillMaxSize()
     ) {
-
-        TeamItem(
-            pokemon = PokemonInfo(
-                id = 1,
-                name = "Pikachu",
-                height = 4,
-                weight = 60,
-                experience = 112,
-                types = emptyList(),
-                stats = emptyList(),
-                team = true
-            ),
-            onItemClick = {}
-        )
+        LazyVerticalGrid(
+            state = rememberLazyGridState(),
+            columns = GridCells.Fixed(4),
+        ) {
+            items(count = 10) { index ->
+                TeamItem(
+                    pokemon = PokemonInfo(
+                        id = 1,
+                        name = "Pikachu",
+                        height = 4,
+                        weight = 60,
+                        experience = 112,
+                        types = emptyList(),
+                        stats = emptyList(),
+                        team = true
+                    ),
+                    onItemClick = {}
+                )
+            }
+        }
     }
 }

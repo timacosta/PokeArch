@@ -2,8 +2,6 @@ package com.architects.pokearch.ui.components.image
 
 import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,11 +14,11 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import coil.compose.AsyncImagePainter
 import com.architects.pokearch.R
-import com.architects.pokearch.ui.components.animations.shimmerEffect
 
 @Composable
 fun ArchAsyncImage(
@@ -29,6 +27,7 @@ fun ArchAsyncImage(
     modifier: Modifier = Modifier,
     alignment: Alignment = Alignment.Center,
     contentScale: ContentScale = ContentScale.Fit,
+    placeHolderSize: Dp = 150.dp,
     alpha: Float = DefaultAlpha,
     colorFilter: ColorFilter? = null,
     filterQuality: FilterQuality = DrawScope.DefaultFilterQuality,
@@ -36,7 +35,9 @@ fun ArchAsyncImage(
     when (val state = asyncImagePainter.state) {
 
         is AsyncImagePainter.State.Loading -> {
-            ArchImagePlaceHolder()
+            ArchImagePlaceHolder(
+                size = placeHolderSize
+            )
         }
 
         is AsyncImagePainter.State.Error -> {

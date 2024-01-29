@@ -1,11 +1,9 @@
 package com.architects.pokearch.ui.features.team.ui
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
@@ -13,11 +11,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.architects.pokearch.R
 import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
-
 
 @Composable
 fun TeamScreen(
@@ -25,15 +23,11 @@ fun TeamScreen(
     modifier: Modifier = Modifier,
     viewModel: TeamViewModel = hiltViewModel(),
 ) {
-
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Container(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(8.dp)
+        modifier = modifier.fillMaxSize()
     ) {
-
         when (val state = uiState) {
             TeamUiState.Loading -> {
                 ArchLoadingIndicator()
@@ -44,7 +38,7 @@ fun TeamScreen(
                     state = state,
                     onItemClick = { pokemonId ->
                         onNavigationClick(pokemonId)
-                    },
+                    }
                 )
             }
 
@@ -52,6 +46,47 @@ fun TeamScreen(
                 Text(
                     text = "Something went wrong"
                 )
+            }
+        }
+    }
+}
+
+@Composable
+fun TeamSuccessView(
+    state: TeamUiState.Success,
+    onItemClick: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val pokemons = state.pokemonTeam
+
+    val lazyGridState = rememberLazyGridState()
+
+    LazyVerticalGrid(
+        state = lazyGridState,
+        columns = GridCells.Fixed(4),
+        modifier = modifier
+    ) {
+        //Fill available space
+        val totalItems = (pokemons.size + 3) / 4 * 4
+
+        items(count = totalItems) { index ->
+            val pokemon = pokemons.getOrNull(index)
+
+            Box {
+                Image(
+                    painter = painterResource(id = R.drawable.image_cartoon_grass),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize()
+                )
+
+                pokemon?.let {
+                    TeamItem(
+                        pokemon = it,
+                        onItemClick = { pokemonId ->
+                            onItemClick(pokemonId)
+                        }
+                    )
+                }
             }
         }
     }
@@ -67,31 +102,5 @@ private fun Container(
         propagateMinConstraints = true,
     ) {
         content()
-    }
-}
-
-
-@Composable
-fun TeamSuccessView(
-    state: TeamUiState.Success,
-    onItemClick: (Int) -> Unit,
-) {
-    val pokemons = state.pokemonTeam
-
-    val lazyGridState = rememberLazyGridState()
-
-    LazyVerticalGrid(
-        state = lazyGridState,
-        columns = GridCells.Fixed(4),
-    ) {
-        items(count = pokemons.size) { index ->
-            val pokemon = pokemons[index]
-            TeamItem(
-                pokemon = pokemon,
-                onItemClick = { pokemonId ->
-                    onItemClick(pokemonId)
-                }
-            )
-        }
     }
 }
