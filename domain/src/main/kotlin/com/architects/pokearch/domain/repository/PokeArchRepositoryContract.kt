@@ -20,6 +20,8 @@ interface PokeArchRepositoryContract {
 
     suspend fun fetchPokemonInfo(id: Int): Flow<Either<Failure, PokemonInfo>>
 
+    suspend fun updatePokemonInfo(pokemonInfo: PokemonInfo)
+
     suspend fun fetchCry(name: String): String
 
     suspend fun randomPokemon(): Flow<Either<Failure, PokemonInfo>>

@@ -1,7 +1,5 @@
 package com.architects.pokearch.ui.navigation
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
@@ -14,7 +12,6 @@ import com.architects.pokearch.ui.features.home.ui.HomeScreen
 import com.architects.pokearch.ui.features.shakeNCatch.ui.ShakeNCatchScreen
 import com.architects.pokearch.ui.features.team.ui.TeamScreen
 
-@RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun Navigation(
     navHostController: NavHostController,
@@ -25,14 +22,15 @@ fun Navigation(
         navController = navHostController,
         startDestination = Feature.MAIN.route
     ){
-        homeNav(pokemonName, onNavigationDetailClick)
+        homeNav(navHostController, pokemonName, onNavigationDetailClick)
         teamNav(onNavigationDetailClick)
-        randomCatchNav(onNavigationDetailClick)
+        randomCatchNav(navHostController, onNavigationDetailClick)
     }
 
 }
 
 fun NavGraphBuilder.homeNav(
+    navHostController: NavHostController,
     pokemonName: String,
     onNavigationDetailClick: (String) -> Unit,
 ){
@@ -51,7 +49,9 @@ fun NavGraphBuilder.homeNav(
             )
         }
         composable(NavCommand.ContentDetail(Feature.MAIN)){
-            DetailScreen()
+            DetailScreen(
+                onBack = { navHostController.popBackStack() }
+            )
         }
     }
 }
@@ -77,6 +77,7 @@ fun NavGraphBuilder.teamNav(
 }
 
 fun NavGraphBuilder.randomCatchNav(
+    navHostController: NavHostController,
     onNavigationDetailClick: (String) -> Unit,
 ){
     navigation(
@@ -93,7 +94,7 @@ fun NavGraphBuilder.randomCatchNav(
             )
         }
         composable(NavCommand.ContentDetail(Feature.RANDOM)){
-            DetailScreen()
+            DetailScreen(onBack = { navHostController.popBackStack() })
         }
     }
 }
