@@ -28,4 +28,10 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
     ksp(libs.hilt.androix.compiler)
     ksp(libs.dagger.hilt.compiler)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.turbine)
+    testImplementation(libs.kluent)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
