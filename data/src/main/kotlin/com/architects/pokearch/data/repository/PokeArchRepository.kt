@@ -77,12 +77,12 @@ class PokeArchRepository @Inject constructor(
             }
         )
 
-    //TODO: RESPONSIBILITY HERE OR SERVER DATASOURCE
     override suspend fun fetchCry(name: String): String {
         var result = ""
         remoteDataSource.tryCatchCry(name) { result = it }
 
         if (name.contains("-") && result.isEmpty()) {
+            //TODO: Move logic to DataSource
             remoteDataSource.tryCatchCry(name.replace("-", "")) { result = it }
             remoteDataSource.tryCatchCry(name.split("-")[0]) { result = it }
         }
