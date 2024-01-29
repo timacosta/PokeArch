@@ -4,11 +4,14 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.architects.pokearch.core.di.annotations.IO
+import com.architects.pokearch.domain.model.error.Failure
 import com.architects.pokearch.domain.repository.MediaPlayerRepositoryContract
 import com.architects.pokearch.ui.features.details.state.DetailUiState
 import com.architects.pokearch.ui.features.details.state.DetailUiState.Error
 import com.architects.pokearch.ui.features.details.state.DetailUiState.Loading
 import com.architects.pokearch.ui.features.details.state.DetailUiState.Success
+import com.architects.pokearch.ui.mapper.DialogData
+import com.architects.pokearch.ui.mapper.ErrorDialogManager
 import com.architects.pokearch.ui.navigation.NavArg
 import com.architects.pokearch.usecases.FetchCry
 import com.architects.pokearch.usecases.FetchPokemonDetails
@@ -16,6 +19,7 @@ import com.architects.pokearch.usecases.UpdatePokemonInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -28,6 +32,7 @@ class DetailViewModel @Inject constructor(
     private val fetchCry: FetchCry,
     private val mediaPlayerRepository: MediaPlayerRepositoryContract,
     private val updatePokemonInfo: UpdatePokemonInfo,
+    private val errorDialogManager: ErrorDialogManager,
     @IO val dispatcher: CoroutineDispatcher,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -37,6 +42,9 @@ class DetailViewModel @Inject constructor(
     private val _pokemonDetailInfo: MutableStateFlow<DetailUiState> =
         MutableStateFlow(Loading)
     val pokemonDetailInfo: MutableStateFlow<DetailUiState> = _pokemonDetailInfo
+
+    private val _dialogState: MutableStateFlow<DialogData?> = MutableStateFlow(null)
+    val dialogState: StateFlow<DialogData?> = _dialogState
 
     private var once = false
 
@@ -49,8 +57,13 @@ class DetailViewModel @Inject constructor(
     private suspend fun getPokemonDetails(pokemonId: Int) {
         fetchPokemonDetails(pokemonId).collectLatest { result ->
             result.fold(
-                ifLeft = {
+                ifLeft = { failure ->
                     _pokemonDetailInfo.value = Error
+                    if (failure is Failure.NetworkError) _dialogState.value =
+                        errorDialogManager.transform(
+                            errorType = failure.errorType,
+                            onDismiss = { _dialogState.update { null } }
+                        )
                 },
                 ifRight = { pokemonInfo ->
                     _pokemonDetailInfo.value = Success(pokemonInfo)
@@ -62,6 +75,7 @@ class DetailViewModel @Inject constructor(
     fun playCry() {
         viewModelScope.launch(dispatcher) {
             with(_pokemonDetailInfo.value) {
+                //TODO: Move to usecase to avoid calling the repository here
                 if (this is Success && !once) {
                     mediaPlayerRepository.playCry(getCryUrl(pokemonInfo.name.replaceFirstChar { it.lowercase() }))
                     once = true

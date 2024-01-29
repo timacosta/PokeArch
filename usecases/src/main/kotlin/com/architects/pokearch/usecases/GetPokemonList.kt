@@ -11,13 +11,3 @@ class GetPokemonList @Inject constructor(
         pokemonRepository.getPokemonList(filter, page, limit)
 }
 
-class GetPokemonListWithLambda(
-    private val pokemonRepository: PokeArchRepositoryContract,
-    private val filter: String = "",
-    private val page: Int = 0,
-    private val limit: Int = 0,
-) {
-    suspend fun invoke(onResult: (List<Pokemon>) -> Unit) =
-        onResult(pokemonRepository.getPokemonList(filter, page, limit))
-}
-

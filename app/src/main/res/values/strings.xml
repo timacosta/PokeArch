@@ -8,4 +8,22 @@
     <string name="search_label_place_holder">Search…</string>
     <string name="no_search_results_text">Your Pokemon search was super effective… at finding nothing. Maybe try a different name?</string>
     <string name="shake_pokeball">Shake the Pokeball</string>
+
+    <!-- Error Titles -->
+    <string name="error_title_no_internet">No Internet</string>
+    <string name="error_title_timeout">Server not responding</string>
+    <string name="error_title_bad_request">Bad Request</string>
+    <string name="error_title_internal_server_error">Internal Server Error</string>
+    <string name="error_title_bad_gateway">Bad Gateway</string>
+    <string name="error_title_service_unavailable">Service Unavailable</string>
+    <string name="error_title_gateway_timeout">Gateway Timeout</string>
+    <string name="error_title_not_found">Not Found</string>
+    <string name="error_title_unauthorized">Unauthorized</string>
+    <string name="error_title_unknown">Unknown Error</string>
+
+    <!-- Error Messages -->
+    <string name="error_message_no_internet">Check your internet connection</string>
+    <string name="error_message_default">Try again later</string>
+
+
 </resources>

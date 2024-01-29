@@ -12,7 +12,7 @@ interface PokemonRemoteDataSource {
 
     suspend fun getPokemonList(limit: Int = LIMIT_ALL, offset: Int = 0): Either<Failure, List<Pokemon>>
 
-    suspend fun areMorePokemonAvailableFrom(count: Int): Boolean
+    suspend fun areMorePokemonAvailableFrom(count: Int): Either<Failure,Boolean>
 
     suspend fun getPokemon(id: Int): Either<Failure, PokemonInfo>
 
