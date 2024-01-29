@@ -8,11 +8,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import javax.inject.Qualifier
 
 @InstallIn(SingletonComponent::class)
 @Module
-object CoroutinesDispatchersModule {
+object CoroutineDispatcherModule {
 
     @Main
     @Provides

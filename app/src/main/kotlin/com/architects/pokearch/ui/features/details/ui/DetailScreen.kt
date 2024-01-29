@@ -61,11 +61,13 @@ import com.architects.pokearch.R
 import com.architects.pokearch.domain.model.PokemonInfo
 import com.architects.pokearch.domain.model.Stat
 import com.architects.pokearch.domain.model.Stats
+import com.architects.pokearch.ui.components.dialogs.ArchDialog
 import com.architects.pokearch.ui.components.extensions.GetColorsBackground
 import com.architects.pokearch.ui.components.extensions.abilityColor
 import com.architects.pokearch.ui.components.extensions.buildImageRequest
 import com.architects.pokearch.ui.components.extensions.statColor
 import com.architects.pokearch.ui.components.image.ArchAsyncImage
+import com.architects.pokearch.ui.components.placeHolders.ErrorScreen
 import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
 import com.architects.pokearch.ui.features.details.state.DetailUiState
 import com.architects.pokearch.ui.features.details.state.DetailUiState.Success
@@ -79,6 +81,7 @@ fun DetailScreen(
     viewModel: DetailViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.pokemonDetailInfo.collectAsStateWithLifecycle()
+    val dialogState by viewModel.dialogState.collectAsStateWithLifecycle()
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -90,7 +93,7 @@ fun DetailScreen(
             }
 
             is DetailUiState.Error -> {
-                Text(text = "Error")
+                ErrorScreen()
             }
 
             is Success -> {
@@ -108,6 +111,11 @@ fun DetailScreen(
             onFavorite = { viewModel.toggleFavorite() }
         )
     }
+
+    dialogState?.let {
+        ArchDialog(data = it)
+    }
+
 }
 
 @Composable

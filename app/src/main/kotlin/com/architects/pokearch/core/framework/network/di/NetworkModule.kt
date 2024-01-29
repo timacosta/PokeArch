@@ -1,12 +1,16 @@
 package com.architects.pokearch.core.framework.network.di
 
+import android.content.Context
+import android.net.ConnectivityManager
 import com.architects.pokearch.core.framework.network.di.annotations.CryRetrofit
 import com.architects.pokearch.core.framework.network.di.annotations.PokeRetrofit
+import com.architects.pokearch.core.framework.network.interceptor.ConnectivityInterceptor
 import com.architects.pokearch.core.framework.network.service.CryService
 import com.architects.pokearch.core.framework.network.service.PokedexService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -23,13 +27,22 @@ private const val RESPONSE_TIME_OUT_SECONDS: Long = 100
 object NetworkModule {
     @Provides
     @Singleton
-    fun provideOKHttpClient(): OkHttpClient {
+    fun provideOKHttpClient(@ApplicationContext context: Context): OkHttpClient {
         return OkHttpClient.Builder()
             .readTimeout(RESPONSE_TIME_OUT_SECONDS, TimeUnit.SECONDS)
             .connectTimeout(RESPONSE_TIME_OUT_SECONDS, TimeUnit.SECONDS)
+            .addInterceptor(provideConnectivityInterceptor(context))
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
     }
+
+    @Provides
+    @Singleton
+    fun provideConnectivityInterceptor(@ApplicationContext context: Context): ConnectivityInterceptor {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return ConnectivityInterceptor(connectivityManager)
+    }
+
 
     @PokeRetrofit
     @Provides
