@@ -16,10 +16,7 @@ class PokeArchRepository @Inject constructor(
     private val localDataSource: PokemonLocalDataSource,
 ) : PokeArchRepositoryContract {
 
-    companion object {
-        private const val PREFIX_URL = "https://play.pokemonshowdown.com/audio/cries/"
-        private const val SUBFIX_URL = ".mp3"
-    }
+
 
     override suspend fun getPokemonList(filter: String, page: Int, limit: Int): List<Pokemon> {
         val offset = page * limit
@@ -80,13 +77,7 @@ class PokeArchRepository @Inject constructor(
     override suspend fun fetchCry(name: String): String {
         var result = ""
         remoteDataSource.tryCatchCry(name) { result = it }
-
-        if (name.contains("-") && result.isEmpty()) {
-            //TODO: Move logic to DataSource
-            remoteDataSource.tryCatchCry(name.replace("-", "")) { result = it }
-            remoteDataSource.tryCatchCry(name.split("-")[0]) { result = it }
-        }
-        return "$PREFIX_URL$result$SUBFIX_URL"
+        return result
     }
 
     override suspend fun randomPokemon(): Flow<Either<Failure, PokemonInfo>> {

@@ -12,7 +12,6 @@ import io.mockk.coVerify
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.runs
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeNull
@@ -30,14 +29,12 @@ class PokeArchRepositoryTest {
         val page = 0
         val limit = 20
         val offset = page * limit
-
         val pokemonList = listOf(
             Pokemon(
                 name = "Pikachu",
                 url = "/pokemon/pikachu"
             )
         )
-
         val repository: PokeArchRepository = buildPokeArchRepository(
             localDataSource = mockk {
                 coEvery {
@@ -67,17 +64,14 @@ class PokeArchRepositoryTest {
                 url = "/pokemon/pikachu"
             )
         )
-
         val remoteDataSource: PokemonRemoteDataSource = mockk {
             coEvery { areMorePokemonAvailableFrom(count) } returns Either.Right(false)
             coEvery { getPokemonList() } returns Either.Right(pokemonList)
         }
-
         val localDataSource: PokemonLocalDataSource = mockk {
             coEvery { countPokemon() } returns count
             coEvery { savePokemonList(pokemonList) } just runs
         }
-
         val repository = buildPokeArchRepository(
             remoteDataSource = remoteDataSource,
             localDataSource = localDataSource
@@ -86,7 +80,6 @@ class PokeArchRepositoryTest {
         val result = repository.fetchPokemonList()
 
         coVerify (exactly = 0) { remoteDataSource.getPokemonList(any(), any()) }
-
         result.shouldBeNull()
     }
 
@@ -103,7 +96,6 @@ class PokeArchRepositoryTest {
             stats = listOf(),
             team = false
         )
-
         val repository: PokeArchRepository = buildPokeArchRepository(
             localDataSource = mockk {
                 coEvery { getPokemonInfo(id) } returns pokemonInfo

@@ -2,8 +2,8 @@ package com.architects.pokearch.data.datasource
 
 import arrow.core.Either
 import com.architects.pokearch.domain.model.Pokemon
-import com.architects.pokearch.domain.model.error.Failure
 import com.architects.pokearch.domain.model.PokemonInfo
+import com.architects.pokearch.domain.model.error.Failure
 
 interface PokemonRemoteDataSource {
     companion object {
@@ -16,5 +16,5 @@ interface PokemonRemoteDataSource {
 
     suspend fun getPokemon(id: Int): Either<Failure, PokemonInfo>
 
-    suspend fun tryCatchCry(name: String, isSuccessful: (String) -> Unit)
+    suspend fun tryCatchCry(pokemonName: String, isSuccessful: (String) -> Unit)
 }
