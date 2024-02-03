@@ -11,15 +11,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.architects.pokearch.R
 import com.architects.pokearch.ui.components.progressIndicators.ArchLoadingIndicator
 import com.architects.pokearch.ui.features.team.state.TeamUiState
 import com.architects.pokearch.ui.features.team.viewmodel.TeamViewModel
+import kotlin.math.max
 
 @Composable
 fun TeamScreen(
@@ -62,22 +61,16 @@ fun TeamSuccessView(
     modifier: Modifier = Modifier,
 ) {
     val pokemons = state.pokemonTeam
-
     val lazyGridState = rememberLazyGridState()
-
-    val screenHeightPixels = LocalConfiguration.current.screenHeightDp.dp.value.toInt()
 
     LazyVerticalGrid(
         state = lazyGridState,
         columns = GridCells.Fixed(4),
         modifier = modifier
     ) {
+        val totalRows = max((pokemons.size + 3) / 4, 8)
 
-        val rows = (screenHeightPixels / 100)
-
-        items(count = rows * 4) { index ->
-            val pokemon = pokemons.getOrNull(index)
-
+        items(count = totalRows * 4) { index ->
             Box {
                 Image(
                     painter = painterResource(id = R.drawable.image_cartoon_grass),
@@ -85,9 +78,10 @@ fun TeamSuccessView(
                     modifier = Modifier.fillMaxSize()
                 )
 
-                pokemon?.let {
+                if (index < pokemons.size) {
+                    val pokemon = pokemons[index]
                     TeamItem(
-                        pokemon = it,
+                        pokemon = pokemon,
                         onItemClick = { pokemonId ->
                             onItemClick(pokemonId)
                         }
