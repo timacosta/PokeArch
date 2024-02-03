@@ -6,14 +6,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -38,20 +38,16 @@ fun TeamItem(
     val image = rememberAsyncImagePainter(
         model = pokemon.getSmallSpriteArtworkImageUrl().buildImageRequest(LocalContext.current)
     )
-
-    Card(
-        colors = CardDefaults.cardColors(
-            containerColor = Color.Transparent,
-        ),
-        modifier = modifier
-            .clickable { onItemClick(pokemon.id) }
-    ) {
         Box(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
+            modifier = modifier
+                .padding(start = 4.dp, end = 4.dp)
+                .background(Color.Transparent)
+                .fillMaxSize()
+                .clip(shape = RoundedCornerShape(8.dp))
                 .modifyIf(image.state is AsyncImagePainter.State.Loading) {
                     it.shimmerEffect()
                 }
+                .clickable{ onItemClick(pokemon.id) }
         ) {
             ArchAsyncImage(
                 modifier = Modifier.height(100.dp),
@@ -62,7 +58,6 @@ fun TeamItem(
             )
         }
     }
-}
 
 @Preview
 @Composable
