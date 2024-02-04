@@ -1,6 +1,6 @@
 package com.architects.pokearch.domain.util
 
-object PokemonImageBuilderUrl {
+object PokemonImageUrlBuilder {
 
     private const val BASE_IMAGE_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/"
     private const val OFFICIAL_ARTWORK_URL = "pokemon/other/official-artwork/"

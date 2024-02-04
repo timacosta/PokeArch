@@ -6,7 +6,7 @@ import com.architects.pokearch.domain.model.Stat.Companion.HP
 import com.architects.pokearch.domain.model.Stat.Companion.SPEED
 import com.architects.pokearch.domain.model.Stat.Companion.SP_ATK
 import com.architects.pokearch.domain.model.Stat.Companion.SP_DEF
-import com.architects.pokearch.domain.util.PokemonImageBuilderUrl
+import com.architects.pokearch.domain.util.PokemonImageUrlBuilder
 
 data class PokemonInfo(
     val id: Int,
@@ -19,11 +19,11 @@ data class PokemonInfo(
     val team: Boolean = false,
 ) {
     fun getOfficialArtworkImageUrl(): String {
-        return PokemonImageBuilderUrl.getOfficialArtworkImageUrl(id)
+        return PokemonImageUrlBuilder.getOfficialArtworkImageUrl(id)
     }
 
     fun getSpriteUrl(): String {
-        return PokemonImageBuilderUrl.getSpriteUrl(id)
+        return PokemonImageUrlBuilder.getSpriteUrl(id)
     }
 
 }

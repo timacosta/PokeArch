@@ -1,6 +1,6 @@
 package com.architects.pokearch.domain.model
 
-import com.architects.pokearch.domain.util.PokemonImageBuilderUrl
+import com.architects.pokearch.domain.util.PokemonImageUrlBuilder
 
 data class Pokemon(
     val name: String,
@@ -8,6 +8,6 @@ data class Pokemon(
 ) {
     fun getIndex():Int = url.split("/".toRegex()).dropLast(1).last().toIntOrNull() ?: 0
     fun getOfficialArtworkImageUrl(): String {
-        return PokemonImageBuilderUrl.getOfficialArtworkImageUrlFrom(url)
+        return PokemonImageUrlBuilder.getOfficialArtworkImageUrlFrom(url)
     }
 }
