@@ -1,5 +1,6 @@
 package com.architects.pokearch.ui.features.team.ui
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -11,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -63,15 +65,20 @@ fun TeamSuccessView(
     val pokemons = state.pokemonTeam
     val lazyGridState = rememberLazyGridState()
 
+    val isPortrait = LocalConfiguration.current.orientation == Configuration.ORIENTATION_PORTRAIT
+    val columns = if (isPortrait) 4 else 8
+
+    val totalRowsWithGarden = max((pokemons.size + columns - 1) / columns, 8)
+
     LazyVerticalGrid(
         state = lazyGridState,
-        columns = GridCells.Fixed(4),
+        columns = GridCells.Fixed(columns),
         modifier = modifier
     ) {
-        val totalRows = max((pokemons.size + 3) / 4, 8)
-
-        items(count = totalRows * 4) { index ->
-            Box {
+        items(count = totalRowsWithGarden * columns) { index ->
+            Box(
+                modifier = Modifier.fillMaxSize()
+            ) {
                 Image(
                     painter = painterResource(id = R.drawable.image_cartoon_grass),
                     contentDescription = null,
