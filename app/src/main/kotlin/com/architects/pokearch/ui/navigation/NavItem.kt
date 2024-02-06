@@ -47,7 +47,7 @@ sealed class NavCommand(
     }
 }
 
-//TODO
+//TODO: Jujo create this todo, but there is no explanation yet about what to do here
 sealed class NavArg(val key: String, val navTypeWrapper: NavTypeWrapper) {
 
     val navType = navTypeWrapper.navType

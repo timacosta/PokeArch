@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
-import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.architects.pokearch.ui.navigation.NavItem
 
@@ -60,7 +59,10 @@ fun ArchBottomNavigationBar(
                     selected = isCurrentRoute == true,
                     onClick = {
                         navController.navigate(item.navCommand.route) {
-                            // TODO: navigateToTopLevelDestination(navController)
+                            popUpTo(item.navCommand.route) {
+                                inclusive = true
+                            }
+                            launchSingleTop = true
                         }
                     },
                     colors = NavigationBarItemDefaults.colors(
@@ -73,14 +75,4 @@ fun ArchBottomNavigationBar(
             }
         }
     }
-}
-
-private fun NavOptionsBuilder.navigateToTopLevelDestination(navController: NavController) {
-    navController.graph.startDestinationRoute?.let { route ->
-        popUpTo(route) {
-            saveState = true
-        }
-    }
-    launchSingleTop = true
-    restoreState = true
 }
