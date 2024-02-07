@@ -1,4 +1,4 @@
-package com.architects.pokearch.data.rules
+package com.architects.pokearch.testing.rules
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

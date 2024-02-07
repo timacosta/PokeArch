@@ -10,7 +10,10 @@ java {
 }
 
 dependencies {
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.arrow)
-    testImplementation(project(":testing"))
+    api(libs.kotlinx.coroutines.core)
+    api(libs.junit)
+    api(libs.turbine)
+    api(libs.kluent)
+    api(libs.mockk)
+    api(libs.kotlinx.coroutines.test)
 }
