@@ -1,13 +1,10 @@
 package com.architects.pokearch.data.repository
 
-import android.util.Log
 import arrow.core.Either
-import arrow.core.left
 import com.architects.pokearch.data.datasource.PokemonLocalDataSource
 import com.architects.pokearch.data.datasource.PokemonRemoteDataSource
 import com.architects.pokearch.domain.model.Pokemon
 import com.architects.pokearch.domain.model.PokemonInfo
-import com.architects.pokearch.domain.model.error.ErrorType
 import com.architects.pokearch.domain.model.error.Failure
 import com.architects.pokearch.domain.repository.PokeArchRepositoryContract
 import kotlinx.coroutines.flow.Flow
@@ -16,13 +13,10 @@ import javax.inject.Inject
 
 class PokeArchRepository @Inject constructor(
     private val remoteDataSource: PokemonRemoteDataSource,
-    private val localDataSource: PokemonLocalDataSource
+    private val localDataSource: PokemonLocalDataSource,
 ) : PokeArchRepositoryContract {
 
-    companion object {
-        private const val PREFIX_URL = "https://play.pokemonshowdown.com/audio/cries/"
-        private const val SUBFIX_URL = ".mp3"
-    }
+
 
     override fun getPokemonTeam(): Flow<List<PokemonInfo>> = localDataSource.getPokemonTeam()
 
@@ -35,20 +29,25 @@ class PokeArchRepository @Inject constructor(
     }
 
     override suspend fun fetchPokemonList(): Failure? {
-        val areMorePokemonAvailableFrom = remoteDataSource.areMorePokemonAvailableFrom(localDataSource.countPokemon())
-        return if (areMorePokemonAvailableFrom.isRight()) {
-            val remotePokemonList = remoteDataSource.getPokemonList()
+        val areMorePokemonAvailableFrom =
+            remoteDataSource.areMorePokemonAvailableFrom(localDataSource.countPokemon())
 
-            return remotePokemonList.fold(
-                ifRight = { pokemonList ->
-                    localDataSource.savePokemonList(pokemonList)
+        return areMorePokemonAvailableFrom.fold(
+            ifLeft = { it },
+            ifRight = { moreAvailable ->
+                if (moreAvailable) {
+                    val remotePokemonList = remoteDataSource.getPokemonList()
+                    remotePokemonList.fold(
+                        ifRight = { pokemonList ->
+                            localDataSource.savePokemonList(pokemonList)
+                            null
+                        },
+                        ifLeft = { it }
+                    )
+                } else {
                     null
-                },
-                ifLeft = { it }
-            )
-        } else areMorePokemonAvailableFrom.fold(
-            ifRight = { null },
-            ifLeft = { it }
+                }
+            }
         )
     }
 
@@ -78,16 +77,10 @@ class PokeArchRepository @Inject constructor(
             }
         )
 
-    //TODO: RESPONSIBILITY HERE OR SERVER DATASOURCE
     override suspend fun fetchCry(name: String): String {
         var result = ""
         remoteDataSource.tryCatchCry(name) { result = it }
-
-        if (name.contains("-") && result.isEmpty()) {
-            remoteDataSource.tryCatchCry(name.replace("-", "")) { result = it }
-            remoteDataSource.tryCatchCry(name.split("-")[0]) { result = it }
-        }
-        return "$PREFIX_URL$result$SUBFIX_URL"
+        return result
     }
 
     override suspend fun randomPokemon(): Flow<Either<Failure, PokemonInfo>> {

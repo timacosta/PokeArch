@@ -19,6 +19,11 @@ class PokemonServerDataSource @Inject constructor(
     private val cryService: CryService,
 ) : PokemonRemoteDataSource {
 
+    companion object {
+        private const val PREFIX_URL = "https://play.pokemonshowdown.com/audio/cries/"
+        private const val SUBFIX_URL = ".mp3"
+    }
+
     override suspend fun getPokemonList(limit: Int, offset: Int): Either<Failure, List<Pokemon>> {
         return try {
             val response = pokedexService.fetchPokemonList(limit, offset)
@@ -77,15 +82,23 @@ class PokemonServerDataSource @Inject constructor(
     }
 
 
-    override suspend fun tryCatchCry(name: String, isSuccessful: (String) -> Unit) {
-        try {
-            val fetchCry = cryService.thereIsCry(name)
-            if (fetchCry.isSuccessful) isSuccessful(name)
-        } catch (exception: Exception) {
-            Log.e("CryException", exception.stackTraceToString())
-            when (exception) {
-                is InternetConnectivityException -> Either.Left(Failure.NetworkError(ErrorType.NoInternet))
-                else -> Either.Left(Failure.UnknownError)
+    override suspend fun tryCatchCry(pokemonName: String, isSuccessful: (String) -> Unit) {
+        val namesToTry = if (pokemonName.contains("-")) {
+            listOf(pokemonName.replace("-", ""), pokemonName.split("-")[0])
+        } else {
+            listOf(pokemonName)
+        }
+
+        for (name in namesToTry) {
+            try {
+                val fetchCry = cryService.thereIsCry(name)
+                if (fetchCry.isSuccessful) isSuccessful("$PREFIX_URL$name$SUBFIX_URL")
+            } catch (exception: Exception) {
+                Log.e("CryException", exception.stackTraceToString())
+                when (exception) {
+                    is InternetConnectivityException -> Either.Left(Failure.NetworkError(ErrorType.NoInternet))
+                    else -> Either.Left(Failure.UnknownError)
+                }
             }
         }
     }
