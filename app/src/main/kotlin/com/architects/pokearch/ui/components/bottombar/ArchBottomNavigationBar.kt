@@ -43,6 +43,7 @@ fun ArchBottomNavigationBar(
 
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
+            val homeRoute = NavItem.entries.first().navCommand.route
 
             NavItem.entries.forEach { item ->
                 val title = stringResource(id = item.title)
@@ -59,8 +60,8 @@ fun ArchBottomNavigationBar(
                     selected = isCurrentRoute == true,
                     onClick = {
                         navController.navigate(item.navCommand.route) {
-                            popUpTo(item.navCommand.route) {
-                                inclusive = true
+                            popUpTo(homeRoute) {
+                                inclusive = false
                             }
                             launchSingleTop = true
                         }
