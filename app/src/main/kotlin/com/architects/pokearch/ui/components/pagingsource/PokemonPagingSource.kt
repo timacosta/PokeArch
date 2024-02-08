@@ -7,7 +7,6 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import androidx.paging.cachedIn
 import com.architects.pokearch.domain.model.Pokemon
-import com.architects.pokearch.domain.repository.PokeArchRepositoryContract
 import com.architects.pokearch.usecases.GetPokemonList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow

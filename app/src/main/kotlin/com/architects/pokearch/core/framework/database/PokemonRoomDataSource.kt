@@ -1,11 +1,11 @@
 package com.architects.pokearch.core.framework.database
 
-import com.architects.pokearch.domain.model.Pokemon
 import com.architects.pokearch.core.framework.database.dao.PokemonDao
 import com.architects.pokearch.core.framework.database.dao.PokemonInfoDao
 import com.architects.pokearch.core.framework.database.mapper.toDomain
 import com.architects.pokearch.core.framework.database.mapper.toEntity
 import com.architects.pokearch.data.datasource.PokemonLocalDataSource
+import com.architects.pokearch.domain.model.Pokemon
 import com.architects.pokearch.domain.model.PokemonInfo
 import javax.inject.Inject
 

@@ -5,22 +5,19 @@ import androidx.lifecycle.viewModelScope
 import com.architects.pokearch.core.di.annotations.IO
 import com.architects.pokearch.domain.model.error.Failure
 import com.architects.pokearch.ui.components.pagingsource.PokemonPagingSource
+import com.architects.pokearch.ui.features.home.state.HomeUiState
 import com.architects.pokearch.ui.mapper.DialogData
 import com.architects.pokearch.ui.mapper.ErrorDialogManager
-import com.architects.pokearch.ui.features.home.state.HomeUiState
 import com.architects.pokearch.usecases.FetchPokemonList
 import com.architects.pokearch.usecases.GetPokemonList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.internal.ChannelFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.coroutines.suspendCoroutine
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(

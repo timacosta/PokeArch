@@ -79,6 +79,9 @@ org-jetbrains-kotlin-jvm = "1.9.10"
 appcompat = "1.6.1"
 material = "1.11.0"
 
+#Inject
+javax-inject = "1"
+
 [libraries]
 
 kotlinx_coroutines_test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines-test" }
@@ -161,6 +164,9 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+#Inject
+inject = { group = "javax.inject", name = "javax.inject", version.ref = "javax-inject" }
 
 [plugins]
 
