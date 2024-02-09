@@ -10,6 +10,7 @@ java {
 }
 
 dependencies {
+    api(project(":domain"))
     api(libs.kotlinx.coroutines.core)
     api(libs.junit)
     api(libs.turbine)

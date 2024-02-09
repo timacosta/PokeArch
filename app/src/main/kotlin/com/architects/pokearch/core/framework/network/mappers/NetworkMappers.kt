@@ -50,12 +50,12 @@ fun NetworkStats.toDomainStats(): Stats =
 fun NetworkStat.toDomainStat(): Stat =
     Stat(
         name = when (name) {
-            "hp" -> HP
-            "attack" -> ATK
-            "defense" -> DEF
-            "speed" -> SPEED
-            "special-attack" -> SP_ATK
-            "special-defense" -> SP_DEF
+            NetworkStat.HP -> HP
+            NetworkStat.ATK -> ATK
+            NetworkStat.DEF -> DEF
+            NetworkStat.SPEED -> SPEED
+            NetworkStat.SP_ATK -> SP_ATK
+            NetworkStat.SP_DEF -> SP_DEF
             else -> name
         }
     )
