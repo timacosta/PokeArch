@@ -1,7 +1,7 @@
 package com.architects.pokearch.usecases
 
-import com.architects.pokearch.domain.repository.PokeArchRepositoryContract
 import com.architects.pokearch.domain.model.Pokemon
+import com.architects.pokearch.domain.repository.PokeArchRepositoryContract
 import javax.inject.Inject
 
 class GetPokemonList @Inject constructor(
