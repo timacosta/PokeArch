@@ -1,7 +1,7 @@
 package com.architects.pokearch.core.framework.network.service
 
-import com.architects.pokearch.core.framework.network.model.NetworkPokemons
 import com.architects.pokearch.core.framework.network.model.NetworkPokemonInfo
+import com.architects.pokearch.core.framework.network.model.NetworkPokemons
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
