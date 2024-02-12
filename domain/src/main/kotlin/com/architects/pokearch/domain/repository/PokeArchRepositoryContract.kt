@@ -14,6 +14,8 @@ interface PokeArchRepositoryContract {
         limit: Int = 20
     ): List<Pokemon>
 
+    fun getPokemonTeam(): Flow<List<PokemonInfo>>
+
     suspend fun fetchPokemonList(): Failure?
 
     suspend fun fetchPokemonInfo(id: Int): Flow<Either<Failure, PokemonInfo>>

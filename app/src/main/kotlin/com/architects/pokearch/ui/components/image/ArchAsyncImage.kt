@@ -14,6 +14,8 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import coil.compose.AsyncImagePainter
 import com.architects.pokearch.R
@@ -25,6 +27,7 @@ fun ArchAsyncImage(
     modifier: Modifier = Modifier,
     alignment: Alignment = Alignment.Center,
     contentScale: ContentScale = ContentScale.Fit,
+    placeHolderSize: Dp = 150.dp,
     alpha: Float = DefaultAlpha,
     colorFilter: ColorFilter? = null,
     filterQuality: FilterQuality = DrawScope.DefaultFilterQuality,
@@ -32,7 +35,9 @@ fun ArchAsyncImage(
     when (val state = asyncImagePainter.state) {
 
         is AsyncImagePainter.State.Loading -> {
-            ArchImagePlaceHolder()
+            ArchImagePlaceHolder(
+                size = placeHolderSize
+            )
         }
 
         is AsyncImagePainter.State.Error -> {
