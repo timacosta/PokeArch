@@ -18,6 +18,9 @@ class PokeArchRepository @Inject constructor(
 
 
 
+    override fun getPokemonTeam(): Flow<List<PokemonInfo>> = localDataSource.getPokemonTeam()
+
+
     override suspend fun getPokemonList(filter: String, page: Int, limit: Int): List<Pokemon> {
         val offset = page * limit
 

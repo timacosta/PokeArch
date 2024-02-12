@@ -10,7 +10,7 @@ import androidx.navigation.navigation
 import com.architects.pokearch.ui.features.details.ui.DetailScreen
 import com.architects.pokearch.ui.features.home.ui.HomeScreen
 import com.architects.pokearch.ui.features.shakeNCatch.ui.ShakeNCatchScreen
-import com.architects.pokearch.ui.features.team.TeamScreen
+import com.architects.pokearch.ui.features.team.ui.TeamScreen
 
 @Composable
 fun Navigation(
@@ -23,7 +23,7 @@ fun Navigation(
         startDestination = Feature.MAIN.route
     ){
         homeNav(navHostController, pokemonName, onNavigationDetailClick)
-        teamNav()
+        teamNav(onNavigationDetailClick)
         randomCatchNav(navHostController, onNavigationDetailClick)
     }
 
@@ -56,13 +56,22 @@ fun NavGraphBuilder.homeNav(
     }
 }
 
-fun NavGraphBuilder.teamNav(){
+
+fun NavGraphBuilder.teamNav(
+    onNavigationDetailClick: (String) -> Unit,
+){
     navigation(
         route = Feature.TEAM.route,
         startDestination = NavCommand.ContentType(Feature.TEAM).route
     ){
         composable(NavCommand.ContentType(Feature.TEAM)){
-            TeamScreen()
+            TeamScreen(
+                onNavigationClick = { pokemonId ->
+                    onNavigationDetailClick(
+                        NavCommand.ContentDetail(Feature.MAIN).createRoute(pokemonId)
+                    )
+                }
+            )
         }
     }
 }

@@ -19,12 +19,14 @@ import com.architects.pokearch.domain.model.Stats
 import com.architects.pokearch.domain.model.Type
 import com.architects.pokearch.domain.model.Types
 
-//TODO: CHANGE NAME INTO ENTITYMAPPER AFTER SHOW CODE
 fun List<PokemonEntity>.toDomain(): List<Pokemon> =
     map { it.toDomain() }
 
 fun PokemonEntity.toDomain(): Pokemon =
     Pokemon(name = name, url = url)
+
+fun List<PokemonInfoEntity>.toTeamDomain(): List<PokemonInfo> =
+    map { it.toDomain() }
 
 fun PokemonInfoEntity.toDomain(): PokemonInfo =
     PokemonInfo(

@@ -178,7 +178,7 @@ private fun getGradientImageAndColors(
 ): Pair<AsyncImagePainter, List<Color>> {
 
     val image = rememberAsyncImagePainter(
-        model = pokemonInfo.getImageUrl().buildImageRequest(LocalContext.current)
+        model = pokemonInfo.getOfficialArtworkImageUrl().buildImageRequest(LocalContext.current)
     )
 
     val colorDefault = MaterialTheme.colorScheme.surfaceVariant
