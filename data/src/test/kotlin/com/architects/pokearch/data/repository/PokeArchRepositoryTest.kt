@@ -38,7 +38,7 @@ class PokeArchRepositoryTest {
                 url = "/pokemon/pikachu"
             )
         )
-        val repository: PokeArchRepository = buildPokeArchRepository(
+        val repository: PokeArchRepository = buildRepository(
             localDataSource = mockk {
                 coEvery {
                     getPokemonList(
@@ -76,7 +76,7 @@ class PokeArchRepositoryTest {
                 coEvery { countPokemon() } returns count
                 coEvery { savePokemonList(pokemonList) } just runs
             }
-            val repository = buildPokeArchRepository(
+            val repository = buildRepository(
                 remoteDataSource = remoteDataSource,
                 localDataSource = localDataSource
             )
@@ -101,7 +101,7 @@ class PokeArchRepositoryTest {
             val localDataSource: PokemonLocalDataSource = mockk {
                 coEvery { countPokemon() } returns count
             }
-            val repository = buildPokeArchRepository(
+            val repository = buildRepository(
                 remoteDataSource = remoteDataSource,
                 localDataSource = localDataSource
             )
@@ -122,7 +122,7 @@ class PokeArchRepositoryTest {
             val localDataSource: PokemonLocalDataSource = mockk {
                 coEvery { countPokemon() } returns count
             }
-            val repository = buildPokeArchRepository(
+            val repository = buildRepository(
                 remoteDataSource = remoteDataSource,
                 localDataSource = localDataSource
             )
@@ -145,7 +145,7 @@ class PokeArchRepositoryTest {
             stats = listOf(),
             team = false
         )
-        val repository: PokeArchRepository = buildPokeArchRepository(
+        val repository: PokeArchRepository = buildRepository(
             localDataSource = mockk {
                 coEvery { getPokemonInfo(id) } returns pokemonInfo
             }
@@ -164,7 +164,7 @@ class PokeArchRepositoryTest {
     fun `GIVEN invalid id WHEN fetchPokemonInfo THEN return Failure`() = runTest {
         val id = -1
 
-        val repository: PokeArchRepository = buildPokeArchRepository(
+        val repository: PokeArchRepository = buildRepository(
             localDataSource = mockk {
                 coEvery { getPokemonInfo(id) } returns null
             },
@@ -186,7 +186,7 @@ class PokeArchRepositoryTest {
             coEvery { savePokemonInfo(any()) } just runs
         }
 
-        val repository = buildPokeArchRepository(
+        val repository = buildRepository(
             localDataSource = localDataSource
         )
 
@@ -200,7 +200,7 @@ class PokeArchRepositoryTest {
         val name = "pikachu"
         val cryUrl = "https://play.pokemonshowdown.com/audio/cries/pikachu.mp3"
 
-        val repository: PokeArchRepository = buildPokeArchRepository(
+        val repository: PokeArchRepository = buildRepository(
             remoteDataSource = mockk {
                 coEvery { tryCatchCry(name, any()) } answers {
                     secondArg<(String) -> Unit>().invoke(
@@ -216,7 +216,7 @@ class PokeArchRepositoryTest {
     }
 
 
-    private fun buildPokeArchRepository(
+    private fun buildRepository(
         remoteDataSource: PokemonRemoteDataSource = mockk(),
         localDataSource: PokemonLocalDataSource = mockk(),
     ) = PokeArchRepository(
