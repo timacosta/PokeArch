@@ -16,5 +16,5 @@ interface PokemonRemoteDataSource {
 
     suspend fun getPokemon(id: Int): Either<Failure, PokemonInfo>
 
-    suspend fun tryCatchCry(pokemonName: String, isSuccessful: (String) -> Unit)
+    suspend fun tryCatchCry(pokemonName: String, isSuccessful: (Either<Failure, String>) -> Unit)
 }

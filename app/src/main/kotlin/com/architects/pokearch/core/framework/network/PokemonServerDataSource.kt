@@ -82,7 +82,7 @@ class PokemonServerDataSource @Inject constructor(
     }
 
 
-    override suspend fun tryCatchCry(pokemonName: String, isSuccessful: (String) -> Unit) {
+    override suspend fun tryCatchCry(pokemonName: String, isSuccessful: (Either<Failure, String>) -> Unit) {
         val namesToTry = if (pokemonName.contains("-")) {
             listOf(pokemonName.replace("-", ""), pokemonName.split("-")[0])
         } else {
@@ -92,12 +92,17 @@ class PokemonServerDataSource @Inject constructor(
         for (name in namesToTry) {
             try {
                 val fetchCry = cryService.thereIsCry(name)
-                if (fetchCry.isSuccessful) isSuccessful("$PREFIX_URL$name$SUBFIX_URL")
+                if (fetchCry.isSuccessful) {
+                    isSuccessful(Either.Right("$PREFIX_URL$name$SUBFIX_URL"))
+                }
+                else {
+                    isSuccessful(Either.Left(Failure.NetworkError(ErrorMapper.getErrorType(fetchCry.code()))))
+                }
             } catch (exception: Exception) {
                 Log.e("CryException", exception.stackTraceToString())
                 when (exception) {
-                    is InternetConnectivityException -> Either.Left(Failure.NetworkError(ErrorType.NoInternet))
-                    else -> Either.Left(Failure.UnknownError)
+                    is InternetConnectivityException -> isSuccessful(Either.Left(Failure.NetworkError(ErrorType.NoInternet)))
+                    else -> isSuccessful(Either.Left(Failure.UnknownError))
                 }
             }
         }
