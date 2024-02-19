@@ -203,8 +203,8 @@ class PokeArchRepositoryTest {
         val repository: PokeArchRepository = buildRepository(
             remoteDataSource = mockk {
                 coEvery { tryCatchCry(name, any()) } answers {
-                    secondArg<(String) -> Unit>().invoke(
-                        cryUrl
+                    secondArg<(Either<Failure, String>) -> Unit>().invoke(
+                        Either.Right(cryUrl)
                     )
                 }
             }
