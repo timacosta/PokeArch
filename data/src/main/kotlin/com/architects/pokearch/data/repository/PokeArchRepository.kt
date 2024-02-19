@@ -79,7 +79,12 @@ class PokeArchRepository @Inject constructor(
 
     override suspend fun fetchCry(name: String): String {
         var result = ""
-        remoteDataSource.tryCatchCry(name) { result = it }
+        remoteDataSource.tryCatchCry(name) {
+            it.fold(
+                ifRight = { cry -> result = cry },
+                ifLeft = { failure -> }
+            )
+        }
         return result
     }
 
