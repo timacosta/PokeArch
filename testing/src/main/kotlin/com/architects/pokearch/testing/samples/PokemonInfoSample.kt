@@ -1,4 +1,4 @@
-package com.architects.pokearch.testing.rules.samples
+package com.architects.pokearch.testing.samples
 
 import com.architects.pokearch.domain.model.PokemonInfo
 import com.architects.pokearch.domain.model.Stat
