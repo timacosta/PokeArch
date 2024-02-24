@@ -6,12 +6,12 @@ import com.architects.pokearch.samples.database.pokemonInfoEntityBuilder
 import com.architects.pokearch.samples.database.pokemonInfoEntityListBuilder
 import com.architects.pokearch.samples.database.statsHolderBuilder
 import com.architects.pokearch.samples.database.typesHolderBuilder
-import com.architects.pokearch.testing.rules.samples.pokemonBuilder
-import com.architects.pokearch.testing.rules.samples.pokemonInfoBuilder
-import com.architects.pokearch.testing.rules.samples.pokemonInfoListBuilder
-import com.architects.pokearch.testing.rules.samples.pokemonListBuilder
-import com.architects.pokearch.testing.rules.samples.statsBuilder
-import com.architects.pokearch.testing.rules.samples.typesBuilder
+import com.architects.pokearch.testing.samples.pokemonBuilder
+import com.architects.pokearch.testing.samples.pokemonInfoBuilder
+import com.architects.pokearch.testing.samples.pokemonInfoListBuilder
+import com.architects.pokearch.testing.samples.pokemonListBuilder
+import com.architects.pokearch.testing.samples.statsBuilder
+import com.architects.pokearch.testing.samples.typesBuilder
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Test
 
