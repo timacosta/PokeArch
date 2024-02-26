@@ -65,7 +65,7 @@ class ShakeNCatchViewModelTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `GIVEN accelerometer value is greater than 8 and greater than or equal to -8 afterWHEN init THEN states no change`() = runTest {
+    fun `GIVEN accelerometer value is greater than 8 and greater than or equal to -8 after WHEN init THEN states no change`() = runTest {
         every { getAccelerometerValue() } returns buildAccelerationFlow(9f, -8f)
 
         viewModel = buildViewModel()
