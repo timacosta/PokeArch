@@ -33,4 +33,14 @@ class HomeItemTest {
 
         assert(clicked)
     }
+
+    @Test
+    fun doesNotCallOnClickIfItemIsNotClicked() {
+        var clicked = false
+        val pokemon = Pokemon(name = "Pikachu", url = "http://example.com/pikachu.png")
+
+        composeRule.setContent { HomeItem(pokemon = pokemon, onItemClick = { clicked = true }) }
+
+        assert(!clicked)
+    }
 }
