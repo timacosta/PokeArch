@@ -24,10 +24,17 @@ class AppIntegrationTest {
     val composeRule = createAndroidComposeRule<PokeArchActivity>()
 
     @Before
-    fun init() { hiltRule.inject() }
+    fun init() {
+        hiltRule.inject()
+    }
 
     @Test
-    fun foo() {
+    fun firstSixPokemonsAreVisible() {
         composeRule.onNodeWithText("Bulbasaur").assertIsDisplayed()
+        composeRule.onNodeWithText("Ivysaur").assertIsDisplayed()
+        composeRule.onNodeWithText("Venusaur").assertIsDisplayed()
+        composeRule.onNodeWithText("Charmander").assertIsDisplayed()
+        composeRule.onNodeWithText("Charmeleon").assertIsDisplayed()
+        composeRule.onNodeWithText("Charizard").assertIsDisplayed()
     }
 }
