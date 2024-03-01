@@ -10,7 +10,7 @@ import dagger.hilt.testing.TestInstallIn
 import javax.inject.Singleton
 
 
-private const val Url = "http://localhost:8080/"
+private const val URL = "http://localhost:8080/"
 
 @TestInstallIn(
     components = [SingletonComponent::class],
@@ -21,10 +21,10 @@ object FakeNetworkModule {
     @Provides
     @Singleton
     @PokeApi
-    fun providePokeApiUrl(): String = Url
+    fun providePokeApiUrl(): String = URL
 
     @Provides
     @Singleton
     @CryApi
-    fun provideCryApiUrl(): String = Url
+    fun provideCryApiUrl(): String = URL
 }
