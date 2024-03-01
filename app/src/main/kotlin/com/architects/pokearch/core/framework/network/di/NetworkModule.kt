@@ -45,16 +45,6 @@ object NetworkModule {
         return ConnectivityInterceptor(connectivityManager)
     }
 
-    @PokeApi
-    @Provides
-    @Singleton
-    fun providePokeApiUrl(): String = BASE_POKE_API_URL
-
-    @CryApi
-    @Provides
-    @Singleton
-    fun provideCryApiUrl(): String = BASE_CRY_API_URL
-
     @PokeRetrofit
     @Provides
     @Singleton
@@ -88,4 +78,19 @@ object NetworkModule {
     fun provideCryService(@CryRetrofit retrofit: Retrofit): CryService {
         return retrofit.create(CryService::class.java)
     }
+}
+
+
+@Module
+@InstallIn(SingletonComponent::class)
+object NetworkExtrasModule {
+    @PokeApi
+    @Provides
+    @Singleton
+    fun providePokeApiUrl(): String = BASE_POKE_API_URL
+
+    @CryApi
+    @Provides
+    @Singleton
+    fun provideCryApiUrl(): String = BASE_CRY_API_URL
 }

@@ -124,7 +124,8 @@ dependencies {
     implementation(libs.room.paging)
 
     testImplementation(project(":testing"))
-//androidTestImplementation(project(":testing"))
+    androidTestImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation((libs.kluent))
     androidTestImplementation(libs.mockk.android)
     androidTestImplementation(libs.mockk.agent)
     androidTestImplementation(libs.androidx.test.ext.junit)
