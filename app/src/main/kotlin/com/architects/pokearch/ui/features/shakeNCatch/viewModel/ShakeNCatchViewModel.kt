@@ -41,8 +41,10 @@ class ShakeNCatchViewModel @Inject constructor(
         private const val accelerationThreshold = 8
     }
 
-    private var accelerationMin = 0f
-    private var accelerationMax = 0f
+    var accelerationMin = 0f
+        private set
+    var accelerationMax = 0f
+        private set
 
     init {
         collectAccelerometerValue()
@@ -74,6 +76,7 @@ class ShakeNCatchViewModel @Inject constructor(
         viewModelScope.launch(dispatcher) {
             uiState.map { it.openedPokeball }.distinctUntilChanged().collect { openPokeball ->
                 if (openPokeball) {
+                    _uiState.update { it.copy(isLoading = true) }
                     vibrate()
                     getRandomPokemon().collectLatest { result ->
                         result.fold(

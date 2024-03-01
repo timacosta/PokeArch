@@ -8,11 +8,11 @@ import com.architects.pokearch.samples.network.networkPokemonInfoListBuilder
 import com.architects.pokearch.samples.network.networkPokemonListBuilder
 import com.architects.pokearch.samples.network.networkStatsBuilder
 import com.architects.pokearch.samples.network.networkTypesBuilder
-import com.architects.pokearch.testing.rules.samples.pokemonInfoBuilder
-import com.architects.pokearch.testing.rules.samples.pokemonInfoListBuilder
-import com.architects.pokearch.testing.rules.samples.pokemonListBuilder
-import com.architects.pokearch.testing.rules.samples.statsBuilder
-import com.architects.pokearch.testing.rules.samples.typesBuilder
+import com.architects.pokearch.testing.samples.pokemonInfoBuilder
+import com.architects.pokearch.testing.samples.pokemonInfoListBuilder
+import com.architects.pokearch.testing.samples.pokemonListBuilder
+import com.architects.pokearch.testing.samples.statsBuilder
+import com.architects.pokearch.testing.samples.typesBuilder
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Test
 
