@@ -5,6 +5,8 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.architects.pokearch.domain.model.Pokemon
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeTrue
 import org.junit.Rule
 import org.junit.Test
 
@@ -31,7 +33,7 @@ class HomeItemTest {
 
         composeRule.onNodeWithText("Pikachu").performClick()
 
-        assert(clicked)
+        clicked.shouldBeTrue()
     }
 
     @Test
@@ -41,6 +43,6 @@ class HomeItemTest {
 
         composeRule.setContent { HomeItem(pokemon = pokemon, onItemClick = { clicked = true }) }
 
-        assert(!clicked)
+        clicked.shouldBeFalse()
     }
 }
