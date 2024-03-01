@@ -122,12 +122,15 @@ class PokeArchRepositoryTest {
             val localDataSource: PokemonLocalDataSource = mockk {
                 coEvery { countPokemon() } returns count
             }
+
             val repository = buildRepository(
                 remoteDataSource = remoteDataSource,
                 localDataSource = localDataSource
             )
 
             val result = repository.fetchPokemonList()
+
+            coVerify(exactly = 0) { localDataSource.savePokemonList(any()) }
 
             result shouldBeEqualTo Failure.NetworkError(ErrorType.NoInternet)
         }
