@@ -17,18 +17,11 @@ class VibrationRepositoryTest {
     @Test
     fun `GIVEN startVibration WHEN invokes THEN call correct method from vibrationSource`() = runTest {
         val vibrationSource: VibrationSource = mockk(relaxed = true)
-        val vibrationRepository = buildRepository(vibrationSource)
+        val vibrationRepository = VibrationRepository(vibrationSource)
         coEvery { vibrationSource.vibrate() } returns Unit
 
         vibrationRepository.vibrate()
 
         verify { vibrationSource.vibrate() }
     }
-
-    private fun buildRepository(
-        vibrationSource: VibrationSource
-    ) = VibrationRepository(
-        vibrationSource = vibrationSource
-    )
-
 }
