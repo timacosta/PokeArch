@@ -75,7 +75,6 @@ android {
     }
 }
 
-
 ktlint {
     android.set(true)
     ignoreFailures.set(false)
