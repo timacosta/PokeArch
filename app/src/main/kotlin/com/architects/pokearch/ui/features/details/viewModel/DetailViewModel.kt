@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.architects.pokearch.core.di.annotations.IO
 import com.architects.pokearch.domain.model.error.Failure
-import com.architects.pokearch.domain.repository.MediaPlayerRepositoryContract
 import com.architects.pokearch.ui.features.details.state.DetailUiState
 import com.architects.pokearch.ui.features.details.state.DetailUiState.Error
 import com.architects.pokearch.ui.features.details.state.DetailUiState.Loading
@@ -15,6 +14,7 @@ import com.architects.pokearch.ui.mapper.ErrorDialogManager
 import com.architects.pokearch.ui.navigation.NavArg
 import com.architects.pokearch.usecases.FetchCry
 import com.architects.pokearch.usecases.FetchPokemonDetails
+import com.architects.pokearch.usecases.PlayCry
 import com.architects.pokearch.usecases.UpdatePokemonInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -30,7 +30,7 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(
     private val fetchPokemonDetails: FetchPokemonDetails,
     private val fetchCry: FetchCry,
-    private val mediaPlayerRepository: MediaPlayerRepositoryContract,
+    private val playCry: PlayCry,
     private val updatePokemonInfo: UpdatePokemonInfo,
     private val errorDialogManager: ErrorDialogManager,
     @IO val dispatcher: CoroutineDispatcher,
@@ -75,9 +75,8 @@ class DetailViewModel @Inject constructor(
     fun playCry() {
         viewModelScope.launch(dispatcher) {
             with(_pokemonDetailInfo.value) {
-                //TODO: Move to usecase to avoid calling the repository here
                 if (this is Success && !once) {
-                    mediaPlayerRepository.playCry(getCryUrl(pokemonInfo.name.replaceFirstChar { it.lowercase() }))
+                    playCry(getCryUrl(pokemonInfo.name.replaceFirstChar { it.lowercase() }))
                     once = true
                 }
             }
