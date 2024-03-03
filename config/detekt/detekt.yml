@@ -132,7 +132,7 @@ complexity:
   LongParameterList:
     active: true
     functionThreshold: 12
-    constructorThreshold: 7
+    constructorThreshold: 12
     ignoreDefaultParameters: true
     ignoreDataClasses: true
     ignoreAnnotatedParameter: []
