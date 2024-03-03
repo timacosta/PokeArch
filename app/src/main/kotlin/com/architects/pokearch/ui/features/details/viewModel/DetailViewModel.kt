@@ -1,17 +1,16 @@
 package com.architects.pokearch.ui.features.details.viewModel
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.architects.pokearch.core.di.annotations.IO
 import com.architects.pokearch.domain.model.error.Failure
+import com.architects.pokearch.ui.features.details.di.annotations.PokemonId
 import com.architects.pokearch.ui.features.details.state.DetailUiState
 import com.architects.pokearch.ui.features.details.state.DetailUiState.Error
 import com.architects.pokearch.ui.features.details.state.DetailUiState.Loading
 import com.architects.pokearch.ui.features.details.state.DetailUiState.Success
 import com.architects.pokearch.ui.mapper.DialogData
 import com.architects.pokearch.ui.mapper.ErrorDialogManager
-import com.architects.pokearch.ui.navigation.NavArg
 import com.architects.pokearch.usecases.FetchCry
 import com.architects.pokearch.usecases.FetchPokemonDetails
 import com.architects.pokearch.usecases.PlayCry
@@ -34,10 +33,8 @@ class DetailViewModel @Inject constructor(
     private val updatePokemonInfo: UpdatePokemonInfo,
     private val errorDialogManager: ErrorDialogManager,
     @IO val dispatcher: CoroutineDispatcher,
-    savedStateHandle: SavedStateHandle,
+    @PokemonId private val pokemonId: Int,
 ) : ViewModel() {
-
-    private val pokemonId = savedStateHandle.get<Int>(NavArg.PokemonId.key) ?: 0
 
     private val _pokemonDetailInfo: MutableStateFlow<DetailUiState> =
         MutableStateFlow(Loading)
