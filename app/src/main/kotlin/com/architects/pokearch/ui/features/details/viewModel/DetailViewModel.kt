@@ -67,6 +67,7 @@ class DetailViewModel @Inject constructor(
                 }
             )
         }
+        playCry()
     }
 
     fun playCry() {

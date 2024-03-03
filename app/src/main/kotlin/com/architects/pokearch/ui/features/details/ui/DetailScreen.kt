@@ -97,7 +97,6 @@ fun DetailScreen(
             }
 
             is Success -> {
-                viewModel.playCry()
                 DetailSuccessScreen(
                     modifier = modifier,
                     state = state
