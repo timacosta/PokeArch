@@ -10,5 +10,6 @@ import javax.inject.Inject
 class FetchPokemonDetails @Inject constructor(
     private val pokeArchRepositoryContract: PokeArchRepositoryContract,
 ) {
-    suspend operator fun invoke(id: Int): Flow<Either<Failure, PokemonInfo>> = pokeArchRepositoryContract.fetchPokemonInfo(id)
+    suspend operator fun invoke(id: Int): Flow<Either<Failure, PokemonInfo>> =
+        pokeArchRepositoryContract.fetchPokemonInfo(id)
 }
