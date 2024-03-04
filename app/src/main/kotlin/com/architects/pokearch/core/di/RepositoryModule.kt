@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package com.architects.pokearch.data.di
+package com.architects.pokearch.core.di
 
 import com.architects.pokearch.data.repository.MediaPlayerRepository
 import com.architects.pokearch.data.repository.PokeArchRepository

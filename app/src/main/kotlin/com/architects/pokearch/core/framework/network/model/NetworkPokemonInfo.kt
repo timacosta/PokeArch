@@ -41,4 +41,13 @@ data class NetworkStats(
 
 data class NetworkStat(
     val name: String,
-)
+) {
+    companion object {
+        const val HP = "hp"
+        const val ATK = "attack"
+        const val DEF = "defense"
+        const val SPEED = "speed"
+        const val SP_ATK = "special-attack"
+        const val SP_DEF = "special-defense"
+    }
+}

@@ -1,4 +1,4 @@
-package com.architects.pokearch.ui.features.team
+package com.architects.pokearch.ui.components.placeHolders
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,11 +8,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun TeamScreen(modifier: Modifier = Modifier) {
+fun ErrorScreen(modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier.fillMaxSize()
     ) {
-        Text(text = "TeamScreen")
+        Text(
+            modifier = Modifier.align(Alignment.Center),
+            text = "Something went wrong"
+        )
     }
 }

@@ -12,4 +12,5 @@ java {
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.arrow)
+    testImplementation(project(":testing"))
 }

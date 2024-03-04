@@ -3,7 +3,10 @@ package com.architects.pokearch.ui.features.shakeNCatch.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.architects.pokearch.core.di.annotations.IO
+import com.architects.pokearch.domain.model.error.Failure
 import com.architects.pokearch.ui.features.shakeNCatch.state.ShakeNCatchUiState
+import com.architects.pokearch.ui.mapper.DialogData
+import com.architects.pokearch.ui.mapper.ErrorDialogManager
 import com.architects.pokearch.usecases.GetAccelerometerValue
 import com.architects.pokearch.usecases.GetRandomPokemon
 import com.architects.pokearch.usecases.Vibrate
@@ -24,18 +27,24 @@ class ShakeNCatchViewModel @Inject constructor(
     private val getRandomPokemon: GetRandomPokemon,
     private val vibrate: Vibrate,
     @IO private val dispatcher: CoroutineDispatcher,
+    private val errorDialogManager: ErrorDialogManager,
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<ShakeNCatchUiState> =
         MutableStateFlow(ShakeNCatchUiState())
     val uiState = _uiState.asStateFlow()
 
+    private val _dialogState: MutableStateFlow<DialogData?> = MutableStateFlow(null)
+    val dialogState = _dialogState.asStateFlow()
+
     companion object {
         private const val accelerationThreshold = 8
     }
 
-    private var accelerationMin = 0f
-    private var accelerationMax = 0f
+    var accelerationMin = 0f
+        private set
+    var accelerationMax = 0f
+        private set
 
     init {
         collectAccelerometerValue()
@@ -67,13 +76,18 @@ class ShakeNCatchViewModel @Inject constructor(
         viewModelScope.launch(dispatcher) {
             uiState.map { it.openedPokeball }.distinctUntilChanged().collect { openPokeball ->
                 if (openPokeball) {
+                    _uiState.update { it.copy(isLoading = true) }
                     vibrate()
                     getRandomPokemon().collectLatest { result ->
                         result.fold(
-                            ifLeft = {
+                            ifLeft = {failure ->
                                 _uiState.update {
                                     it.copy(isLoading = false, error = true)
                                 }
+                                if (failure is Failure.NetworkError) _dialogState.value = errorDialogManager.transform(
+                                    errorType = failure.errorType,
+                                    onDismiss = { _dialogState.update { null } }
+                                )
                             },
                             ifRight = { pokemonInfo ->
                                 _uiState.update {

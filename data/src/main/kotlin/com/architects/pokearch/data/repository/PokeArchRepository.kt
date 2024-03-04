@@ -13,13 +13,13 @@ import javax.inject.Inject
 
 class PokeArchRepository @Inject constructor(
     private val remoteDataSource: PokemonRemoteDataSource,
-    private val localDataSource: PokemonLocalDataSource
+    private val localDataSource: PokemonLocalDataSource,
 ) : PokeArchRepositoryContract {
 
-    companion object {
-        private const val PREFIX_URL = "https://play.pokemonshowdown.com/audio/cries/"
-        private const val SUBFIX_URL = ".mp3"
-    }
+
+
+    override fun getPokemonTeam(): Flow<List<PokemonInfo>> = localDataSource.getPokemonTeam()
+
 
     override suspend fun getPokemonList(filter: String, page: Int, limit: Int): List<Pokemon> {
         val offset = page * limit
@@ -29,18 +29,26 @@ class PokeArchRepository @Inject constructor(
     }
 
     override suspend fun fetchPokemonList(): Failure? {
-        if (remoteDataSource.areMorePokemonAvailableFrom(localDataSource.countPokemon())) {
-            val remotePokemonList = remoteDataSource.getPokemonList()
+        val areMorePokemonAvailableFrom =
+            remoteDataSource.areMorePokemonAvailableFrom(localDataSource.countPokemon())
 
-            return remotePokemonList.fold(
-                ifRight = { pokemonList ->
-                    localDataSource.savePokemonList(pokemonList)
+        return areMorePokemonAvailableFrom.fold(
+            ifLeft = { it },
+            ifRight = { moreAvailable ->
+                if (moreAvailable) {
+                    val remotePokemonList = remoteDataSource.getPokemonList()
+                    remotePokemonList.fold(
+                        ifRight = { pokemonList ->
+                            localDataSource.savePokemonList(pokemonList)
+                            null
+                        },
+                        ifLeft = { it }
+                    )
+                } else {
                     null
-                },
-                ifLeft = { Failure.UnknownError }
-            )
-        }
-        return null
+                }
+            }
+        )
     }
 
     override suspend fun fetchPokemonInfo(id: Int): Flow<Either<Failure, PokemonInfo>> = flow {
@@ -52,6 +60,9 @@ class PokeArchRepository @Inject constructor(
             emit(getRemotePokemon(id))
         }
     }
+
+    override suspend fun updatePokemonInfo(pokemonInfo: PokemonInfo) =
+        localDataSource.savePokemonInfo(pokemonInfo)
 
     private suspend fun getRemotePokemon(
         id: Int,
@@ -66,16 +77,15 @@ class PokeArchRepository @Inject constructor(
             }
         )
 
-    //TODO: RESPONSIBILITY HERE OR SERVER DATASOURCE
     override suspend fun fetchCry(name: String): String {
         var result = ""
-        remoteDataSource.tryCatchCry(name) { result = it }
-
-        if (name.contains("-") && result.isEmpty()) {
-            remoteDataSource.tryCatchCry(name.replace("-", "")) { result = it }
-            remoteDataSource.tryCatchCry(name.split("-")[0]) { result = it }
+        remoteDataSource.tryCatchCry(name) {
+            it.fold(
+                ifRight = { cry -> result = cry },
+                ifLeft = { failure -> }
+            )
         }
-        return "$PREFIX_URL$result$SUBFIX_URL"
+        return result
     }
 
     override suspend fun randomPokemon(): Flow<Either<Failure, PokemonInfo>> {

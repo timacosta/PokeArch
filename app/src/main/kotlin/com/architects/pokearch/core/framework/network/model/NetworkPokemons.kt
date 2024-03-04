@@ -12,3 +12,10 @@ data class NetworkPokemons(
     @SerializedName("results")
     val results: List<NetworkPokemon>,
 )
+
+data class NetworkPokemon(
+    @SerializedName("name")
+    val name: String,
+    @SerializedName("url")
+    val url: String,
+)
