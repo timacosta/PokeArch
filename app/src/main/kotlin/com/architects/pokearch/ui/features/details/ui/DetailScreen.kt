@@ -80,8 +80,12 @@ fun DetailScreen(
     modifier: Modifier = Modifier,
     viewModel: DetailViewModel = hiltViewModel(),
 ) {
-    val uiState by viewModel.pokemonDetailInfo.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val dialogState by viewModel.dialogState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(true) {
+        viewModel.getPokemonDetails()
+    }
 
     Box(
         modifier = Modifier.fillMaxSize()
