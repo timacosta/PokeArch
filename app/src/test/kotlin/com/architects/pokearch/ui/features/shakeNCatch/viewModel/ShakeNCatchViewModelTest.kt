@@ -124,8 +124,8 @@ class ShakeNCatchViewModelTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `GIVEN accelerometer value is greater than 8 and less than -8 after WHEN init with error THEN get failure`() = runTest {
-        val expetedErrorTitle = R.string.error_title_no_internet
-        val expetedErrorMessage = R.string.error_message_no_internet
+        val expectedErrorTitle = R.string.error_title_no_internet
+        val expectedErrorMessage = R.string.error_message_no_internet
         every { getAccelerometerValue() } returns buildAccelerationFlow(9f, -9f)
         coEvery { getRandomPokemon() } returns flowOf(Failure.NetworkError(ErrorType.NoInternet).left())
 
@@ -145,8 +145,8 @@ class ShakeNCatchViewModelTest {
         verifyOnce { getAccelerometerValue() }
         coVerifyOnce { getRandomPokemon() }
         verifyOnce { vibrate() }
-        viewModel.dialogState.value?.title shouldBeEqualTo expetedErrorTitle
-        viewModel.dialogState.value?.message shouldBeEqualTo expetedErrorMessage
+        viewModel.dialogState.value?.title shouldBeEqualTo expectedErrorTitle
+        viewModel.dialogState.value?.message shouldBeEqualTo expectedErrorMessage
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
