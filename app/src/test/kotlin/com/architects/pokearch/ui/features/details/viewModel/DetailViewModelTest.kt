@@ -16,11 +16,10 @@ import com.architects.pokearch.usecases.FetchPokemonDetails
 import com.architects.pokearch.usecases.PlayCry
 import com.architects.pokearch.usecases.UpdatePokemonInfo
 import io.mockk.coEvery
+import io.mockk.coJustRun
 import io.mockk.coVerify
 import io.mockk.coVerifyOrder
-import io.mockk.just
 import io.mockk.mockk
-import io.mockk.runs
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo
@@ -46,8 +45,8 @@ class DetailViewModelTest {
 
         coEvery { fetchPokemonDetails(pokemonInfoBuilder().id) } returns flowOf(pokemonInfoBuilder().right())
         coEvery { fetchCry(pokemonInfoBuilder().name) } returns fetchCryStringResult
-        coEvery { playCry(pokemonInfoBuilder().name) } just runs
-        coEvery { updatePokemonInfo(any()) } just runs
+        coJustRun{ playCry(pokemonInfoBuilder().name) }
+        coJustRun { updatePokemonInfo(any()) }
     }
 
     @Test
