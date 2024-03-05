@@ -10,6 +10,7 @@ java {
 
 dependencies {
     implementation(project(":domain"))
+    testImplementation(project(":testing"))
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.arrow)
     implementation(libs.inject)
