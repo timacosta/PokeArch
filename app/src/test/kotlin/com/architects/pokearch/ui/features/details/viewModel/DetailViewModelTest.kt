@@ -17,7 +17,10 @@ import com.architects.pokearch.usecases.PlayCry
 import com.architects.pokearch.usecases.UpdatePokemonInfo
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.coVerifyOrder
+import io.mockk.just
 import io.mockk.mockk
+import io.mockk.runs
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo
@@ -43,8 +46,8 @@ class DetailViewModelTest {
 
         coEvery { fetchPokemonDetails(pokemonInfoBuilder().id) } returns flowOf(pokemonInfoBuilder().right())
         coEvery { fetchCry(pokemonInfoBuilder().name) } returns fetchCryStringResult
-        coEvery { playCry(pokemonInfoBuilder().name) } returns Unit
-        coEvery { updatePokemonInfo(any()) } returns Unit
+        coEvery { playCry(pokemonInfoBuilder().name) } just runs
+        coEvery { updatePokemonInfo(any()) } just runs
     }
 
     @Test
@@ -57,9 +60,11 @@ class DetailViewModelTest {
             awaitItem() shouldBeEqualTo DetailUiState.Success(pokemonInfoBuilder())
             cancel()
         }
-        coVerifyOnce { fetchPokemonDetails(pokemonInfoBuilder().id) }
-        coVerifyOnce { fetchCry(pokemonInfoBuilder().name) }
-        coVerifyOnce { playCry(pokemonInfoBuilder().name) }
+        coVerifyOrder {
+            fetchPokemonDetails(pokemonInfoBuilder().id)
+            fetchCry(pokemonInfoBuilder().name)
+            playCry(pokemonInfoBuilder().name)
+        }
         viewModel.dialogState.value shouldBeEqualTo null
     }
 
@@ -121,28 +126,33 @@ class DetailViewModelTest {
             awaitItem() shouldBeEqualTo DetailUiState.Success(pokemonInfoBuilder())
             viewModel.toggleFavorite()
             awaitItem() shouldBeEqualTo DetailUiState.Success(
-                pokemonInfoBuilder(team = true))
+                pokemonInfoBuilder(team = true)
+            )
             cancel()
         }
         coVerifyOnce { updatePokemonInfo((any())) }
     }
+
     @Test
-    fun `GIVEN PokemonInfo WHEN updatePokemonInfo twice THEN team is updated twice`(): Unit = runTest {
-        viewModel = buildViewModel()
-        viewModel.uiState.test {
-            awaitItem() shouldBeEqualTo DetailUiState.Loading
-            viewModel.getPokemonDetails()
-            awaitItem() shouldBeEqualTo DetailUiState.Success(pokemonInfoBuilder())
-            viewModel.toggleFavorite()
-            awaitItem() shouldBeEqualTo DetailUiState.Success(
-                pokemonInfoBuilder(team = true))
-            viewModel.toggleFavorite()
-            awaitItem() shouldBeEqualTo DetailUiState.Success(
-                pokemonInfoBuilder(team = false))
-            cancel()
+    fun `GIVEN PokemonInfo WHEN updatePokemonInfo twice THEN team is updated twice`(): Unit =
+        runTest {
+            viewModel = buildViewModel()
+            viewModel.uiState.test {
+                awaitItem() shouldBeEqualTo DetailUiState.Loading
+                viewModel.getPokemonDetails()
+                awaitItem() shouldBeEqualTo DetailUiState.Success(pokemonInfoBuilder())
+                viewModel.toggleFavorite()
+                awaitItem() shouldBeEqualTo DetailUiState.Success(
+                    pokemonInfoBuilder(team = true)
+                )
+                viewModel.toggleFavorite()
+                awaitItem() shouldBeEqualTo DetailUiState.Success(
+                    pokemonInfoBuilder(team = false)
+                )
+                cancel()
+            }
+            coVerify { updatePokemonInfo((any())) }
         }
-        coVerify { updatePokemonInfo((any())) }
-    }
 
 
     private fun buildViewModel() = DetailViewModel(
