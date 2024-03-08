@@ -1,6 +1,7 @@
 package com.architects.pokearch.ui
 
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -40,13 +41,38 @@ class PokeArchAppTest {
     }
 
     @Test
+    fun bottomBarItemsIsVisible() {
+        composeRule.onNodeWithText("Home").assertIsDisplayed()
+        composeRule.onNodeWithText("Team").assertIsDisplayed()
+        composeRule.onNodeWithText("Shake'n'Catch").assertIsDisplayed()
+    }
+
+    @Test
+    fun homeBottomBarItemIsSelected() {
+        composeRule.onNodeWithText("Home")
+            .assertIsDisplayed()
+            .assertIsSelected()
+    }
+
+    @Test
+    fun navigateToTeamScreen() {
+        composeRule.onNodeWithText("Team").performClick()
+
+        composeRule.onNodeWithText("Team").assertIsDisplayed()
+    }
+
+    @Test
+    fun navigateToShakeNCatchScreen() {
+        composeRule.onNodeWithText("Shake'n'Catch").performClick()
+
+        composeRule.onNodeWithText("Shake'n'Catch").assertIsDisplayed()
+    }
+
+    @Test
     fun navigateToDetailScreen() {
         composeRule.onNodeWithText("Bulbasaur").performClick()
 
         composeRule.onNodeWithText("Grass").assertIsDisplayed()
         composeRule.onNodeWithText("Poison").assertIsDisplayed()
     }
-
-
-
 }
