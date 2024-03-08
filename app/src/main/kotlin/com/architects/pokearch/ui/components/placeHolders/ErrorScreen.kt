@@ -6,6 +6,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.architects.pokearch.R
 
 @Composable
 fun ErrorScreen(modifier: Modifier = Modifier) {
@@ -15,7 +17,7 @@ fun ErrorScreen(modifier: Modifier = Modifier) {
     ) {
         Text(
             modifier = Modifier.align(Alignment.Center),
-            text = "Something went wrong"
+            text = stringResource(id = R.string.error_screen_description)
         )
     }
 }

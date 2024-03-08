@@ -27,7 +27,7 @@ fun NoSearchResultPlaceHolder(modifier: Modifier = Modifier) {
         Image(
             painter = painterResource(id = R.drawable.not_found_placeholder),
             contentScale = ContentScale.Crop,
-            contentDescription = null
+            contentDescription = stringResource(id = R.string.no_search_results_text)
         )
         Spacer(modifier = Modifier.padding(16.dp))
         Text(
