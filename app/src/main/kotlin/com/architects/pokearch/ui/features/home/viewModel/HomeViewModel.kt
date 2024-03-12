@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.architects.pokearch.core.di.annotations.IO
 import com.architects.pokearch.domain.model.error.Failure
-import com.architects.pokearch.ui.components.pagingsource.PokemonPagingSource
+import com.architects.pokearch.ui.components.pagingsource.PokemonPagingFlowBuilder
 import com.architects.pokearch.ui.features.home.state.HomeUiState
 import com.architects.pokearch.ui.mapper.DialogData
 import com.architects.pokearch.ui.mapper.ErrorDialogManager
@@ -25,6 +25,7 @@ class HomeViewModel @Inject constructor(
     private val fetchPokemonList: FetchPokemonList,
     @IO private val dispatcher: CoroutineDispatcher,
     private val errorDialogManager: ErrorDialogManager,
+    private val pokemonPagingFlowBuilder: PokemonPagingFlowBuilder,
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState.Loading)
@@ -52,7 +53,7 @@ class HomeViewModel @Inject constructor(
     fun getPokemonList(pokemonName: String = "") {
         _uiState.value =
             HomeUiState.Success(
-                PokemonPagingSource.getPager(pokemonName, getPokemonList, viewModelScope)
+                pokemonPagingFlowBuilder(pokemonName, getPokemonList, viewModelScope)
             )
     }
 }

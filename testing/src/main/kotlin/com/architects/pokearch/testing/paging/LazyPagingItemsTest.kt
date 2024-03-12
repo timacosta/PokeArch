@@ -1,4 +1,4 @@
-package com.architects.pokearch.testing
+package com.architects.pokearch.testing.paging
 
 import androidx.paging.CombinedLoadStates
 import androidx.paging.DifferCallback
@@ -11,15 +11,12 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.test.StandardTestDispatcher
 
 @Suppress("EmptyFunctionBlock")
 class LazyPagingItemsTest<T : Any> (
     private val flow: Flow<PagingData<T>>,
-    dispatcher: CoroutineDispatcher = StandardTestDispatcher()
+    private val dispatcher: CoroutineDispatcher,
 ) {
-
-    private val mainDispatcher = dispatcher
 
     private val differCallback: DifferCallback = object : DifferCallback {
         override fun onChanged(position: Int, count: Int) {}
@@ -31,7 +28,7 @@ class LazyPagingItemsTest<T : Any> (
 
     private val pagingDataDiffer = object : PagingDataDiffer<T>(
         differCallback = differCallback,
-        mainContext = mainDispatcher,
+        mainContext = dispatcher,
         cachedPagingData =
         if (flow is SharedFlow<PagingData<T>>) flow.replayCache.firstOrNull() else null,
     ) {
