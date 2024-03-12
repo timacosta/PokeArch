@@ -113,7 +113,9 @@ material-icons-extended =  { group = "androidx.compose.material", name = "materi
 
 #Paging
 paging = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
+paging-common = { group = "androidx.paging", name = "paging-common", version.ref = "paging" }
 paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging-compose" }
+paging-testing = { group = "androidx.paging", name = "paging-testing", version.ref = "paging" }
 
 #Ui
 ui = { group = "androidx.compose.ui", name = "ui" }
