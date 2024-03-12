@@ -1,26 +1,28 @@
 package com.architects.pokearch.ui.features.details.viewModel
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.architects.pokearch.core.di.annotations.IO
 import com.architects.pokearch.domain.model.error.Failure
-import com.architects.pokearch.domain.repository.MediaPlayerRepositoryContract
+import com.architects.pokearch.ui.features.details.di.annotations.PokemonId
 import com.architects.pokearch.ui.features.details.state.DetailUiState
 import com.architects.pokearch.ui.features.details.state.DetailUiState.Error
 import com.architects.pokearch.ui.features.details.state.DetailUiState.Loading
 import com.architects.pokearch.ui.features.details.state.DetailUiState.Success
 import com.architects.pokearch.ui.mapper.DialogData
 import com.architects.pokearch.ui.mapper.ErrorDialogManager
-import com.architects.pokearch.ui.navigation.NavArg
 import com.architects.pokearch.usecases.FetchCry
 import com.architects.pokearch.usecases.FetchPokemonDetails
+import com.architects.pokearch.usecases.PlayCry
 import com.architects.pokearch.usecases.UpdatePokemonInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -30,55 +32,52 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(
     private val fetchPokemonDetails: FetchPokemonDetails,
     private val fetchCry: FetchCry,
-    private val mediaPlayerRepository: MediaPlayerRepositoryContract,
+    private val playCry: PlayCry,
     private val updatePokemonInfo: UpdatePokemonInfo,
     private val errorDialogManager: ErrorDialogManager,
     @IO val dispatcher: CoroutineDispatcher,
-    savedStateHandle: SavedStateHandle,
+    @PokemonId private val pokemonId: Int,
 ) : ViewModel() {
 
-    private val pokemonId = savedStateHandle.get<Int>(NavArg.PokemonId.key) ?: 0
-
-    private val _pokemonDetailInfo: MutableStateFlow<DetailUiState> =
+    private val _uiState: MutableStateFlow<DetailUiState> =
         MutableStateFlow(Loading)
-    val pokemonDetailInfo: MutableStateFlow<DetailUiState> = _pokemonDetailInfo
+    val uiState: StateFlow<DetailUiState> = _uiState.asStateFlow()
 
     private val _dialogState: MutableStateFlow<DialogData?> = MutableStateFlow(null)
     val dialogState: StateFlow<DialogData?> = _dialogState
 
-    private var once = false
-
-    init {
+    fun getPokemonDetails() {
         viewModelScope.launch(dispatcher) {
-            getPokemonDetails(pokemonId)
-        }
-    }
-
-    private suspend fun getPokemonDetails(pokemonId: Int) {
-        fetchPokemonDetails(pokemonId).collectLatest { result ->
-            result.fold(
-                ifLeft = { failure ->
-                    _pokemonDetailInfo.value = Error
-                    if (failure is Failure.NetworkError) _dialogState.value =
-                        errorDialogManager.transform(
-                            errorType = failure.errorType,
-                            onDismiss = { _dialogState.update { null } }
-                        )
-                },
-                ifRight = { pokemonInfo ->
-                    _pokemonDetailInfo.value = Success(pokemonInfo)
+            fetchPokemonDetails(pokemonId)
+                .onStart { _uiState.update { Loading } }
+                .onEach { result ->
+                    result.fold(
+                        ifLeft = { failure ->
+                            _uiState.update { Error }
+                            if (failure is Failure.NetworkError) _dialogState.update {
+                                errorDialogManager.transform(
+                                    errorType = failure.errorType,
+                                    onDismiss = { _dialogState.update { null } }
+                                )
+                            }
+                        },
+                        ifRight = { pokemonInfo ->
+                            _uiState.update { Success(pokemonInfo) }
+                        }
+                    )
                 }
-            )
+                .collectLatest {
+                    _uiState.update { it }
+                }
+            playCry()
         }
     }
 
-    fun playCry() {
+    private fun playCry() {
         viewModelScope.launch(dispatcher) {
-            with(_pokemonDetailInfo.value) {
-                //TODO: Move to usecase to avoid calling the repository here
-                if (this is Success && !once) {
-                    mediaPlayerRepository.playCry(getCryUrl(pokemonInfo.name.replaceFirstChar { it.lowercase() }))
-                    once = true
+            with(_uiState.value) {
+                if (this is Success) {
+                    playCry(getCryUrl(pokemonInfo.name.replaceFirstChar { it.lowercase() }))
                 }
             }
         }
@@ -91,17 +90,16 @@ class DetailViewModel @Inject constructor(
 
     fun toggleFavorite() {
         viewModelScope.launch {
-            if (_pokemonDetailInfo.value is Success) {
-                _pokemonDetailInfo.update {
+            if (_uiState.value is Success) {
+                _uiState.update {
                     (it as Success).copy(
                         pokemonInfo = it.pokemonInfo.copy(
-                            team = !(_pokemonDetailInfo.value as Success).pokemonInfo.team
+                            team = !(_uiState.value as Success).pokemonInfo.team
                         )
                     )
                 }
-                updatePokemonInfo((_pokemonDetailInfo.value as Success).pokemonInfo)
+                updatePokemonInfo((_uiState.value as Success).pokemonInfo)
             }
         }
-
     }
 }

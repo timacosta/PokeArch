@@ -80,8 +80,12 @@ fun DetailScreen(
     modifier: Modifier = Modifier,
     viewModel: DetailViewModel = hiltViewModel(),
 ) {
-    val uiState by viewModel.pokemonDetailInfo.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val dialogState by viewModel.dialogState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(true) {
+        viewModel.getPokemonDetails()
+    }
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -97,7 +101,6 @@ fun DetailScreen(
             }
 
             is Success -> {
-                viewModel.playCry()
                 DetailSuccessScreen(
                     modifier = modifier,
                     state = state
@@ -120,8 +123,8 @@ fun DetailScreen(
 
 @Composable
 private fun DetailSuccessScreen(
-    modifier: Modifier = Modifier,
     state: Success,
+    modifier: Modifier = Modifier,
 ) {
 
     val (image, colors) = getGradientImageAndColors(pokemonInfo = state.pokemonInfo)
@@ -195,10 +198,10 @@ private fun getGradientImageAndColors(
 
 @Composable
 private fun PokemonCard(
-    modifier: Modifier = Modifier,
     pokemonImage: AsyncImagePainter,
-    imageSize: Dp = 240.dp,
     gradientColors: List<Color>,
+    modifier: Modifier = Modifier,
+    imageSize: Dp = 240.dp,
 ) {
     Box(
         modifier = modifier
@@ -224,8 +227,8 @@ private fun PokemonCard(
 
 @Composable
 private fun Title(
-    modifier: Modifier = Modifier,
     text: String,
+    modifier: Modifier = Modifier,
     style: TextStyle = MaterialTheme.typography.headlineLarge,
 ) {
     Text(
@@ -237,8 +240,8 @@ private fun Title(
 
 @Composable
 private fun TypeRow(
-    modifier: Modifier = Modifier,
     pokemonInfo: PokemonInfo,
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier,
@@ -257,9 +260,9 @@ private fun TypeRow(
 
 @Composable
 private fun TypeItem(
-    modifier: Modifier = Modifier,
     name: String,
     containerColor: Color,
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = name,
@@ -282,8 +285,8 @@ private fun TypeItem(
 
 @Composable
 private fun PokemonInfos(
-    modifier: Modifier = Modifier,
     pokemonInfo: PokemonInfo,
+    modifier: Modifier = Modifier,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -372,8 +375,8 @@ private fun PokemonInfos(
 
 @Composable
 fun BaseStatsTitle(
-    modifier: Modifier = Modifier,
     text: String,
+    modifier: Modifier = Modifier,
     style: TextStyle = MaterialTheme.typography.headlineSmall,
 ) {
     Text(
@@ -385,8 +388,8 @@ fun BaseStatsTitle(
 
 @Composable
 private fun PokemonStats(
-    modifier: Modifier = Modifier,
     pokemonInfo: PokemonInfo,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier.fillMaxWidth()
@@ -402,9 +405,9 @@ private fun PokemonStats(
 
 @Composable
 private fun StatItem(
+    stats: Stats,
     modifier: Modifier = Modifier,
     height: Dp = 22.dp,
-    stats: Stats,
 ) {
 
     val animationProgress = remember {

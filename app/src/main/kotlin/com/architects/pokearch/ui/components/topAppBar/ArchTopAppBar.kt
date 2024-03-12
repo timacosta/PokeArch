@@ -26,11 +26,11 @@ import com.architects.pokearch.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArchTopAppBar(
+    archTopAppBarType: ArchTopAppBarType,
+    onBackButtonClicked: () -> Unit,
     modifier: Modifier = Modifier,
     text: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
-    archTopAppBarType: ArchTopAppBarType,
-    onBackButtonClicked: () -> Unit,
     onTextChange: ((String) -> Unit),
 ) {
 
