@@ -8,5 +8,7 @@ import kotlinx.coroutines.flow.Flow
 sealed class HomeUiState {
     data object Loading : HomeUiState()
     data class Error(val failure: Failure) : HomeUiState()
-    data class Success(val pokemonList: Flow<PagingData<Pokemon>>) : HomeUiState()
+    data class Success(
+        val pokemonList: Flow<PagingData<Pokemon>>
+    ) : HomeUiState()
 }

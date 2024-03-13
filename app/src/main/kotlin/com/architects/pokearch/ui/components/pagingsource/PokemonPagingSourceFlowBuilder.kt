@@ -7,7 +7,7 @@ import com.architects.pokearch.usecases.GetPokemonList
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 
-class PokemonPagingFlowBuilder @Inject constructor() {
+class PokemonPagingSourceFlowBuilder @Inject constructor() {
     operator fun invoke(
         pokemonName: String,
         getPokemonList: GetPokemonList,

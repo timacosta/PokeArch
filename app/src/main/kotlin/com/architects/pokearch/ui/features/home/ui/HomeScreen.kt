@@ -34,7 +34,9 @@ fun HomeScreen(
     SetStatusBarColor()
 
     LaunchedEffect(key1 = pokemonName) {
-        viewModel.getPokemonList(pokemonName)
+        if (viewModel.afterDbCallState.value) {
+            viewModel.getPokemonListFromDb()
+        }
     }
 
     dialogState?.let {
@@ -48,7 +50,6 @@ fun HomeScreen(
     ) {
 
         when (val state = uiState) {
-            //TODO: Not shown because state is set directly to TRUE when
             is HomeUiState.Loading -> {
                 Box(
                     contentAlignment = Alignment.Center,
