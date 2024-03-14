@@ -4,7 +4,9 @@ import androidx.paging.LoadState
 import androidx.paging.LoadStates
 import androidx.paging.PagingData
 import app.cash.turbine.test
+import com.architects.pokearch.R
 import com.architects.pokearch.domain.model.Pokemon
+import com.architects.pokearch.domain.model.error.ErrorType
 import com.architects.pokearch.domain.model.error.Failure
 import com.architects.pokearch.testing.paging.LazyPagingItemsTest
 import com.architects.pokearch.testing.rules.MainDispatcherRule
@@ -19,10 +21,12 @@ import com.architects.pokearch.usecases.GetPokemonList
 import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Before
@@ -59,7 +63,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `GIVEN fetch pokemon list WHEN init THEN return no error if success`() = runTest {
+    fun `GIVEN fetch pokemon list WHEN init THEN return success`() = runTest {
 
         viewModel = buildViewModel()
 
@@ -185,7 +189,7 @@ class HomeViewModelTest {
             state.initPagingDiffer()
             val items = state.itemSnapshotList.items
 
-            items.size shouldBeEqualTo expectedPokemonList.size
+            items.size shouldBeEqualTo 10
 
             viewModel.getPokemonListFromDb(expectedPokemonName)
 
@@ -208,21 +212,88 @@ class HomeViewModelTest {
         coVerifyOnce { getPokemonList(expectedPokemonName) }
     }
 
-
     @Test
-    fun `GIVEN failure WHEN fetchPokemonList THEN return Failure`() = runTest {
+    fun `GIVEN unknown error WHEN fetchPokemonList THEN return failure screen`() = runTest {
 
-        coEvery { fetchPokemonList() } returns Failure.UnknownError
+        coEvery { fetchPokemonList() } coAnswers {
+            delay(100)
+            Failure.UnknownError
+        }
 
         viewModel = buildViewModel()
 
         viewModel.uiState.test {
+            awaitItem() shouldBeEqualTo HomeUiState.Loading
             awaitItem() shouldBeEqualTo HomeUiState.Error(Failure.UnknownError)
             cancel()
         }
 
+        coVerifyOnce { fetchPokemonList() }
+
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `GIVEN network error WHEN fetchPokemonList THEN return failure`() = runTest {
+
+        val expectedErrorTitle = R.string.error_title_no_internet
+        val expectedErrorMessage = R.string.error_message_no_internet
+
+        coEvery { fetchPokemonList() } coAnswers {
+            delay(100)
+            Failure.NetworkError(ErrorType.NoInternet)
+        }
+
+        viewModel = buildViewModel()
+
+        viewModel.uiState.test {
+            awaitItem() shouldBeEqualTo HomeUiState.Loading
+            cancel()
+        }
+        advanceUntilIdle()
+
+        coVerifyOnce { fetchPokemonList() }
+        viewModel.dialogState.value?.title shouldBeEqualTo expectedErrorTitle
+        viewModel.dialogState.value?.message shouldBeEqualTo expectedErrorMessage
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `GIVEN network error WHEN getPokemonList after dialogState is null THEN return pokemon list from database`() = runTest {
+        val expectedErrorTitle = R.string.error_title_no_internet
+        val expectedErrorMessage = R.string.error_message_no_internet
+
+        coEvery { fetchPokemonList() } coAnswers {
+            delay(100)
+            Failure.NetworkError(ErrorType.NoInternet)
+        }
+
+
+        viewModel = buildViewModel()
+
+        viewModel.uiState.test {
+            awaitItem() shouldBeEqualTo HomeUiState.Loading
+            cancel()
+        }
+        advanceUntilIdle()
+
+        viewModel.dialogState.value?.title shouldBeEqualTo expectedErrorTitle
+        viewModel.dialogState.value?.message shouldBeEqualTo expectedErrorMessage
+
+
+        viewModel.getPokemonListFromDb()
+
+        viewModel.uiState.test {
+            val state = LazyPagingItemsTest(
+                (awaitItem() as HomeUiState.Success).pokemonList,
+                mainDispatcherRule.testDispatcher
+            )
+            state.initPagingDiffer()
+            val items = state.itemSnapshotList.items
+            items shouldBeEqualTo expectedPokemonList
+            cancel()
+        }
+    }
 
     private fun buildViewModel() = HomeViewModel(
         getPokemonList = getPokemonList,
