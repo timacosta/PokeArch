@@ -45,7 +45,7 @@ class HomeViewModelTest {
     @Before
     fun setUp() {
         coEvery { fetchPokemonList() } coAnswers {
-            delay(500) // Short delay to simulate network latency
+            delay(100) // Short delay to simulate network latency
             null
         }
         coEvery { getPokemonList() } returns expectedPokemonList
@@ -106,6 +106,7 @@ class HomeViewModelTest {
         viewModel = buildViewModel()
 
         viewModel.uiState.test {
+            awaitItem() shouldBeEqualTo HomeUiState.Loading
             val state = LazyPagingItemsTest(
                 (awaitItem() as HomeUiState.Success).pokemonList,
                 mainDispatcherRule.testDispatcher
@@ -176,6 +177,7 @@ class HomeViewModelTest {
         viewModel = buildViewModel()
 
         viewModel.uiState.test {
+            awaitItem() shouldBeEqualTo HomeUiState.Loading
             val state = LazyPagingItemsTest(
                 (awaitItem() as HomeUiState.Success).pokemonList,
                 mainDispatcherRule.testDispatcher
