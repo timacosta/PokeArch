@@ -12,7 +12,6 @@ import com.architects.pokearch.usecases.FetchPokemonList
 import com.architects.pokearch.usecases.GetPokemonList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -45,7 +44,6 @@ class HomeViewModel @Inject constructor(
     private fun fetchData(pokemonName: String = "") {
 
         viewModelScope.launch {
-            delay(5000)
             when (val failure = withContext(dispatcher) { fetchPokemonList() }) {
                 null -> {
                     _uiState.update {
