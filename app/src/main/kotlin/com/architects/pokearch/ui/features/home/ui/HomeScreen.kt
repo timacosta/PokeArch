@@ -30,11 +30,12 @@ fun HomeScreen(
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val dialogState by viewModel.dialogState.collectAsStateWithLifecycle()
+    val afterDbCallState by viewModel.afterDbCallState.collectAsStateWithLifecycle()
 
     SetStatusBarColor()
 
     LaunchedEffect(key1 = pokemonName) {
-        if (viewModel.afterDbCallState.value) {
+        if (afterDbCallState) {
             viewModel.getPokemonListFromDb()
         }
     }

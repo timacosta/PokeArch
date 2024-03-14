@@ -53,16 +53,13 @@ class HomeViewModel @Inject constructor(
                     }
                 }
                 else -> {
-                    getPokemonListFromDb()
                     when (failure) {
                         is Failure.NetworkError -> {
                             showErrorDialog(failure)
                         }
 
                         Failure.UnknownError -> {
-                            _uiState.update {
-                                HomeUiState.Error(failure)
-                            }
+                            showScreenError(failure)
                         }
                     }
                 }
@@ -70,13 +67,19 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-     fun getPokemonListFromDb(pokemonName: String = "") {
+    fun getPokemonListFromDb(pokemonName: String = "") {
         _uiState.update {
             HomeUiState.Success(
                 pokemonPagingFlowBuilder(pokemonName, getPokemonList, viewModelScope)
             )
         }
         _afterDbCallState.update { true }
+    }
+
+    private fun showScreenError(failure: Failure) {
+        _uiState.update {
+            HomeUiState.Error(failure)
+        }
     }
 
     private fun showErrorDialog(failure: Failure.NetworkError) {
@@ -90,5 +93,6 @@ class HomeViewModel @Inject constructor(
 
     private fun onDialogDismiss() {
         _dialogState.update { null }
+        getPokemonListFromDb()
     }
 }
