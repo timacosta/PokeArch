@@ -12,6 +12,7 @@ java {
 dependencies {
     api(project(":domain"))
     api(libs.kotlinx.coroutines.core)
+    implementation(libs.paging.common)
     api(libs.junit)
     api(libs.turbine)
     api(libs.kluent)

@@ -30,11 +30,14 @@ fun HomeScreen(
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val dialogState by viewModel.dialogState.collectAsStateWithLifecycle()
+    val afterDbCallState by viewModel.afterDbCallState.collectAsStateWithLifecycle()
 
     SetStatusBarColor()
 
     LaunchedEffect(key1 = pokemonName) {
-        viewModel.getPokemonList(pokemonName)
+        if (afterDbCallState) {
+            viewModel.getPokemonListFromDb()
+        }
     }
 
     dialogState?.let {
@@ -48,7 +51,6 @@ fun HomeScreen(
     ) {
 
         when (val state = uiState) {
-            //TODO: Not shown because state is set directly to TRUE when
             is HomeUiState.Loading -> {
                 Box(
                     contentAlignment = Alignment.Center,
