@@ -27,7 +27,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/timacosta/PokeArch/">
-    <img src="https://github.com/timacosta/PokeArch/blob/100-actualizar-readme/previews/github_logo.png" alt="Logo">
+    <img src="previews/github_logo.png" alt="Logo">
   </a>
 
 <h3 align="center">PokeArch</h3>
