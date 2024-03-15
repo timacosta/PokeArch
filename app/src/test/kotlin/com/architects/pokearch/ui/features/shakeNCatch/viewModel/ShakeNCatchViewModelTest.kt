@@ -33,6 +33,7 @@ import org.junit.Rule
 import org.junit.Test
 
 class ShakeNCatchViewModelTest {
+
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
