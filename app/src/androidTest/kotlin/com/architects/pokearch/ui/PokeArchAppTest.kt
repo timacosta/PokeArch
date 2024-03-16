@@ -3,10 +3,14 @@ package com.architects.pokearch.ui
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.hasScrollAction
+import androidx.compose.ui.test.hasTestTag
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToIndex
+import androidx.compose.ui.test.performTextInput
 import com.architects.pokearch.PokeArchActivity
 import com.architects.pokearch.remote.MockWebServerRule
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -43,8 +47,22 @@ class PokeArchAppTest {
     }
 
     @Test
-    fun searchFieldIsVisible() {
-        composeRule.onNodeWithText("Search").assertIsDisplayed()
+    fun searchBarWorksAsExpected() {
+
+        composeRule
+            .onNodeWithTag("topBar")
+            .performClick()
+
+        composeRule
+            .onNodeWithTag("searchField")
+            .performTextInput("Bulbasaur")
+
+        composeRule
+            .onNode(
+                hasTestTag("homeItem")
+                        and hasText("Bulbasaur")
+            )
+            .assertIsDisplayed()
     }
 
     @Test

@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.architects.pokearch.R
@@ -87,7 +88,8 @@ private fun RowScope.SearchIconButton(onClick: () -> Unit) {
     IconButton(
         modifier = Modifier
             .align(Alignment.CenterVertically)
-            .padding(end = 16.dp),
+            .padding(end = 16.dp)
+            .testTag("topBar"),
         onClick = {
             onClick()
         }
