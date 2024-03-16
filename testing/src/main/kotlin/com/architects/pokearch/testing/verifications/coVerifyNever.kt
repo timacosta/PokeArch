@@ -20,7 +20,7 @@ fun coVerifyNever(
         atMost,
         0,
         timeout,
-        verifyBlock,
+        verifyBlock
     )
 }
 

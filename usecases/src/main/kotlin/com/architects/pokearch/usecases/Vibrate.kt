@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 class Vibrate @Inject constructor(
     private val vibrateRepository: VibrationRepositoryContract
-){
+) {
     operator fun invoke() = vibrateRepository.vibrate()
 }

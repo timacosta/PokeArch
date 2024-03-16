@@ -7,25 +7,21 @@ import com.architects.pokearch.domain.model.Pokemon
 import com.architects.pokearch.domain.model.PokemonInfo
 import com.architects.pokearch.domain.model.error.Failure
 import com.architects.pokearch.domain.repository.PokeArchRepositoryContract
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
 
 class PokeArchRepository @Inject constructor(
     private val remoteDataSource: PokemonRemoteDataSource,
-    private val localDataSource: PokemonLocalDataSource,
+    private val localDataSource: PokemonLocalDataSource
 ) : PokeArchRepositoryContract {
 
-
-
     override fun getPokemonTeam(): Flow<List<PokemonInfo>> = localDataSource.getPokemonTeam()
-
 
     override suspend fun getPokemonList(filter: String, page: Int, limit: Int): List<Pokemon> {
         val offset = page * limit
 
         return localDataSource.getPokemonList(filter, limit, offset)
-
     }
 
     override suspend fun fetchPokemonList(): Failure? {
@@ -65,7 +61,7 @@ class PokeArchRepository @Inject constructor(
         localDataSource.savePokemonInfo(pokemonInfo)
 
     private suspend fun getRemotePokemon(
-        id: Int,
+        id: Int
     ): Either<Failure, PokemonInfo> = remoteDataSource.getPokemon(id)
         .fold(
             ifRight = { response ->

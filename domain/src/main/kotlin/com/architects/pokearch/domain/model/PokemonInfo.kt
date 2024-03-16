@@ -16,7 +16,7 @@ data class PokemonInfo(
     val experience: Int,
     val types: List<Types>,
     val stats: List<Stats>,
-    val team: Boolean = false,
+    val team: Boolean = false
 ) {
     fun getOfficialArtworkImageUrl(): String {
         return PokemonImageUrlBuilder.getOfficialArtworkImageUrl(id)
@@ -25,21 +25,20 @@ data class PokemonInfo(
     fun getSpriteUrl(): String {
         return PokemonImageUrlBuilder.getSpriteUrl(id)
     }
-
 }
 
 data class Types(
     val slot: Int,
-    val type: Type,
+    val type: Type
 )
 
 data class Type(
-    val name: String,
+    val name: String
 )
 
 data class Stats(
     val value: Int,
-    val stat: Stat,
+    val stat: Stat
 ) {
     companion object {
         const val maxHp = 300
@@ -64,7 +63,7 @@ data class Stats(
 }
 
 data class Stat(
-    val name: String,
+    val name: String
 ) {
     companion object {
         const val HP = "HP"

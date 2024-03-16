@@ -26,7 +26,7 @@ class SensorRepositoryTest {
     }
 
     private fun buildRepository(
-        sensorSource: SensorSource,
+        sensorSource: SensorSource
     ) = SensorRepository(
         accelerometerSensor = sensorSource
     )

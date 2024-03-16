@@ -5,7 +5,7 @@ plugins {
     `kotlin-dsl`
 }
 
-group = "com.google.samples.apps.nowinandroid.buildlogic"
+group = "com.architects.pokearch.buildlogic"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -21,4 +21,25 @@ dependencies {
     compileOnly(libs.android.gradlePlugin)
     compileOnly(libs.android.tools.common)
     compileOnly(libs.kotlin.gradlePlugin)
+    compileOnly(libs.ktlint.gradlePlugin)
+}
+
+tasks {
+    validatePlugins {
+        enableStricterValidation = true
+        failOnWarning = true
+    }
+}
+
+gradlePlugin {
+    plugins {
+        register("pokearchDetekt") {
+            id = "pokearch.detekt"
+            implementationClass = "PokeArchDetektConventionPlugin"
+        }
+        register("pokearchKtlint") {
+            id = "pokearch.ktlint"
+            implementationClass = "PokeArchKtlintConventionPlugin"
+        }
+    }
 }

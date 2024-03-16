@@ -18,8 +18,8 @@ fun pokemonInfoBuilder(
     id: Int = 1,
     name: String = "pokemon$id",
     height: Int = id,
-    weight: Int = id*10,
-    experience: Int = id*10,
+    weight: Int = id * 10,
+    experience: Int = id * 10,
     types: List<Types> = typesBuilder("type$id", "type$id-2"),
     stats: List<Stats> = statsBuilder(id),
     team: Boolean = false
@@ -40,13 +40,13 @@ fun typesBuilder(vararg types: String = arrayOf("type1", "type1-2")): List<Types
         count++
         Types(
             slot = count,
-            type = Type(name = it))
+            type = Type(name = it)
+        )
     }
 }
 
 fun statsBuilder(id: Int = 1): List<Stats> {
-
-    var value = id*10
+    var value = id * 10
 
     while (value > 300) {
         value -= 300

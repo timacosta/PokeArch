@@ -20,7 +20,7 @@ fun coVerifyOnce(
         atMost,
         1,
         timeout,
-        verifyBlock,
+        verifyBlock
     )
 }
 

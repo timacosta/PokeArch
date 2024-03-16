@@ -1,6 +1,8 @@
 plugins {
     id("java-library")
     alias(libs.plugins.org.jetbrains.kotlin.jvm)
+    alias(libs.plugins.pokearch.deteck)
+    alias(libs.plugins.pokearch.ktlint)
 }
 
 java {

@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 class MediaPlayerRepository @Inject constructor(
     private val mediaPlayerDataSource: MediaPlayerDataSource
-): MediaPlayerRepositoryContract {
+) : MediaPlayerRepositoryContract {
     override suspend fun playCry(url: String) = mediaPlayerDataSource.playCry(url)
 }

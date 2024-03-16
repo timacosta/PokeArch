@@ -1,14 +1,10 @@
-import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE
-import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN
-import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.SARIF
-
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.hiltAndroid)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.io.gitlab.arturbosch.detekt)
-    alias(libs.plugins.org.jlleitschuh.ktlint)
+    alias(libs.plugins.pokearch.deteck)
+    alias(libs.plugins.pokearch.ktlint)
 }
 
 android {
@@ -62,16 +58,6 @@ android {
     }
 }
 
-ktlint {
-    android.set(true)
-    ignoreFailures.set(false)
-    reporters {
-        reporter(PLAIN)
-        reporter(CHECKSTYLE)
-        reporter(SARIF)
-    }
-}
-
 dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
@@ -98,7 +84,6 @@ dependencies {
     ksp(libs.dagger.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
     ksp(libs.hilt.androix.compiler)
-    detektPlugins(libs.detetkcompose)
     implementation(libs.navigation)
     implementation(libs.arrow)
     implementation(libs.kotlinx.coroutines.core)
