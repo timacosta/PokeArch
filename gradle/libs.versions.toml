@@ -1,13 +1,14 @@
 [versions]
 
 #Android Gradle Plugin
-agp = "8.1.3"
+agp = "8.2.2"
+androidTools = "31.3.0"
 
 #Kotlin Plugin
-org-jetbrains-kotlin-android = "1.9.20"
+org-jetbrains-kotlin-android = "1.9.22"
 
 #Kotlin Compiler
-kotlinCompilerExtensionVersion = "1.5.4"
+kotlinCompilerExtensionVersion = "1.5.10"
 
 #Core Ktx
 core-ktx = "1.12.0"
@@ -21,12 +22,12 @@ kluent = "1.72"
 mockk = "1.13.5"
 
 #Lifecycle
-lifecycle-runtime-ktx = "2.6.2"
+lifecycle-runtime-ktx = "2.7.0"
 
 #Compose
 activity-compose = "1.8.2"
-compose-bom = "2023.10.01"
-material-extended-icons = "1.5.4"
+compose-bom = "2024.02.02"
+material-extended-icons = "1.6.3"
 
 #Paging
 paging = "3.2.1"
@@ -36,7 +37,7 @@ paging-compose = "3.2.1"
 retrofit = "2.9.0"
 
 #Navigation
-navigation = "2.7.6"
+navigation = "2.7.7"
 
 #Detekt
 detekt = "1.23.4"
@@ -50,11 +51,11 @@ okhttp = "4.12.0"
 okhttp-logging-interceptor = "4.12.0"
 
 #Dagger - Hilt
-dagger-hilt = "2.49"
-androidx-hilt = "1.1.0"
+dagger-hilt = "2.50"
+androidx-hilt = "1.2.0"
 
 #Kotlin-ksp
-ksp = "1.9.20-1.0.14"
+ksp = "1.9.22-1.0.17"
 
 #Arrow
 arrow = "1.2.0"
@@ -168,6 +169,11 @@ material = { group = "com.google.android.material", name = "material", version.r
 
 #Inject
 inject = { group = "javax.inject", name = "javax.inject", version.ref = "javax-inject" }
+
+#Build-logic
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+android-tools-common = { group = "com.android.tools", name = "common", version.ref = "androidTools" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "org-jetbrains-kotlin-android" }
 
 [plugins]
 
