@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
@@ -38,7 +39,7 @@ import com.architects.pokearch.ui.components.image.ArchAsyncImage
 @Composable
 fun HomeItem(
     pokemon: Pokemon,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.testTag("homeItem"),
     onItemClick: (Int) -> Unit,
 ) {
 

@@ -102,6 +102,10 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 kluent = { group = "org.amshove.kluent", name = "kluent-android", version.ref = "kluent" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+mockk-android = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
+mockk-agent = { group = "io.mockk", name = "mockk-agent", version.ref = "mockk" }
+hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "dagger-hilt" }
+mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "okhttp" }
 
 #Lifecycle
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }

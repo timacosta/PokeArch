@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -36,7 +37,8 @@ fun ArchSearchTextField(
     TextField(
         modifier = modifier
             .fillMaxWidth()
-            .height(64.dp),
+            .height(64.dp)
+            .testTag("searchField"),
         value = text,
         onValueChange = {
             onTextChange(it)
@@ -70,19 +72,19 @@ fun ArchSearchTextField(
 
 @Composable
 private fun TrailingIcon(onTextChange: (String) -> Unit) {
-
-        Icon(
-            modifier = Modifier
-                .padding(start = 16.dp, end = 10.dp)
-                .alpha(CONS_MEDIUM_ALPHA)
-                .clickable {
-                    onTextChange("")
-                },
-            imageVector = Icons.Default.Clear,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSurface
-        )
-    }
+    Icon(
+        modifier = Modifier
+            .padding(start = 16.dp, end = 10.dp)
+            .alpha(CONS_MEDIUM_ALPHA)
+            .clickable {
+                onTextChange("")
+            }
+        ,
+        imageVector = Icons.Default.Clear,
+        contentDescription = null,
+        tint = MaterialTheme.colorScheme.onSurface
+    )
+}
 
 @Composable
 private fun textFieldColors() = TextFieldDefaults.colors(
@@ -92,12 +94,7 @@ private fun textFieldColors() = TextFieldDefaults.colors(
     unfocusedContainerColor = MaterialTheme.colorScheme.background,
     focusedIndicatorColor = Color.Transparent,
     unfocusedIndicatorColor = Color.Transparent,
-    disabledContainerColor = MaterialTheme.colorScheme.background,
-    //cursorColor = MaterialTheme.colorScheme.inversePrimary,
-    /*selectionColors = TextSelectionColors(
-        handleColor = MaterialTheme.colorScheme.inversePrimary,
-        backgroundColor = Color.Transparent
-    )*/
+    disabledContainerColor = MaterialTheme.colorScheme.background
 )
 
 @Composable

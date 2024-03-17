@@ -20,6 +20,7 @@
     <string name="error_title_not_found">Not Found</string>
     <string name="error_title_unauthorized">Unauthorized</string>
     <string name="error_title_unknown">Unknown Error</string>
+    <string name="error_screen_description">Something went wrong</string>
 
     <!-- Error Messages -->
     <string name="error_message_no_internet">Check your internet connection</string>
