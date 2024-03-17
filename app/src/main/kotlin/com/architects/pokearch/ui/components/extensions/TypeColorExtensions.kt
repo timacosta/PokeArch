@@ -21,7 +21,7 @@ import com.architects.pokearch.ui.theme.TypeRock
 import com.architects.pokearch.ui.theme.TypeSteel
 import com.architects.pokearch.ui.theme.TypeWater
 
-
+@Suppress("CyclomaticComplexMethod")
 fun String.abilityColor(): Color = when(this) {
     "Normal" -> TypeNormal
     "Fighting" -> TypeFighting

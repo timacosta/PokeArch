@@ -1,7 +1,7 @@
 package com.architects.pokearch.ui.features.details.ui
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.architects.pokearch.ui.features.details.state.DetailUiState
 
@@ -21,6 +22,7 @@ fun DetailTopBar(
     onBack: () -> Unit,
     uiState: DetailUiState,
     onFavorite: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     TopAppBar(
         title = { },
@@ -29,7 +31,7 @@ fun DetailTopBar(
                 onClick = { onBack() },
                 colors = iconButtonColors()
             ) {
-                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
+                Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
             }
         },
         actions = {
@@ -48,6 +50,7 @@ fun DetailTopBar(
             }
         },
         colors = topAppBarColors(),
+        modifier = modifier,
     )
 }
 

@@ -54,7 +54,7 @@ fun HomeScreen(
             is HomeUiState.Loading -> {
                 Box(
                     contentAlignment = Alignment.Center,
-                    modifier = modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize()
                 ) {
                     LoadingPokeball(
                         modifier = Modifier.size(100.dp)
