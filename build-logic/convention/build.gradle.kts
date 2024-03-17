@@ -1,6 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     `kotlin-dsl`
 }
@@ -33,6 +32,10 @@ tasks {
 
 gradlePlugin {
     plugins {
+        register("pokearchLibrary") {
+            id = "pokearch.library"
+            implementationClass = "PokeArchLibraryConventionPlugin"
+        }
         register("pokearchDetekt") {
             id = "pokearch.detekt"
             implementationClass = "PokeArchDetektConventionPlugin"

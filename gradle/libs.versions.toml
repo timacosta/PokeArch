@@ -10,6 +10,9 @@ org-jetbrains-kotlin-android = "1.9.22"
 #Kotlin Compiler
 kotlinCompilerExtensionVersion = "1.5.10"
 
+#Java Library
+java-library = "1.8.0"
+
 #Core Ktx
 core-ktx = "1.12.0"
 
@@ -205,6 +208,7 @@ org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 
 # This project
+pokearch-library = { id = "pokearch.library", version = "unspecified" }
 pokearch-deteck = { id = "pokearch.detekt", version = "unspecified" }
 pokearch-ktlint = { id = "pokearch.ktlint", version = "unspecified" }
 
