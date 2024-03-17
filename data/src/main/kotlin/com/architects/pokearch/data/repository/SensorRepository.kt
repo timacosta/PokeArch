@@ -7,7 +7,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 
 class SensorRepository @Inject constructor(
-    private val accelerometerSensor: SensorSource
+    private val accelerometerSensor: SensorSource,
 ) : SensorRepositoryContract {
 
     init {

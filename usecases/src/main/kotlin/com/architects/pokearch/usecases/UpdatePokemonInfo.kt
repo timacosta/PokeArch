@@ -5,7 +5,7 @@ import com.architects.pokearch.domain.repository.PokeArchRepositoryContract
 import javax.inject.Inject
 
 class UpdatePokemonInfo @Inject constructor(
-    private val pokeArchRepository: PokeArchRepositoryContract
+    private val pokeArchRepository: PokeArchRepositoryContract,
 ) {
     suspend operator fun invoke(pokemon: PokemonInfo) =
         pokeArchRepository.updatePokemonInfo(pokemon)

@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.firstOrNull
 @Suppress("EmptyFunctionBlock")
 class LazyPagingItemsTest<T : Any> (
     private val flow: Flow<PagingData<T>>,
-    private val dispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher,
 ) {
 
     private val differCallback: DifferCallback = object : DifferCallback {
@@ -30,13 +30,13 @@ class LazyPagingItemsTest<T : Any> (
         differCallback = differCallback,
         mainContext = dispatcher,
         cachedPagingData =
-        if (flow is SharedFlow<PagingData<T>>) flow.replayCache.firstOrNull() else null
+        if (flow is SharedFlow<PagingData<T>>) flow.replayCache.firstOrNull() else null,
     ) {
         override suspend fun presentNewList(
             previousList: NullPaddedList<T>,
             newList: NullPaddedList<T>,
             lastAccessedIndex: Int,
-            onListPresentable: () -> Unit
+            onListPresentable: () -> Unit,
         ): Int? {
             onListPresentable()
             updateItemSnapshotList()
@@ -81,7 +81,7 @@ class LazyPagingItemsTest<T : Any> (
                 refresh = InitialLoadStates.refresh,
                 prepend = InitialLoadStates.prepend,
                 append = InitialLoadStates.append,
-                source = InitialLoadStates
+                source = InitialLoadStates,
             )
 }
 
@@ -89,5 +89,5 @@ private val IncompleteLoadState = LoadState.NotLoading(false)
 private val InitialLoadStates = LoadStates(
     LoadState.Loading,
     IncompleteLoadState,
-    IncompleteLoadState
+    IncompleteLoadState,
 )

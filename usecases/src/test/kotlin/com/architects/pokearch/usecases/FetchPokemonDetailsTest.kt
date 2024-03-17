@@ -26,7 +26,7 @@ class FetchPokemonDetailsTest {
     @Test
     fun `GIVEN FetchPokemonDetails WHEN invokes success THEN calls repository fetchPokemonInfo and returns expected PokemonInfo`() = runTest {
         val expectedResult: Flow<Either<Failure, PokemonInfo>> = flowOf(
-            pokemonInfoBuilder().right()
+            pokemonInfoBuilder().right(),
         )
         val repository: PokeArchRepositoryContract = mockk {
             coEvery { fetchPokemonInfo(any()) } returns expectedResult

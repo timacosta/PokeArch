@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.flow
 
 class PokeArchRepository @Inject constructor(
     private val remoteDataSource: PokemonRemoteDataSource,
-    private val localDataSource: PokemonLocalDataSource
+    private val localDataSource: PokemonLocalDataSource,
 ) : PokeArchRepositoryContract {
 
     override fun getPokemonTeam(): Flow<List<PokemonInfo>> = localDataSource.getPokemonTeam()
@@ -38,12 +38,12 @@ class PokeArchRepository @Inject constructor(
                             localDataSource.savePokemonList(pokemonList)
                             null
                         },
-                        ifLeft = { it }
+                        ifLeft = { it },
                     )
                 } else {
                     null
                 }
-            }
+            },
         )
     }
 
@@ -61,7 +61,7 @@ class PokeArchRepository @Inject constructor(
         localDataSource.savePokemonInfo(pokemonInfo)
 
     private suspend fun getRemotePokemon(
-        id: Int
+        id: Int,
     ): Either<Failure, PokemonInfo> = remoteDataSource.getPokemon(id)
         .fold(
             ifRight = { response ->
@@ -70,7 +70,7 @@ class PokeArchRepository @Inject constructor(
             },
             ifLeft = { failure ->
                 Either.Left(failure)
-            }
+            },
         )
 
     override suspend fun fetchCry(name: String): String {
@@ -78,7 +78,7 @@ class PokeArchRepository @Inject constructor(
         remoteDataSource.tryCatchCry(name) {
             it.fold(
                 ifRight = { cry -> result = cry },
-                ifLeft = { failure -> }
+                ifLeft = { failure -> },
             )
         }
         return result

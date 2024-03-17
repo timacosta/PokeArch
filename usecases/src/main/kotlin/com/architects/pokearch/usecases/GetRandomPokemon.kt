@@ -8,7 +8,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
 class GetRandomPokemon @Inject constructor(
-    private val pokeArchRepositoryContract: PokeArchRepositoryContract
+    private val pokeArchRepositoryContract: PokeArchRepositoryContract,
 ) {
     suspend operator fun invoke(): Flow<Either<Failure, PokemonInfo>> = pokeArchRepositoryContract.randomPokemon()
 }

@@ -8,7 +8,7 @@ interface PokemonLocalDataSource {
     suspend fun getPokemonList(
         filter: String,
         limit: Int,
-        offset: Int
+        offset: Int,
     ): List<Pokemon>
 
     fun getPokemonTeam(): Flow<List<PokemonInfo>>

@@ -22,7 +22,7 @@ fun pokemonInfoBuilder(
     experience: Int = id * 10,
     types: List<Types> = typesBuilder("type$id", "type$id-2"),
     stats: List<Stats> = statsBuilder(id),
-    team: Boolean = false
+    team: Boolean = false,
 ) = PokemonInfo(
     id = id,
     name = name,
@@ -31,7 +31,7 @@ fun pokemonInfoBuilder(
     experience = experience,
     types = types,
     stats = stats,
-    team = team
+    team = team,
 )
 
 fun typesBuilder(vararg types: String = arrayOf("type1", "type1-2")): List<Types> {
@@ -40,7 +40,7 @@ fun typesBuilder(vararg types: String = arrayOf("type1", "type1-2")): List<Types
         count++
         Types(
             slot = count,
-            type = Type(name = it)
+            type = Type(name = it),
         )
     }
 }
@@ -58,6 +58,6 @@ fun statsBuilder(id: Int = 1): List<Stats> {
         Stats(value = value, stat = Stat(name = Stat.DEF)),
         Stats(value = value, stat = Stat(name = Stat.SPEED)),
         Stats(value = value, stat = Stat(name = Stat.SP_ATK)),
-        Stats(value = value, stat = Stat(name = Stat.SP_DEF))
+        Stats(value = value, stat = Stat(name = Stat.SP_DEF)),
     )
 }

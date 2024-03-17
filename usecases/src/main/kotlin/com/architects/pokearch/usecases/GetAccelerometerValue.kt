@@ -5,7 +5,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
 class GetAccelerometerValue @Inject constructor(
-    private val sensorRepositoryContract: SensorRepositoryContract
+    private val sensorRepositoryContract: SensorRepositoryContract,
 ) {
     operator fun invoke(): Flow<Float> = sensorRepositoryContract.getAccelerometerValue()
 }

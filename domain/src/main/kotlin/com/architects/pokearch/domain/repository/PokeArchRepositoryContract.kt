@@ -11,7 +11,7 @@ interface PokeArchRepositoryContract {
     suspend fun getPokemonList(
         filter: String = "",
         page: Int = 0,
-        limit: Int = 20
+        limit: Int = 20,
     ): List<Pokemon>
 
     fun getPokemonTeam(): Flow<List<PokemonInfo>>

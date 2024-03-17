@@ -11,7 +11,7 @@ fun coVerifyNever(
     atLeast: Int = 1,
     atMost: Int = Int.MAX_VALUE,
     timeout: Long = 0,
-    verifyBlock: suspend MockKVerificationScope.() -> Unit
+    verifyBlock: suspend MockKVerificationScope.() -> Unit,
 ) = MockK.useImpl {
     MockKDsl.internalCoVerify(
         ordering,
@@ -20,7 +20,7 @@ fun coVerifyNever(
         atMost,
         0,
         timeout,
-        verifyBlock
+        verifyBlock,
     )
 }
 
@@ -30,7 +30,7 @@ fun verifyNever(
     atLeast: Int = 1,
     atMost: Int = Int.MAX_VALUE,
     timeout: Long = 0,
-    verifyBlock: MockKVerificationScope.() -> Unit
+    verifyBlock: MockKVerificationScope.() -> Unit,
 ) = MockK.useImpl {
     MockKDsl.internalVerify(ordering, inverse, atLeast, atMost, 0, timeout, verifyBlock)
 }

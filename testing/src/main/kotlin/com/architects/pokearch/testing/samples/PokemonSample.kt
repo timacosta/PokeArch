@@ -13,5 +13,5 @@ fun pokemonListBuilder(size: Int = 10): List<Pokemon> {
 fun pokemonBuilder(id: Int = 1) =
     Pokemon(
         name = "pokemon$id",
-        url = "https://pokeapi.co/api/v2/pokemon/$id/"
+        url = "https://pokeapi.co/api/v2/pokemon/$id/",
     )
