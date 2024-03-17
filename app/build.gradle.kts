@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.hiltAndroid)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.pokearch.deteck)
+    alias(libs.plugins.pokearch.detekt)
     alias(libs.plugins.pokearch.ktlint)
 }
 

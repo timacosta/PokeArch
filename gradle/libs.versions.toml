@@ -209,7 +209,7 @@ androidLibrary = { id = "com.android.library", version.ref = "agp" }
 
 # This project
 pokearch-library = { id = "pokearch.library", version = "unspecified" }
-pokearch-deteck = { id = "pokearch.detekt", version = "unspecified" }
+pokearch-detekt = { id = "pokearch.detekt", version = "unspecified" }
 pokearch-ktlint = { id = "pokearch.ktlint", version = "unspecified" }
 
 [bundles]

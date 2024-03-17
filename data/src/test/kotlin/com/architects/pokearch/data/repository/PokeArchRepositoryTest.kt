@@ -156,7 +156,7 @@ class PokeArchRepositoryTest {
             },
         )
 
-        repository.fetchPokemonInfo(id).test {
+        repository.fetchPokemonInfo { id }.test {
             awaitItem().onRight {
                 it.name shouldBeEqualTo "Pikachu"
                 it.experience shouldBeEqualTo 8341
@@ -180,7 +180,7 @@ class PokeArchRepositoryTest {
             },
         )
 
-        val result = repository.fetchPokemonInfo(id)
+        val result = repository.fetchPokemonInfo { id }
 
         result.first().run {
             this shouldBeEqualTo Either.Left(Failure.NetworkError(ErrorType.BadRequest))
