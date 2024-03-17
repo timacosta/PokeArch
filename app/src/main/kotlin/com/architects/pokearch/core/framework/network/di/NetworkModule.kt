@@ -2,7 +2,9 @@ package com.architects.pokearch.core.framework.network.di
 
 import android.content.Context
 import android.net.ConnectivityManager
+import com.architects.pokearch.core.framework.network.di.annotations.CryApi
 import com.architects.pokearch.core.framework.network.di.annotations.CryRetrofit
+import com.architects.pokearch.core.framework.network.di.annotations.PokeApi
 import com.architects.pokearch.core.framework.network.di.annotations.PokeRetrofit
 import com.architects.pokearch.core.framework.network.interceptor.ConnectivityInterceptor
 import com.architects.pokearch.core.framework.network.service.CryService
@@ -43,14 +45,13 @@ object NetworkModule {
         return ConnectivityInterceptor(connectivityManager)
     }
 
-
     @PokeRetrofit
     @Provides
     @Singleton
-    fun providePokeRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun providePokeRetrofit(okHttpClient: OkHttpClient, @PokeApi baseUrl: String): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl(BASE_POKE_API_URL)
+            .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -58,10 +59,10 @@ object NetworkModule {
     @CryRetrofit
     @Provides
     @Singleton
-    fun provideCryRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun provideCryRetrofit(okHttpClient: OkHttpClient, @CryApi baseUrl: String): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl(BASE_CRY_API_URL)
+            .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -77,4 +78,19 @@ object NetworkModule {
     fun provideCryService(@CryRetrofit retrofit: Retrofit): CryService {
         return retrofit.create(CryService::class.java)
     }
+}
+
+
+@Module
+@InstallIn(SingletonComponent::class)
+object NetworkExtrasModule {
+    @PokeApi
+    @Provides
+    @Singleton
+    fun providePokeApiUrl(): String = BASE_POKE_API_URL
+
+    @CryApi
+    @Provides
+    @Singleton
+    fun provideCryApiUrl(): String = BASE_CRY_API_URL
 }
