@@ -2,7 +2,8 @@ package com.architects.pokearch.domain.util
 
 object PokemonImageUrlBuilder {
 
-    private const val BASE_IMAGE_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/"
+    private const val BASE_IMAGE_URL =
+        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/"
     private const val OFFICIAL_ARTWORK_URL = "pokemon/other/official-artwork/"
     private const val SMALL_SPRITE_ARTWORK_URL = "pokemon/"
 
@@ -19,5 +20,6 @@ object PokemonImageUrlBuilder {
         return getOfficialArtworkImageUrl(pokemonId)
     }
 
-    private fun getIndex(url: String): Int = url.split("/".toRegex()).dropLast(1).last().toIntOrNull() ?: 0
+    private fun getIndex(url: String): Int =
+        url.split("/".toRegex()).dropLast(1).last().toIntOrNull() ?: 0
 }

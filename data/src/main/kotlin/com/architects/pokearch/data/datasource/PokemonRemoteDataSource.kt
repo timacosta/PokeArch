@@ -10,7 +10,10 @@ interface PokemonRemoteDataSource {
         private const val LIMIT_ALL = 10000
     }
 
-    suspend fun getPokemonList(limit: Int = LIMIT_ALL, offset: Int = 0): Either<Failure, List<Pokemon>>
+    suspend fun getPokemonList(
+        limit: Int = LIMIT_ALL,
+        offset: Int = 0,
+    ): Either<Failure, List<Pokemon>>
 
     suspend fun areMorePokemonAvailableFrom(count: Int): Either<Failure, Boolean>
 
