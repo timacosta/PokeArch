@@ -18,11 +18,11 @@ interface PokeArchRepositoryContract {
 
     suspend fun fetchPokemonList(): Failure?
 
-    suspend fun fetchPokemonInfo(id: Int): Flow<Either<Failure, PokemonInfo>>
+    fun fetchPokemonInfo(id: suspend () -> Int): Flow<Either<Failure, PokemonInfo>>
 
     suspend fun updatePokemonInfo(pokemonInfo: PokemonInfo)
 
     suspend fun fetchCry(name: String): String
 
-    suspend fun randomPokemon(): Flow<Either<Failure, PokemonInfo>>
+    fun randomPokemon(): Flow<Either<Failure, PokemonInfo>>
 }

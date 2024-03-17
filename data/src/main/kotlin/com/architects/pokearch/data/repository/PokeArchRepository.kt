@@ -7,9 +7,9 @@ import com.architects.pokearch.domain.model.Pokemon
 import com.architects.pokearch.domain.model.PokemonInfo
 import com.architects.pokearch.domain.model.error.Failure
 import com.architects.pokearch.domain.repository.PokeArchRepositoryContract
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
 class PokeArchRepository @Inject constructor(
     private val remoteDataSource: PokemonRemoteDataSource,
@@ -47,13 +47,13 @@ class PokeArchRepository @Inject constructor(
         )
     }
 
-    override suspend fun fetchPokemonInfo(id: Int): Flow<Either<Failure, PokemonInfo>> = flow {
-        val pokemon = localDataSource.getPokemonInfo(id)?.let { pokemon ->
+    override fun fetchPokemonInfo(id: suspend () -> Int): Flow<Either<Failure, PokemonInfo>> = flow {
+        val pokemon = localDataSource.getPokemonInfo(id())?.let { pokemon ->
             emit(Either.Right(pokemon))
         }
 
         if (pokemon == null) {
-            emit(getRemotePokemon(id))
+            emit(getRemotePokemon(id()))
         }
     }
 
@@ -84,7 +84,7 @@ class PokeArchRepository @Inject constructor(
         return result
     }
 
-    override suspend fun randomPokemon(): Flow<Either<Failure, PokemonInfo>> {
-        return fetchPokemonInfo(localDataSource.randomId())
+    override fun randomPokemon(): Flow<Either<Failure, PokemonInfo>> {
+        return fetchPokemonInfo { localDataSource.randomId() }
     }
 }

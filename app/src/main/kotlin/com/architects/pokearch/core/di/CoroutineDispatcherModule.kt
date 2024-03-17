@@ -9,6 +9,7 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
+@Suppress("InjectDispatcher")
 @InstallIn(SingletonComponent::class)
 @Module
 object CoroutineDispatcherModule {
