@@ -23,7 +23,6 @@ class TeamViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-
             getPokemonTeam()
                 .onStart {
                     _uiState.update { TeamUiState.Loading }
