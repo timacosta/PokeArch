@@ -73,6 +73,5 @@ fun PokeArchApp(
                 }
             }
         )
-
     }
 }

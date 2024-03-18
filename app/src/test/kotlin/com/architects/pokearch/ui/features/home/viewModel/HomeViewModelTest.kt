@@ -117,7 +117,7 @@ class HomeViewModelTest {
                 items.size shouldBeEqualTo 10
             }
 
-            viewModel.getPokemonListFromDb(expectedPokemonName)
+            viewModel.getPokemonList(expectedPokemonName)
 
             extractPagingItems(
                 (awaitItem() as HomeUiState.Success).pokemonList
@@ -203,7 +203,7 @@ class HomeViewModelTest {
             viewModel.dialogState.value?.title shouldBeEqualTo expectedErrorTitle
             viewModel.dialogState.value?.message shouldBeEqualTo expectedErrorMessage
 
-            viewModel.getPokemonListFromDb()
+            viewModel.getPokemonList()
 
             viewModel.uiState.test {
                 extractPagingItems(
