@@ -39,7 +39,7 @@ import com.architects.pokearch.ui.components.image.ArchAsyncImage
 @Composable
 fun HomeItem(
     pokemon: Pokemon,
-    modifier: Modifier = Modifier.testTag("homeItem"),
+    modifier: Modifier = Modifier,
     onItemClick: (Int) -> Unit,
 ) {
 
@@ -54,6 +54,7 @@ fun HomeItem(
             .fillMaxSize()
             .padding(dimensionResource(id = R.dimen.card_external_padding))
             .clickable { onItemClick(pokemon.getIndex()) }
+            .testTag("homeItem")
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Box(
@@ -76,7 +77,7 @@ fun HomeItem(
             }
             Text(
                 text = pokemon.name.capitalize(Locale.current),
-                modifier = modifier
+                modifier = Modifier
                     .padding(vertical = dimensionResource(id = R.dimen.card_internal_padding))
             )
         }

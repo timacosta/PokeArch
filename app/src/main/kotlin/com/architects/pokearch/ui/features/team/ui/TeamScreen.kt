@@ -22,6 +22,9 @@ import com.architects.pokearch.ui.features.team.state.TeamUiState
 import com.architects.pokearch.ui.features.team.viewmodel.TeamViewModel
 import kotlin.math.max
 
+private const val MIN_COLUMNS = 4
+private const val MAX_COLUMNS = 8
+
 @Composable
 fun TeamScreen(
     onNavigationClick: (Int) -> Unit,
@@ -66,9 +69,9 @@ fun TeamSuccessView(
     val lazyGridState = rememberLazyGridState()
 
     val isPortrait = LocalConfiguration.current.orientation == Configuration.ORIENTATION_PORTRAIT
-    val columns = if (isPortrait) 4 else 8
+    val columns = if (isPortrait) MIN_COLUMNS else MAX_COLUMNS
 
-    val totalRowsWithGarden = max((pokemons.size + columns - 1) / columns, 8)
+    val totalRowsWithGarden = max((pokemons.size + columns - 1) / columns, MAX_COLUMNS)
 
     LazyVerticalGrid(
         state = lazyGridState,

@@ -5,32 +5,32 @@ import io.mockk.MockKDsl
 import io.mockk.MockKVerificationScope
 import io.mockk.Ordering
 
-fun coVerifyNever(
+fun coVerifyOnce(
     ordering: Ordering = Ordering.UNORDERED,
     inverse: Boolean = false,
     atLeast: Int = 1,
     atMost: Int = Int.MAX_VALUE,
     timeout: Long = 0,
-    verifyBlock: suspend MockKVerificationScope.() -> Unit
+    verifyBlock: suspend MockKVerificationScope.() -> Unit,
 ) = MockK.useImpl {
     MockKDsl.internalCoVerify(
         ordering,
         inverse,
         atLeast,
         atMost,
-        0,
+        1,
         timeout,
         verifyBlock,
     )
 }
 
-fun verifyNever(
+fun verifyOnce(
     ordering: Ordering = Ordering.UNORDERED,
     inverse: Boolean = false,
     atLeast: Int = 1,
     atMost: Int = Int.MAX_VALUE,
     timeout: Long = 0,
-    verifyBlock: MockKVerificationScope.() -> Unit
+    verifyBlock: MockKVerificationScope.() -> Unit,
 ) = MockK.useImpl {
-    MockKDsl.internalVerify(ordering, inverse, atLeast, atMost, 0, timeout, verifyBlock)
+    MockKDsl.internalVerify(ordering, inverse, atLeast, atMost, 1, timeout, verifyBlock)
 }

@@ -19,13 +19,15 @@ import org.amshove.kluent.shouldBe
 import org.junit.Rule
 import org.junit.Test
 
-class FetchPokemonDetailsTest{
+class FetchPokemonDetailsTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
     @Test
     fun `GIVEN FetchPokemonDetails WHEN invokes success THEN calls repository fetchPokemonInfo and returns expected PokemonInfo`() = runTest {
-        val expectedResult: Flow<Either<Failure, PokemonInfo>> = flowOf(pokemonInfoBuilder().right())
+        val expectedResult: Flow<Either<Failure, PokemonInfo>> = flowOf(
+            pokemonInfoBuilder().right(),
+        )
         val repository: PokeArchRepositoryContract = mockk {
             coEvery { fetchPokemonInfo(any()) } returns expectedResult
         }

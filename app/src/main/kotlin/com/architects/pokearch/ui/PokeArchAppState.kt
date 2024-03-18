@@ -37,8 +37,8 @@ class PokeArchAppState(
         @Composable get() = TopAppBarDefaults.enterAlwaysScrollBehavior(topAppBarState)
 
     private val currentRoute: String
-        @Composable get() = navHostController.currentBackStackEntryAsState().value?.destination?.route
-            ?: ""
+        @Composable get() =
+            navHostController.currentBackStackEntryAsState().value?.destination?.route.orEmpty()
 
     val showTopBar: ArchTopAppBarType
         @Composable get() = getShowTopBar(currentRoute)

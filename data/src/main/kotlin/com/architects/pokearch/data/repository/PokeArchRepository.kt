@@ -7,25 +7,21 @@ import com.architects.pokearch.domain.model.Pokemon
 import com.architects.pokearch.domain.model.PokemonInfo
 import com.architects.pokearch.domain.model.error.Failure
 import com.architects.pokearch.domain.repository.PokeArchRepositoryContract
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
 
 class PokeArchRepository @Inject constructor(
     private val remoteDataSource: PokemonRemoteDataSource,
     private val localDataSource: PokemonLocalDataSource,
 ) : PokeArchRepositoryContract {
 
-
-
     override fun getPokemonTeam(): Flow<List<PokemonInfo>> = localDataSource.getPokemonTeam()
-
 
     override suspend fun getPokemonList(filter: String, page: Int, limit: Int): List<Pokemon> {
         val offset = page * limit
 
         return localDataSource.getPokemonList(filter, limit, offset)
-
     }
 
     override suspend fun fetchPokemonList(): Failure? {
@@ -42,22 +38,24 @@ class PokeArchRepository @Inject constructor(
                             localDataSource.savePokemonList(pokemonList)
                             null
                         },
-                        ifLeft = { it }
+                        ifLeft = { it },
                     )
                 } else {
                     null
                 }
-            }
+            },
         )
     }
 
-    override suspend fun fetchPokemonInfo(id: Int): Flow<Either<Failure, PokemonInfo>> = flow {
-        val pokemon = localDataSource.getPokemonInfo(id)?.let { pokemon ->
+    override fun fetchPokemonInfo(
+        id: suspend () -> Int,
+    ): Flow<Either<Failure, PokemonInfo>> = flow {
+        val pokemon = localDataSource.getPokemonInfo(id())?.let { pokemon ->
             emit(Either.Right(pokemon))
         }
 
         if (pokemon == null) {
-            emit(getRemotePokemon(id))
+            emit(getRemotePokemon(id()))
         }
     }
 
@@ -74,7 +72,7 @@ class PokeArchRepository @Inject constructor(
             },
             ifLeft = { failure ->
                 Either.Left(failure)
-            }
+            },
         )
 
     override suspend fun fetchCry(name: String): String {
@@ -82,13 +80,13 @@ class PokeArchRepository @Inject constructor(
         remoteDataSource.tryCatchCry(name) {
             it.fold(
                 ifRight = { cry -> result = cry },
-                ifLeft = { failure -> }
+                ifLeft = { failure -> },
             )
         }
         return result
     }
 
-    override suspend fun randomPokemon(): Flow<Either<Failure, PokemonInfo>> {
-        return fetchPokemonInfo(localDataSource.randomId())
+    override fun randomPokemon(): Flow<Either<Failure, PokemonInfo>> {
+        return fetchPokemonInfo { localDataSource.randomId() }
     }
 }

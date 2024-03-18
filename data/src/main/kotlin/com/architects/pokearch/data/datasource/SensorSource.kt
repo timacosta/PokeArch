@@ -1,7 +1,7 @@
 package com.architects.pokearch.data.datasource
 
 abstract class SensorSource(
-    protected val sensorType: Int
+    protected val sensorType: Int,
 ) {
 
     protected var onSensorValuesChanged: ((List<Float>) -> Unit)? = null

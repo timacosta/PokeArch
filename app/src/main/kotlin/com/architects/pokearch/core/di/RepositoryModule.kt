@@ -15,7 +15,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
-
+@Suppress("UnnecessaryAbstractClass")
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {

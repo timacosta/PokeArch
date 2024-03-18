@@ -28,7 +28,7 @@ class PokemonServerDataSource @Inject constructor(
         return try {
             val response = pokedexService.fetchPokemonList(limit, offset)
             if (response.isSuccessful) Either.Right(
-                response.body()?.results?.toDomain() ?: emptyList()
+                response.body()?.results?.toDomain().orEmpty()
             )
             else Either.Left(Failure.NetworkError(ErrorMapper.getErrorType(response.code())))
         } catch (exception: Exception) {

@@ -7,6 +7,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import com.architects.pokearch.data.datasource.SensorSource
 
+@Suppress("UnnecessaryAbstractClass")
 abstract class AndroidSensor(
     private val context: Context,
     private val sensorFeature: String,

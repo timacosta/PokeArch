@@ -1,14 +1,12 @@
-import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE
-import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN
-import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.SARIF
+@file:Suppress("UnstableApiUsage")
 
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.hiltAndroid)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.io.gitlab.arturbosch.detekt)
-    alias(libs.plugins.org.jlleitschuh.ktlint)
+    alias(libs.plugins.pokearch.detekt)
+    alias(libs.plugins.pokearch.ktlint)
 }
 
 android {
@@ -38,7 +36,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -61,7 +59,7 @@ android {
             excludes += listOf(
                 "/META-INF/{AL2.0,LGPL2.1}",
                 "META-INF/LICENSE.md",
-                "META-INF/LICENSE-notice.md"
+                "META-INF/LICENSE-notice.md",
             )
         }
     }
@@ -72,16 +70,6 @@ android {
                 useLegacyPackaging = true
             }
         }
-    }
-}
-
-ktlint {
-    android.set(true)
-    ignoreFailures.set(false)
-    reporters {
-        reporter(PLAIN)
-        reporter(CHECKSTYLE)
-        reporter(SARIF)
     }
 }
 
@@ -110,7 +98,6 @@ dependencies {
     ksp(libs.dagger.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
     ksp(libs.hilt.androix.compiler)
-    detektPlugins(libs.detetkcompose)
     implementation(libs.navigation)
     implementation(libs.arrow)
     implementation(libs.kotlinx.coroutines.core)

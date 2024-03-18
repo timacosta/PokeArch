@@ -35,8 +35,8 @@ class PokeArchRepositoryTest {
         val pokemonList = listOf(
             Pokemon(
                 name = "Pikachu",
-                url = "/pokemon/pikachu"
-            )
+                url = "/pokemon/pikachu",
+            ),
         )
         val repository: PokeArchRepository = buildRepository(
             localDataSource = mockk {
@@ -44,10 +44,10 @@ class PokeArchRepositoryTest {
                     getPokemonList(
                         filter,
                         limit,
-                        offset
+                        offset,
                     )
                 } returns pokemonList
-            }
+            },
         )
 
         val result = repository.getPokemonList()
@@ -65,8 +65,8 @@ class PokeArchRepositoryTest {
             val pokemonList = listOf(
                 Pokemon(
                     name = "Pikachu",
-                    url = "/pokemon/pikachu"
-                )
+                    url = "/pokemon/pikachu",
+                ),
             )
             val remoteDataSource: PokemonRemoteDataSource = mockk {
                 coEvery { areMorePokemonAvailableFrom(count) } returns Either.Right(false)
@@ -78,7 +78,7 @@ class PokeArchRepositoryTest {
             }
             val repository = buildRepository(
                 remoteDataSource = remoteDataSource,
-                localDataSource = localDataSource
+                localDataSource = localDataSource,
             )
 
             val result = repository.fetchPokemonList()
@@ -94,8 +94,8 @@ class PokeArchRepositoryTest {
             val remoteDataSource: PokemonRemoteDataSource = mockk {
                 coEvery { areMorePokemonAvailableFrom(count) } returns Either.Left(
                     Failure.NetworkError(
-                        ErrorType.NoInternet
-                    )
+                        ErrorType.NoInternet,
+                    ),
                 )
             }
             val localDataSource: PokemonLocalDataSource = mockk {
@@ -103,7 +103,7 @@ class PokeArchRepositoryTest {
             }
             val repository = buildRepository(
                 remoteDataSource = remoteDataSource,
-                localDataSource = localDataSource
+                localDataSource = localDataSource,
             )
 
             val result = repository.fetchPokemonList()
@@ -117,7 +117,9 @@ class PokeArchRepositoryTest {
             val count = 20
             val remoteDataSource: PokemonRemoteDataSource = mockk {
                 coEvery { areMorePokemonAvailableFrom(count) } returns Either.Right(true)
-                coEvery { getPokemonList() } returns Either.Left(Failure.NetworkError(ErrorType.NoInternet))
+                coEvery { getPokemonList() } returns Either.Left(
+                    Failure.NetworkError(ErrorType.NoInternet),
+                )
             }
             val localDataSource: PokemonLocalDataSource = mockk {
                 coEvery { countPokemon() } returns count
@@ -125,7 +127,7 @@ class PokeArchRepositoryTest {
 
             val repository = buildRepository(
                 remoteDataSource = remoteDataSource,
-                localDataSource = localDataSource
+                localDataSource = localDataSource,
             )
 
             val result = repository.fetchPokemonList()
@@ -146,15 +148,15 @@ class PokeArchRepositoryTest {
             experience = 8341,
             types = listOf(),
             stats = listOf(),
-            team = false
+            team = false,
         )
         val repository: PokeArchRepository = buildRepository(
             localDataSource = mockk {
                 coEvery { getPokemonInfo(id) } returns pokemonInfo
-            }
+            },
         )
 
-        repository.fetchPokemonInfo(id).test {
+        repository.fetchPokemonInfo { id }.test {
             awaitItem().onRight {
                 it.name shouldBeEqualTo "Pikachu"
                 it.experience shouldBeEqualTo 8341
@@ -172,11 +174,13 @@ class PokeArchRepositoryTest {
                 coEvery { getPokemonInfo(id) } returns null
             },
             remoteDataSource = mockk {
-                coEvery { getPokemon(id) } returns Either.Left(Failure.NetworkError(ErrorType.BadRequest))
-            }
+                coEvery { getPokemon(id) } returns Either.Left(
+                    Failure.NetworkError(ErrorType.BadRequest),
+                )
+            },
         )
 
-        val result = repository.fetchPokemonInfo(id)
+        val result = repository.fetchPokemonInfo { id }
 
         result.first().run {
             this shouldBeEqualTo Either.Left(Failure.NetworkError(ErrorType.BadRequest))
@@ -190,7 +194,7 @@ class PokeArchRepositoryTest {
         }
 
         val repository = buildRepository(
-            localDataSource = localDataSource
+            localDataSource = localDataSource,
         )
 
         repository.updatePokemonInfo(mockk())
@@ -207,10 +211,10 @@ class PokeArchRepositoryTest {
             remoteDataSource = mockk {
                 coEvery { tryCatchCry(name, any()) } answers {
                     secondArg<(Either<Failure, String>) -> Unit>().invoke(
-                        Either.Right(cryUrl)
+                        Either.Right(cryUrl),
                     )
                 }
-            }
+            },
         )
 
         val result = repository.fetchCry(name)
@@ -218,12 +222,11 @@ class PokeArchRepositoryTest {
         result shouldBeEqualTo cryUrl
     }
 
-
     private fun buildRepository(
         remoteDataSource: PokemonRemoteDataSource = mockk(),
         localDataSource: PokemonLocalDataSource = mockk(),
     ) = PokeArchRepository(
         remoteDataSource = remoteDataSource,
-        localDataSource = localDataSource
+        localDataSource = localDataSource,
     )
 }

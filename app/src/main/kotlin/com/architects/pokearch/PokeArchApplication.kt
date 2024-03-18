@@ -1,4 +1,4 @@
-package com.architects
+package com.architects.pokearch
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

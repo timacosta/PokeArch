@@ -21,8 +21,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -48,9 +46,9 @@ class DetailViewModel @Inject constructor(
 
     fun getPokemonDetails() {
         viewModelScope.launch(dispatcher) {
+            _uiState.update { Loading }
             fetchPokemonDetails(pokemonId)
-                .onStart { _uiState.update { Loading } }
-                .onEach { result ->
+                .collectLatest { result ->
                     result.fold(
                         ifLeft = { failure ->
                             _uiState.update { Error }
@@ -65,9 +63,6 @@ class DetailViewModel @Inject constructor(
                             _uiState.update { Success(pokemonInfo) }
                         }
                     )
-                }
-                .collectLatest {
-                    _uiState.update { it }
                 }
             playCry()
         }

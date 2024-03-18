@@ -2,6 +2,7 @@ package com.architects.pokearch.data.mapper
 
 import com.architects.pokearch.domain.model.error.ErrorType
 
+@Suppress("MagicNumber")
 object ErrorMapper {
     fun getErrorType(code: Int): ErrorType = when (code) {
         400 -> ErrorType.BadRequest

@@ -36,7 +36,7 @@ class LazyPagingItemsTest<T : Any> (
             previousList: NullPaddedList<T>,
             newList: NullPaddedList<T>,
             lastAccessedIndex: Int,
-            onListPresentable: () -> Unit
+            onListPresentable: () -> Unit,
         ): Int? {
             onListPresentable()
             updateItemSnapshotList()

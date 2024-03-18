@@ -20,7 +20,9 @@ import org.junit.Test
 class GetRandomPokemonTest {
     @Test
     fun `GIVEN GetRandomPokemon WHEN invokes success THEN calls repository randomPokemon and returns expected PokemonInfo`() = runTest {
-        val expectedResult: Flow<Either<Failure, PokemonInfo>> = flowOf(pokemonInfoBuilder().right())
+        val expectedResult: Flow<Either<Failure, PokemonInfo>> = flowOf(
+            pokemonInfoBuilder().right(),
+        )
         val repository: PokeArchRepositoryContract = mockk {
             coEvery { randomPokemon() } returns expectedResult
         }

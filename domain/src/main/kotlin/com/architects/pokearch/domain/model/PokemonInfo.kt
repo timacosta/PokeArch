@@ -25,7 +25,6 @@ data class PokemonInfo(
     fun getSpriteUrl(): String {
         return PokemonImageUrlBuilder.getSpriteUrl(id)
     }
-
 }
 
 data class Types(

@@ -1,8 +1,8 @@
 package com.architects.pokearch.usecases
 
 import com.architects.pokearch.domain.repository.SensorRepositoryContract
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 
 class GetAccelerometerValue @Inject constructor(
     private val sensorRepositoryContract: SensorRepositoryContract,

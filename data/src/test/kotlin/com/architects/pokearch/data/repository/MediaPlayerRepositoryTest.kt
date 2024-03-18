@@ -27,6 +27,6 @@ class MediaPlayerRepositoryTest {
     private fun buildRepository(
         mediaPlayerDataSource: MediaPlayerDataSource,
     ) = MediaPlayerRepository(
-        mediaPlayerDataSource = mediaPlayerDataSource
+        mediaPlayerDataSource = mediaPlayerDataSource,
     )
 }
