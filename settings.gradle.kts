@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google()
         mavenCentral()
@@ -15,4 +16,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "PokeArch"
 include(":app")
- 
+include(":domain")
+include(":data")
+include(":usecases")
+include(":testing")
