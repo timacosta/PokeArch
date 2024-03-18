@@ -38,19 +38,15 @@ class HomeViewModel @Inject constructor(
     val afterDbCallState: StateFlow<Boolean> = _afterDbCallState
 
     init {
-        fetchData()
+        loadInitialPokemonData()
     }
 
-    private fun fetchData(pokemonName: String = "") {
+    private fun loadInitialPokemonData() {
 
         viewModelScope.launch {
             when (val failure = withContext(dispatcher) { fetchPokemonList() }) {
                 null -> {
-                    _uiState.update {
-                        HomeUiState.Success(
-                            pokemonPagingFlowBuilder(pokemonName, getPokemonList, viewModelScope)
-                        )
-                    }
+                    getPokemonList()
                 }
                 else -> {
                     when (failure) {
@@ -67,7 +63,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getPokemonListFromDb(pokemonName: String = "") {
+    fun getPokemonList(pokemonName: String = "") {
         _uiState.update {
             HomeUiState.Success(
                 pokemonPagingFlowBuilder(pokemonName, getPokemonList, viewModelScope)
@@ -93,6 +89,6 @@ class HomeViewModel @Inject constructor(
 
     private fun onDialogDismiss() {
         _dialogState.update { null }
-        getPokemonListFromDb()
+        getPokemonList()
     }
 }

@@ -36,7 +36,7 @@ fun HomeScreen(
 
     LaunchedEffect(key1 = pokemonName) {
         if (afterDbCallState) {
-            viewModel.getPokemonListFromDb()
+            viewModel.getPokemonList(pokemonName)
         }
     }
 
